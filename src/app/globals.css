@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-sage: #47ad42;
+  --color-sage-light: #d6f0d4;
+  --color-sage-mid: #7bc978;
+  --color-sage-dark: #2d7a29;
+  --color-cream: #faf8f3;
+  --color-warm-white: #f5f2eb;
+  --color-charcoal: #2c2c2a;
+  --color-muted: #6b6b65;
+  --color-gold: #c8a96e;
+  --color-gold-light: #f0e4cc;
+  --font-display: var(--font-cormorant);
+  --font-body: var(--font-jost);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #faf8f3;
+  color: #2c2c2a;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scroll fade-in animations ─── */
+[data-fadein] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+[data-fadein].in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Botanical divider */
+.botanical-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #c8a96e;
+  opacity: 0.6;
+}
+.botanical-divider::before,
+.botanical-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
