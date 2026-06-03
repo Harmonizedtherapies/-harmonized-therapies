@@ -12,6 +12,7 @@
     "@types/node": "^25.9.0",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
+    "framer-motion": "^12.40.0",
     "next": "^15.5.18",
     "postcss": "^8.5.15",
     "react": "^19.2.6",

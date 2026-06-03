@@ -14,10 +14,8 @@ export default function ServicesPage() {
     <>
       {/* ─── HERO ─── */}
       <section className="bg-sage-dark pt-32 pb-20 px-6 lg:px-10 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <svg viewBox="0 0 600 400" className="absolute -right-20 -top-10 w-1/2 text-sage" fill="currentColor">
-            <ellipse cx="350" cy="180" rx="260" ry="300" opacity="0.4" />
-          </svg>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-gold/10 blur-3xl" />
         </div>
         <div className="max-w-4xl mx-auto text-center relative">
           <p className="text-[0.7rem] tracking-[0.25em] uppercase text-sage-light/60 mb-4 font-[400]">

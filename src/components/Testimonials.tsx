@@ -14,7 +14,7 @@ const testimonials = [
   {
     quote:
       'Danielle is a very skilled and intuitive Havening Techniques Practitioner. Her knowledge and experience woven into a gentle and kind manner enabled me to heal from a difficult situation that had influenced me for years. I would definitely recommend her to anyone wanting to create a healthier and happier life.',
-    service: 'Havening Techniques®',
+    service: 'Havening Techniques',
     featured: false,
   },
   {
@@ -54,12 +54,6 @@ export default function Testimonials({ heading = 'What Clients Say' }: { heading
 
         {/* Featured review */}
         <div className="bg-charcoal rounded-3xl p-8 lg:p-12 mb-6 relative overflow-hidden">
-          <span
-            aria-hidden="true"
-            className="absolute -top-6 left-6 font-display text-[12rem] text-sage/8 leading-none pointer-events-none select-none"
-          >
-            &ldquo;
-          </span>
           <div className="relative grid lg:grid-cols-[auto_1fr] gap-8 items-start">
             <div className="flex flex-col items-center lg:items-start gap-3">
               <div className="w-14 h-14 rounded-full bg-sage-dark flex items-center justify-center font-display text-2xl text-cream font-light flex-shrink-0">

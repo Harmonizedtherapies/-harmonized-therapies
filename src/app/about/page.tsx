@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import Testimonials from '@/components/Testimonials'
+import ParallaxImage from '@/components/ParallaxImage'
 
 export const metadata: Metadata = {
   title: 'About Danielle Brierley',
@@ -12,10 +13,10 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   const credentials = [
     'Certified Massage Therapist',
-    'Havening Techniques® Practitioner',
+    'Havening Techniques Practitioner',
     'Oncology Massage Level 1 & 2',
     'Eastern Palliative Care — Clinical Experience',
-    'Access Bars® Practitioner',
+    'Access Bars Practitioner',
     'NLP Practitioner',
     'Conversational Hypnotherapist',
     'Belief Change Practitioner',
@@ -24,23 +25,25 @@ export default function AboutPage() {
 
   return (
     <>
-      {/* ─── HERO ─── */}
-      <section className="relative min-h-[70vh] flex items-end overflow-hidden bg-charcoal">
-        <Image
-          src="/Images/danielle-outdoor-portrait.png"
-          alt="Danielle Brierley — Harmonized Therapies"
-          fill
-          className="object-cover object-center"
+      {/* ─── HERO PHOTO ─── */}
+      <section className="relative h-[70vh] overflow-hidden bg-charcoal pt-[80px]">
+        <ParallaxImage
+          src="/Images/IMG_0467.PNG"
+          alt="Yarra Valley — Harmonized Therapies"
           priority
-          sizes="100vw"
+          quality={95}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 to-charcoal/20" />
-        <div className="relative max-w-4xl mx-auto px-6 lg:px-10 pb-20 pt-40 text-center w-full">
+        <div className="absolute inset-0 bg-charcoal/20" />
+      </section>
+
+      {/* ─── HERO TEXT ─── */}
+      <section className="bg-charcoal py-16 px-6 lg:px-10 text-center">
+        <div className="max-w-4xl mx-auto">
           <p className="text-[0.7rem] tracking-[0.25em] uppercase text-sage-light/70 mb-4 font-[400]">About Danielle</p>
-          <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-light text-cream leading-tight mb-6">
+          <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-light text-white leading-tight mb-5">
             14 Years of<br /><em className="italic">Heart-Centred Healing</em>
           </h1>
-          <p className="text-cream/60 text-lg font-light leading-relaxed max-w-xl mx-auto">
+          <p className="text-white/70 text-lg font-light leading-relaxed max-w-xl mx-auto">
             Massage therapist, Havening practitioner, and grief space holder — Danielle brings
             her whole self to every session.
           </p>
@@ -52,11 +55,12 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
           <div className="rounded-3xl overflow-hidden aspect-[4/5] relative">
             <Image
-              src="/Images/danielle-outdoor-portrait.png"
+              src="/Images/danielle-portrait.png"
               alt="Danielle Brierley — founder of Harmonized Therapies"
               fill
-              className="object-cover object-center"
+              className="object-cover object-top"
               sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={95}
             />
           </div>
 
@@ -87,7 +91,7 @@ export default function AboutPage() {
               </p>
               <p>
                 It is why I trained in therapeutic, oncology, palliative, and relaxation massage. It is
-                why I became a Havening Techniques® Practitioner. It is why I hold space for grief and
+                why I became a Havening Techniques Practitioner. It is why I hold space for grief and
                 birth trauma and the things that have no name. Not because I studied them — but because
                 I have lived them. And I wanted to become the kind of person who holds others through them.
               </p>

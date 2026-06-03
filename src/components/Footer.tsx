@@ -4,25 +4,25 @@ import Image from 'next/image'
 export default function Footer() {
   return (
     <footer className="bg-charcoal text-cream/60">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-20 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-14 mb-14">
           {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-white">
+            <Link href="/" className="flex items-center gap-3 mb-5">
+              <div className="relative w-14 h-[84px] flex-shrink-0">
                 <Image
-                  src="/Images/logo-circle.png"
+                  src="/Images/logo-submark.png"
                   alt="Harmonized Therapies logo"
                   fill
-                  className="object-cover object-center"
-                  sizes="48px"
+                  className="object-contain"
+                  sizes="56px"
                 />
               </div>
-              <span className="font-display text-[1.15rem] font-light text-cream">
-                Harmonized <em className="not-italic text-sage-mid">Therapies</em>
+              <span className="font-display text-[1.3rem] font-light text-cream">
+                Harmonized <em className="not-italic text-gold">Therapies</em>
               </span>
             </Link>
-            <p className="text-sm leading-relaxed mb-5 text-cream/50 max-w-xs">
+            <p className="text-sm leading-relaxed mb-5 text-cream/60 max-w-xs">
               Holding space for grief, healing and becoming. Yarra Valley, Melbourne.
             </p>
             <div className="flex gap-4">
@@ -49,22 +49,23 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-[0.68rem] tracking-[0.2em] uppercase text-sage-mid mb-4 font-[400]">
+            <h4 className="text-[0.68rem] tracking-[0.2em] uppercase text-gold/70 mb-5 font-[400]">
               Navigate
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {[
                 { href: '/about', label: 'About Danielle' },
                 { href: '/services', label: 'Services' },
                 { href: '/the-quiet-holders', label: 'The Quiet Holders' },
                 { href: '/oracle-cards', label: 'Oracle Cards' },
                 { href: '/retreats', label: 'Retreats & Workshops' },
+                { href: '/meditation', label: 'Free Meditation' },
                 { href: '/contact', label: 'Contact' },
               ].map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-cream/50 hover:text-sage-mid transition-colors"
+                    className="text-sm text-cream/60 hover:text-cream transition-colors"
                   >
                     {label}
                   </Link>
@@ -75,10 +76,10 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-[0.68rem] tracking-[0.2em] uppercase text-sage-mid mb-4 font-[400]">
+            <h4 className="text-[0.68rem] tracking-[0.2em] uppercase text-gold/70 mb-5 font-[400]">
               Connect
             </h4>
-            <ul className="space-y-3 text-sm text-cream/50">
+            <ul className="space-y-3 text-sm text-cream/60">
               <li className="flex gap-2.5 items-start">
                 <span className="mt-0.5">📍</span>
                 <span>Yarra Valley, Melbourne, Australia</span>
@@ -111,7 +112,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-cream/8 pt-6 text-center text-[0.72rem] text-cream/30">
+        <div className="border-t border-cream/10 pt-8 text-center text-[0.72rem] text-cream/40">
           © 2025 Harmonized Therapies · Danielle Brierley · Yarra Valley, Melbourne ·{' '}
           <a href="mailto:danielle@harmonizedtherapies.com.au" className="hover:text-sage-mid transition-colors">
             danielle@harmonizedtherapies.com.au

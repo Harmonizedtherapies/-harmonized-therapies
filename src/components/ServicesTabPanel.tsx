@@ -8,10 +8,10 @@ const services = [
     name: 'Harmonize Me — Signature',
     icon: '✨',
     description:
-      'The ultimate Harmonized Therapies experience — 2.5 hours of full-body and soul integration. This signature session weaves together Havening, Access Bars®, hot stone massage, and energy work into one deeply transformative treatment. Created by Danielle as a complete reset for the mind, body, and soul.',
+      'The ultimate Harmonized Therapies experience — 2.5 hours of full-body and soul integration. This signature session weaves together Havening, Access Bars, hot stone massage, and energy work into one deeply transformative treatment. Created by Danielle as a complete reset for the mind, body, and soul.',
     benefits: [
       '2.5 hour immersive treatment',
-      'Combines Havening, Access Bars®, and hot stone massage',
+      'Combines Havening, Access Bars, and hot stone massage',
       'Deep nervous system reset and emotional release',
       'Energy work woven throughout',
       'Leaves you feeling clear, held, and profoundly restored',
@@ -125,7 +125,7 @@ const services = [
   },
   {
     id: 'havening',
-    name: 'Havening Techniques®',
+    name: 'Havening Techniques',
     icon: '🤲',
     description:
       'Havening uses gentle psychosensory touch — applied to the upper arms, face, and hands — to stimulate delta waves in the brain, helping to de-link distressing memories from their emotional impact. Developed by Dr. Ronald A. Ruden, it\'s a science-backed technique that can create rapid, lasting change — often in just one session. Available in-person or via Zoom.',
@@ -140,10 +140,10 @@ const services = [
   },
   {
     id: 'access',
-    name: 'Access Bars®',
+    name: 'Access Bars',
     icon: '💫',
     description:
-      'A gentle, hands-on energy technique that lightly touches 32 points on the head, storing the thoughts, beliefs, emotions, and patterns that shape your life. By activating them, Access Bars® helps release limitations and create space for more ease, joy, and clarity. Many people describe it as feeling like you\'ve had a whole body massage — or a deeply restorative walk in nature.',
+      'A gentle, hands-on energy technique that lightly touches 32 points on the head, storing the thoughts, beliefs, emotions, and patterns that shape your life. By activating them, Access Bars helps release limitations and create space for more ease, joy, and clarity. Many people describe it as feeling like you\'ve had a whole body massage — or a deeply restorative walk in nature.',
     benefits: [
       'Improved sleep and deep relaxation',
       'Reduced stress, anxiety, and overwhelm',
@@ -151,7 +151,7 @@ const services = [
       'Enhanced mental clarity and focus',
       'Increased sense of possibility and openness',
     ],
-    cta: 'Book Access Bars®',
+    cta: 'Book Access Bars',
   },
   {
     id: 'nlp',
@@ -190,7 +190,7 @@ export default function ServicesTabPanel() {
   const current = services.find(s => s.id === active)!
 
   return (
-    <div className="grid lg:grid-cols-[280px_1fr] gap-1 rounded-2xl overflow-hidden border border-sage/15 bg-sage/10">
+    <div className="grid lg:grid-cols-[280px_1fr] gap-1 rounded-2xl overflow-hidden border border-charcoal/10 bg-warm-white">
       {/* Sidebar list */}
       <div className="bg-white flex flex-col">
         {services.map(s => (

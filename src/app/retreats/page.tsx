@@ -14,14 +14,10 @@ export default function RetreatsPage() {
     <>
       {/* ─── HERO ─── */}
       <section className="bg-charcoal pt-32 pb-24 px-6 lg:px-10 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
-          <svg viewBox="0 0 700 500" className="absolute -right-20 -top-10 w-2/3 text-gold opacity-5" fill="currentColor">
-            <circle cx="450" cy="200" r="300" />
-          </svg>
-          <svg viewBox="0 0 400 400" className="absolute -left-20 bottom-0 w-1/3 text-sage-dark opacity-20" fill="currentColor">
-            <ellipse cx="200" cy="280" rx="180" ry="220" />
-          </svg>
+          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-gold/10 blur-3xl" />
+          <div className="absolute -bottom-10 -left-10 w-64 h-64 rounded-full bg-gold/8 blur-3xl" />
         </div>
         <div className="max-w-4xl mx-auto text-center relative">
           <p className="text-[0.68rem] tracking-[0.3em] uppercase text-gold/70 mb-5 font-[400]">
@@ -87,7 +83,7 @@ export default function RetreatsPage() {
 
           <div className="rounded-3xl overflow-hidden shadow-xl">
             <Image
-              src="/Images/retreats-brand-collage.png"
+              src="/Images/retreats-promo.png"
               alt="The Quiet Holders Retreat — women gathering to heal and reconnect"
               width={700}
               height={525}
@@ -100,11 +96,6 @@ export default function RetreatsPage() {
 
       {/* ─── THE CEREMONY ─── */}
       <section className="bg-sage-dark py-24 px-6 lg:px-10 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-10">
-          <svg viewBox="0 0 600 400" className="absolute right-0 top-0 w-2/3 text-cream" fill="currentColor">
-            <circle cx="400" cy="200" r="250" />
-          </svg>
-        </div>
         <div className="max-w-5xl mx-auto relative">
           <div className="text-center mb-14">
             <p className="text-[0.68rem] tracking-[0.3em] uppercase text-sage-light/60 mb-4 font-[400]">

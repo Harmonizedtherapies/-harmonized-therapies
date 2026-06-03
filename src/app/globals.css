@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-sage: #47ad42;
-  --color-sage-light: #d6f0d4;
-  --color-sage-mid: #7bc978;
-  --color-sage-dark: #2d7a29;
+  --color-sage: #2D5A3D;
+  --color-sage-light: #D4E8D8;
+  --color-sage-mid: #4A7A5A;
+  --color-sage-dark: #1B3828;
   --color-cream: #faf8f3;
   --color-warm-white: #f5f2eb;
-  --color-charcoal: #2c2c2a;
+  --color-charcoal: #181816;
   --color-muted: #6b6b65;
   --color-gold: #c8a96e;
   --color-gold-light: #f0e4cc;
@@ -21,7 +21,7 @@ html {
 
 body {
   background-color: #faf8f3;
-  color: #2c2c2a;
+  color: #181816;
   font-family: var(--font-body), system-ui, sans-serif;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
@@ -37,6 +37,76 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+
+
+/* ─── Marquee scroll ─── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Animated link underline ─── */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ─── Floating orb drift ─── */
+@keyframes orb-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.05); }
+  66%       { transform: translate(-20px, 15px) scale(0.97); }
+}
+@keyframes orb-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-25px, 30px) scale(1.08); }
+  75%       { transform: translate(20px, -15px) scale(0.95); }
+}
+@keyframes orb-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(15px, 25px) scale(1.04); }
+}
+.orb-1 { animation: orb-float-1 12s ease-in-out infinite; }
+.orb-2 { animation: orb-float-2 16s ease-in-out infinite; }
+.orb-3 { animation: orb-float-3 10s ease-in-out infinite; }
+
+/* ─── Luxury card hover ─── */
+.luxury-card {
+  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+              box-shadow 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+              border-color 0.4s ease;
+}
+.luxury-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(200, 169, 110, 0.15), 0 8px 24px rgba(44, 44, 42, 0.08);
+  border-color: rgba(200, 169, 110, 0.3);
+}
+
+/* ─── Subtle pulse on gold accents ─── */
+@keyframes gold-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+.gold-pulse { animation: gold-pulse 3s ease-in-out infinite; }
 
 /* Botanical divider */
 .botanical-divider {

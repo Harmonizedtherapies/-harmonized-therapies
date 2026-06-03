@@ -3,23 +3,15 @@ import Image from 'next/image'
 import Testimonials from '@/components/Testimonials'
 import FadeIn from '@/components/FadeIn'
 import BotanicalDivider from '@/components/BotanicalDivider'
+import FloatingOrbs from '@/components/FloatingOrbs'
+import Marquee from '@/components/Marquee'
 
 export default function HomePage() {
   return (
     <>
       {/* ─── HERO ─── */}
       <section className="relative min-h-screen flex items-center bg-charcoal overflow-hidden">
-        {/* Botanical bg decorations */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none select-none">
-          <svg viewBox="0 0 800 800" className="absolute -top-40 -right-40 w-[700px] h-[700px] text-sage" fill="currentColor">
-            <ellipse cx="400" cy="200" rx="180" ry="320" opacity="0.4" />
-            <ellipse cx="400" cy="200" rx="320" ry="180" opacity="0.25" />
-            <ellipse cx="580" cy="350" rx="120" ry="210" opacity="0.3" />
-          </svg>
-          <svg viewBox="0 0 400 400" className="absolute -bottom-20 -left-20 w-[400px] h-[400px] text-sage-dark" fill="currentColor">
-            <ellipse cx="200" cy="280" rx="140" ry="200" opacity="0.5" />
-          </svg>
-        </div>
+        <FloatingOrbs />
 
         {/* Gold line accent */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-40" />
@@ -30,12 +22,12 @@ export default function HomePage() {
             <p className="text-[0.7rem] tracking-[0.25em] uppercase text-sage mb-6 font-[400]">
               Yarra Valley, Melbourne · Holistic Wellness
             </p>
-            <h1 className="font-display text-[clamp(3rem,6vw,5rem)] font-light leading-[1.05] text-cream mb-7">
+            <h1 className="font-display text-[clamp(3rem,6vw,5rem)] font-light leading-[1.05] text-white mb-7">
               You were never meant<br />
               to carry this{' '}
               <em className="text-sage italic">alone.</em>
             </h1>
-            <p className="text-cream/60 text-lg font-light leading-relaxed max-w-md mb-10">
+            <p className="text-cream/70 text-lg font-light leading-relaxed max-w-md mb-10">
               A space for grief, healing and becoming. Through massage, Havening,
               and holistic therapy, Danielle holds space for women ready to heal.
             </p>
@@ -61,24 +53,19 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right — Danielle portrait */}
+          {/* Right — hero image */}
           <div className="hidden lg:flex justify-center">
-            <div className="relative w-[340px] h-[440px] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative w-[480px] h-[340px] rounded-3xl overflow-hidden shadow-2xl">
               <Image
-                src="/Images/danielle-outdoor-portrait.png"
-                alt="Danielle Brierley — Harmonized Therapies"
+                src="/Images/IMG_0470.PNG"
+                alt="Harmonized Therapies — Yarra Valley"
                 fill
                 className="object-cover object-center"
                 priority
-                sizes="340px"
+                sizes="480px"
+                quality={95}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-7">
-                <h2 className="font-display text-2xl text-cream font-light mb-0.5">Danielle Brierley</h2>
-                <p className="text-[0.7rem] tracking-[0.12em] uppercase text-sage-mid">
-                  Massage Therapist &amp; Holistic Practitioner
-                </p>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-transparent to-transparent" />
             </div>
           </div>
         </div>
@@ -91,6 +78,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <Marquee />
+
       {/* ─── BRAND COLLAGE ─── */}
       <section className="bg-charcoal py-16 px-6 lg:px-10">
         <FadeIn className="max-w-4xl mx-auto">
@@ -102,8 +91,8 @@ export default function HomePage() {
           </div>
           <div className="rounded-3xl overflow-hidden shadow-2xl">
             <Image
-              src="/Images/danielle-brand-collage-2.png"
-              alt="Danielle Brierley — healing, heart-centred practice in the Yarra Valley"
+              src="/Images/IMG_0464.PNG"
+              alt="Danielle Brierley — Havening and healing practice in the Yarra Valley"
               width={1000}
               height={650}
               className="w-full object-cover"
@@ -150,8 +139,9 @@ export default function HomePage() {
                 cta: 'Explore Retreats',
                 bg: 'bg-white',
               },
-            ].map(({ tag, title, desc, href, cta, bg }) => (
-              <div key={tag} className={`${bg} p-10 flex flex-col gap-4`}>
+            ].map(({ tag, title, desc, href, cta, bg }, i) => (
+              <FadeIn key={tag} delay={i * 0.15}>
+              <div className={`luxury-card ${bg} p-10 flex flex-col gap-4 h-full`}>
                 <span className="text-[0.68rem] tracking-[0.2em] uppercase text-sage font-[400]">{tag}</span>
                 <h3 className="font-display text-2xl font-light text-charcoal">{title}</h3>
                 <p className="text-muted text-sm leading-relaxed flex-1">{desc}</p>
@@ -162,6 +152,7 @@ export default function HomePage() {
                   {cta} →
                 </Link>
               </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -185,32 +176,27 @@ export default function HomePage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { icon: '🌿', name: 'Massage Therapy', desc: 'Pure essential oils, hot stones, and natural oils — tailored to your unique needs.' },
-              { icon: '✋', name: 'Havening Techniques®', desc: 'Science-backed psychosensory touch that creates rapid, lasting emotional change.' },
+              { icon: '✋', name: 'Havening Techniques', desc: 'Science-backed psychosensory touch that creates rapid, lasting emotional change.' },
               { icon: '🌸', name: 'Oncology Massage', desc: 'Specialised and deeply caring massage for individuals at all stages of their cancer journey.' },
               { icon: '🕊️', name: 'Palliative Massage', desc: 'Compassionate, gentle care for those facing life-limiting illness. Mobile services available.' },
-              { icon: '✨', name: 'Access Bars®', desc: 'Gentle touch of 32 points on the head to release limitations and create more ease and clarity.' },
+              { icon: '✨', name: 'Access Bars', desc: 'Gentle touch of 32 points on the head to release limitations and create more ease and clarity.' },
               { icon: '🧠', name: 'NLP & Hypnotherapy', desc: 'Shift patterns, release limiting beliefs, and step into a more empowered version of yourself.' },
-            ].map(({ icon, name, desc }) => (
-              <div
-                key={name}
-                className="bg-white rounded-2xl p-7 border border-warm-white hover:shadow-md hover:-translate-y-0.5 transition-all"
-              >
-                <span className="text-2xl mb-4 block">{icon}</span>
-                <h3 className="font-display text-xl font-light text-charcoal mb-2">{name}</h3>
-                <p className="text-muted text-sm leading-relaxed">{desc}</p>
-              </div>
+            ].map(({ icon, name, desc }, i) => (
+              <FadeIn key={name} delay={i * 0.1}>
+                <div className="luxury-card bg-white rounded-2xl p-7 border border-warm-white h-full">
+                  <span className="text-2xl mb-4 block">{icon}</span>
+                  <h3 className="font-display text-xl font-light text-charcoal mb-2">{name}</h3>
+                  <p className="text-muted text-sm leading-relaxed">{desc}</p>
+                </div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
       {/* ─── ABOUT DANIELLE ─── */}
-      <section className="bg-sage-dark py-24 px-6 lg:px-10 overflow-hidden relative">
-        <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-5 pointer-events-none">
-          <svg viewBox="0 0 300 600" className="w-full h-full text-cream" fill="currentColor">
-            <ellipse cx="150" cy="300" rx="150" ry="280" />
-          </svg>
-        </div>
+      <section className="bg-charcoal py-24 px-6 lg:px-10 overflow-hidden relative">
+        <FloatingOrbs />
         <FadeIn className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative">
           <div>
             <p className="text-[0.7rem] tracking-[0.22em] uppercase text-sage-light/70 mb-4 font-[400]">About Danielle</p>
@@ -234,7 +220,7 @@ export default function HomePage() {
               That is not a qualification I studied for. That is a life. And it is why people feel seen in my space.
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
-              {['Certified Massage Therapist', 'Havening Techniques®', 'Oncology Massage L1 & L2', 'Access Bars®', 'NLP & Hypnotherapy'].map(tag => (
+              {['Certified Massage Therapist', 'Havening Techniques', 'Oncology Massage L1 & L2', 'Access Bars', 'NLP & Hypnotherapy'].map(tag => (
                 <span key={tag} className="text-[0.7rem] tracking-wide px-3 py-1.5 border border-cream/20 text-cream/60 rounded-full">
                   {tag}
                 </span>
@@ -253,17 +239,15 @@ export default function HomePage() {
       {/* ─── TESTIMONIALS ─── */}
       <Testimonials />
 
+      <Marquee />
+
       {/* ─── THE QUIET HOLDERS ─── */}
       <section className="bg-charcoal py-24 px-6 lg:px-10 text-center relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-5">
-          <svg viewBox="0 0 800 400" className="w-full h-full text-gold" fill="currentColor">
-            <circle cx="400" cy="200" r="280" />
-          </svg>
-        </div>
+        <FloatingOrbs />
         <FadeIn className="max-w-3xl mx-auto relative">
           <p className="text-[0.7rem] tracking-[0.25em] uppercase text-gold/70 mb-4 font-[400]">Sub-brand</p>
           <h2 className="font-display text-[clamp(2.5rem,5vw,4rem)] font-light text-cream italic mb-5">
-            The Quiet Holders
+            The Quiet <em className="text-gold not-italic">Holders</em>
           </h2>
           <div className="w-16 h-px bg-gold/40 mx-auto mb-7" />
           <p className="text-cream/60 text-lg font-light leading-relaxed mb-10">
@@ -291,8 +275,8 @@ export default function HomePage() {
       <section className="bg-gold-light py-20 px-6 lg:px-10">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           {/* Oracle card image */}
-          <div className="flex justify-center">
-            <div className="rounded-3xl overflow-hidden shadow-xl w-full max-w-[320px]">
+          <FadeIn direction="right" className="flex justify-center">
+            <div className="luxury-card rounded-3xl overflow-hidden shadow-xl w-full max-w-[320px]">
               <Image
                 src="/Images/oracle-card-you-are-not-alone.png"
                 alt="The Quiet Holders Oracle — You Are Not Alone card"
@@ -302,8 +286,8 @@ export default function HomePage() {
                 sizes="(max-width: 1024px) 80vw, 320px"
               />
             </div>
-          </div>
-          <div>
+          </FadeIn>
+          <FadeIn direction="left">
             <p className="text-[0.7rem] tracking-[0.22em] uppercase text-sage mb-3 font-[400]">Oracle Cards</p>
             <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-light text-charcoal mb-5">
               44 cards to guide you back to your truth
@@ -323,18 +307,14 @@ export default function HomePage() {
             >
               Explore the Deck
             </Link>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* ─── STORY PULL ─── */}
       <section className="bg-charcoal py-24 px-6 lg:px-10 text-center relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-5">
-          <svg viewBox="0 0 800 400" className="w-full h-full text-gold" fill="currentColor">
-            <circle cx="400" cy="200" r="320" />
-          </svg>
-        </div>
-        <div className="max-w-3xl mx-auto relative">
+        <FloatingOrbs />
+        <FadeIn className="max-w-3xl mx-auto relative">
           <p className="text-[0.68rem] tracking-[0.3em] uppercase text-gold/60 mb-8 font-[400]">The origin of The Quiet Holders</p>
           <blockquote className="font-display text-[clamp(1.5rem,3vw,2.4rem)] text-cream italic font-light leading-relaxed mb-8">
             &ldquo;They weren&apos;t just nurses and staff. They were The Quiet Holders — the ones who stood in the
@@ -354,7 +334,7 @@ export default function HomePage() {
               Read Danielle&apos;s Story →
             </Link>
           </div>
-        </div>
+        </FadeIn>
       </section>
 
       {/* ─── INSTAGRAM ─── */}

@@ -37,11 +37,10 @@ export default function OracleCardsPage() {
     <>
       {/* ─── HERO ─── */}
       <section className="bg-charcoal pt-32 pb-20 px-6 lg:px-10 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
-          <svg viewBox="0 0 600 400" className="absolute right-0 top-0 w-1/2 text-gold opacity-5" fill="currentColor">
-            <circle cx="350" cy="150" r="280" />
-          </svg>
+          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-gold/10 blur-3xl" />
+          <div className="absolute -bottom-10 -left-10 w-64 h-64 rounded-full bg-gold/8 blur-3xl" />
         </div>
         <div className="max-w-4xl mx-auto text-center relative">
           <div className="inline-block bg-gold/20 border border-gold/40 rounded-full px-5 py-1.5 mb-6">

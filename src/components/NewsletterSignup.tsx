@@ -3,15 +3,6 @@ import BotanicalDivider from './BotanicalDivider'
 export default function NewsletterSignup() {
   return (
     <section className="bg-cream py-20 px-6 lg:px-10 relative overflow-hidden">
-      {/* Soft botanical background shapes */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.04]">
-        <svg viewBox="0 0 800 400" className="absolute -left-20 top-0 w-96 h-96 text-sage" fill="currentColor">
-          <ellipse cx="200" cy="200" rx="180" ry="280" />
-        </svg>
-        <svg viewBox="0 0 800 400" className="absolute -right-20 bottom-0 w-96 h-96 text-sage" fill="currentColor">
-          <ellipse cx="600" cy="200" rx="180" ry="280" />
-        </svg>
-      </div>
 
       <div className="max-w-2xl mx-auto text-center relative">
         <BotanicalDivider className="mb-8" />

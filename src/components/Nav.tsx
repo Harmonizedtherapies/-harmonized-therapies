@@ -9,7 +9,7 @@ import Logo from './Logo'
 const links = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
-  { href: '/the-quiet-holders', label: 'The Quiet Holders' },
+  { href: '/the-quiet-holders', label: 'Quiet Holders' },
   { href: '/oracle-cards', label: 'Oracle Cards' },
   { href: '/retreats', label: 'Retreats' },
   { href: '/contact', label: 'Contact' },
@@ -28,7 +28,7 @@ export default function Nav() {
 
   useEffect(() => { setOpen(false) }, [pathname])
 
-  const light = scrolled || open
+  const light = open
 
   return (
     <header
@@ -38,41 +38,31 @@ export default function Nav() {
           : 'bg-transparent'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-[72px] flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-[80px] flex items-center justify-between">
         {/* Logo / Wordmark */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          {light ? (
-            <div className="relative w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-              <Image
-                src="/Images/logo-circle.png"
-                alt="Harmonized Therapies"
-                fill
-                className="object-cover"
-                priority
-                sizes="40px"
-              />
-            </div>
-          ) : (
-            <span className="text-sage-light">
-              <Logo className="h-9 w-9" />
-            </span>
-          )}
-          <span
-            className={`font-display text-[1.2rem] font-light tracking-wide transition-colors ${
-              light ? 'text-charcoal' : 'text-cream'
-            }`}
-          >
-            Harmonized <em className="not-italic text-sage">Therapies</em>
+        <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
+          <div className="relative w-[50px] h-[75px] flex-shrink-0">
+            <Image
+              src="/Images/logo-submark.png"
+              alt="Harmonized Therapies"
+              fill
+              className="object-contain"
+              priority
+              sizes="50px"
+            />
+          </div>
+          <span className="font-display text-[1.35rem] font-light tracking-wide text-cream whitespace-nowrap">
+            Harmonized <em className="not-italic text-gold">Therapies</em>
           </span>
         </Link>
 
         {/* Desktop links */}
-        <ul className="hidden lg:flex items-center gap-7">
+        <ul className="hidden lg:flex items-center gap-5">
           {links.map(({ href, label }) => (
             <li key={href}>
               <Link
                 href={href}
-                className={`text-[0.72rem] tracking-[0.14em] uppercase transition-colors font-body font-[400] ${
+                className={`link-underline text-[0.68rem] tracking-[0.10em] uppercase transition-colors font-body font-[400] whitespace-nowrap ${
                   light ? 'text-muted hover:text-sage' : 'text-cream/70 hover:text-cream'
                 } ${pathname === href ? (light ? 'text-sage' : 'text-cream') : ''}`}
               >
@@ -83,7 +73,7 @@ export default function Nav() {
           <li>
             <a
               href="mailto:danielle@harmonizedtherapies.com.au?subject=Session Enquiry"
-              className="bg-sage text-white text-[0.72rem] tracking-[0.12em] uppercase px-5 py-2.5 rounded-full hover:bg-sage-dark transition-colors"
+              className="border border-gold text-gold text-[0.72rem] tracking-[0.12em] uppercase px-6 py-2.5 rounded-full hover:bg-gold hover:text-charcoal transition-colors whitespace-nowrap"
             >
               Get in Touch
             </a>

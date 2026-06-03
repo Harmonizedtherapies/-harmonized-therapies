@@ -14,14 +14,10 @@ export default function QuietHoldersPage() {
       {/* ─── HERO ─── */}
       <section className="bg-charcoal min-h-[80vh] flex items-center pt-24 pb-20 px-6 lg:px-10 relative overflow-hidden">
         {/* Atmospheric decorations */}
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
-          <svg viewBox="0 0 800 600" className="absolute -right-40 -top-20 w-2/3 text-sage-dark opacity-20" fill="currentColor">
-            <circle cx="500" cy="250" r="320" />
-          </svg>
-          <svg viewBox="0 0 400 400" className="absolute -left-20 -bottom-20 w-1/3 text-gold opacity-8" fill="currentColor">
-            <circle cx="200" cy="200" r="180" />
-          </svg>
+          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-gold/10 blur-3xl" />
+          <div className="absolute -bottom-10 -left-10 w-64 h-64 rounded-full bg-gold/8 blur-3xl" />
         </div>
         <div className="max-w-4xl mx-auto text-center relative">
           <p className="text-[0.68rem] tracking-[0.3em] uppercase text-gold/70 mb-5 font-[400]">
