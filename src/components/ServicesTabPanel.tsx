@@ -125,7 +125,7 @@ const services = [
   },
   {
     id: 'havening',
-    name: 'Havening Techniques',
+    name: 'Havening Techniques®',
     icon: '🤲',
     description:
       'Havening uses gentle psychosensory touch — applied to the upper arms, face, and hands — to stimulate delta waves in the brain, helping to de-link distressing memories from their emotional impact. Developed by Dr. Ronald A. Ruden, it\'s a science-backed technique that can create rapid, lasting change — often in just one session. Available in-person or via Zoom.',

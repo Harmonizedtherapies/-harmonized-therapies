@@ -176,7 +176,7 @@ export default function HomePage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { icon: '🌿', name: 'Massage Therapy', desc: 'Pure essential oils, hot stones, and natural oils — tailored to your unique needs.' },
-              { icon: '✋', name: 'Havening Techniques', desc: 'Science-backed psychosensory touch that creates rapid, lasting emotional change.' },
+              { icon: '✋', name: 'Havening Techniques®', desc: 'Science-backed psychosensory touch that creates rapid, lasting emotional change.' },
               { icon: '🌸', name: 'Oncology Massage', desc: 'Specialised and deeply caring massage for individuals at all stages of their cancer journey.' },
               { icon: '🕊️', name: 'Palliative Massage', desc: 'Compassionate, gentle care for those facing life-limiting illness. Mobile services available.' },
               { icon: '✨', name: 'Access Bars', desc: 'Gentle touch of 32 points on the head to release limitations and create more ease and clarity.' },
@@ -220,7 +220,7 @@ export default function HomePage() {
               That is not a qualification I studied for. That is a life. And it is why people feel seen in my space.
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
-              {['Certified Massage Therapist', 'Havening Techniques', 'Oncology Massage L1 & L2', 'Access Bars', 'NLP & Hypnotherapy'].map(tag => (
+              {['Certified Massage Therapist', 'Havening Techniques®', 'Oncology Massage L1 & L2', 'Access Bars®', 'NLP & Hypnotherapy'].map(tag => (
                 <span key={tag} className="text-[0.7rem] tracking-wide px-3 py-1.5 border border-cream/20 text-cream/60 rounded-full">
                   {tag}
                 </span>
