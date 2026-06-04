@@ -158,15 +158,12 @@ export default function QuietHoldersPage() {
       {/* ─── THE BOOK ─── */}
       <section className="bg-charcoal py-24 px-6 lg:px-10">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <div className="rounded-3xl overflow-hidden shadow-2xl">
-            <Image
-              src="/Images/book-launch-botanical.png"
-              alt="The Quiet Holders — Book Launch by Danielle Brierley"
-              width={700}
-              height={900}
-              className="w-full object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+          <div className="rounded-3xl border border-gold/20 bg-charcoal/60 flex flex-col items-center justify-center py-24 px-10 text-center shadow-2xl">
+            <div className="w-12 h-px bg-gold/30 mx-auto mb-6" />
+            <p className="font-display text-5xl text-gold/30 mb-4 italic">Book</p>
+            <p className="text-[0.7rem] tracking-[0.25em] uppercase text-gold/50 mb-3">The Quiet Holders</p>
+            <div className="w-8 h-px bg-gold/20 mx-auto mb-4" />
+            <p className="text-cream/30 text-sm italic">Cover reveal coming soon</p>
           </div>
           <div>
             <p className="text-[0.7rem] tracking-[0.25em] uppercase text-gold/60 mb-4 font-[400]">
@@ -248,27 +245,12 @@ export default function QuietHoldersPage() {
             </p>
             <div className="space-y-4 text-charcoal/60 leading-relaxed mb-8">
               <p>
-                The Quiet Holders Journal is a companion for your healing — a space to reflect,
-                feel, and find your way back to yourself. With gentle prompts, space to write,
-                and words to hold you on the days when you can&apos;t hold yourself.
+                A companion for your healing — a space to reflect, feel, and find your way back
+                to yourself. Written by Danielle from the inside of her own healing journey.
               </p>
               <p>
-                Written by Danielle from the inside of her own healing journey — for anyone
-                who has ever needed a quiet holder and didn&apos;t know where to find one.
+                Currently in creation. Register your interest below to be first to know when it arrives.
               </p>
-            </div>
-            <div className="grid grid-cols-2 gap-3 mb-8">
-              {[
-                ['Reflect', 'Gentle prompts to hold your truth'],
-                ['Heal', 'Tools to support your healing'],
-                ['Reconnect', 'Rediscover peace, purpose & presence'],
-                ['Become', 'A space to grow with compassion'],
-              ].map(([title, desc]) => (
-                <div key={title} className="bg-white rounded-xl p-4 border border-sage/10">
-                  <p className="text-sm font-[400] text-charcoal mb-1">{title}</p>
-                  <p className="text-[0.72rem] text-muted leading-snug">{desc}</p>
-                </div>
-              ))}
             </div>
             <a
               href="mailto:danielle@harmonizedtherapies.com.au?subject=The Quiet Holders Journal — Register My Interest"
@@ -277,23 +259,13 @@ export default function QuietHoldersPage() {
               Register My Interest
             </a>
           </div>
-          <div className="space-y-4">
+          <div>
             <div className="rounded-3xl overflow-hidden shadow-xl">
               <Image
                 src="/Images/journal-styled-shot.png"
                 alt="The Quiet Holders Journal — a space to hold, reflect and heal"
                 width={700}
                 height={700}
-                className="w-full object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-            <div className="rounded-2xl overflow-hidden shadow-md">
-              <Image
-                src="/Images/journal-product-details.png"
-                alt="The Quiet Holders Journal — luxury linen cover, gilded edges, thoughtful interiors"
-                width={700}
-                height={400}
                 className="w-full object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />

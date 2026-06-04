@@ -43,7 +43,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-4 items-start">
           <div className="rounded-2xl overflow-hidden aspect-[4/3]">
             <Image
-              src="/Images/havening-brand-promo.png"
+              src="/Images/IMG_0461.PNG"
               alt="Danielle Brierley — Havening Techniques® session"
               width={700}
               height={525}
@@ -53,7 +53,7 @@ export default function ServicesPage() {
           </div>
           <div className="rounded-2xl overflow-hidden aspect-[4/3]">
             <Image
-              src="/Images/massage-promo-oncology.png"
+              src="/Images/oncology-massage-softer.png"
               alt="Danielle Brierley — oncology massage therapy in the Yarra Valley"
               width={700}
               height={525}
