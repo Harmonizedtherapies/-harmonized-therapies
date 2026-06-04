@@ -158,12 +158,15 @@ export default function QuietHoldersPage() {
       {/* ─── THE BOOK ─── */}
       <section className="bg-charcoal py-24 px-6 lg:px-10">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <div className="rounded-3xl border border-gold/20 bg-charcoal/60 flex flex-col items-center justify-center py-24 px-10 text-center shadow-2xl">
-            <div className="w-12 h-px bg-gold/30 mx-auto mb-6" />
-            <p className="font-display text-5xl text-gold/30 mb-4 italic">Book</p>
-            <p className="text-[0.7rem] tracking-[0.25em] uppercase text-gold/50 mb-3">The Quiet Holders</p>
-            <div className="w-8 h-px bg-gold/20 mx-auto mb-4" />
-            <p className="text-cream/30 text-sm italic">Cover reveal coming soon</p>
+          <div className="rounded-3xl overflow-hidden shadow-2xl">
+            <Image
+              src="/Images/IMG_0474.PNG"
+              alt="The Quiet Holders — Book by Danielle Brierley"
+              width={700}
+              height={900}
+              className="w-full object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
           </div>
           <div>
             <p className="text-[0.7rem] tracking-[0.25em] uppercase text-gold/60 mb-4 font-[400]">
@@ -262,7 +265,7 @@ export default function QuietHoldersPage() {
           <div>
             <div className="rounded-3xl overflow-hidden shadow-xl">
               <Image
-                src="/Images/journal-styled-shot.png"
+                src="/Images/IMG_0475.PNG"
                 alt="The Quiet Holders Journal — a space to hold, reflect and heal"
                 width={700}
                 height={700}

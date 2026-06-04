@@ -9,12 +9,12 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-3 mb-5">
-              <div className="relative w-14 h-[84px] flex-shrink-0">
+              <div className="relative w-14 h-14 flex-shrink-0 overflow-hidden">
                 <Image
                   src="/Images/logo-submark.png"
                   alt="Harmonized Therapies logo"
                   fill
-                  className="object-contain"
+                  className="object-cover object-top"
                   sizes="56px"
                 />
               </div>

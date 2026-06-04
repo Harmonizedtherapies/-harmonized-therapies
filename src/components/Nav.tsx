@@ -38,20 +38,20 @@ export default function Nav() {
           : 'bg-transparent'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-[80px] flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-[120px] flex items-center justify-between">
         {/* Logo / Wordmark */}
-        <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-          <div className="relative w-[50px] h-[75px] flex-shrink-0">
+        <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
+          <div className="relative w-[100px] h-[92px] flex-shrink-0 overflow-hidden">
             <Image
               src="/Images/logo-submark.png"
               alt="Harmonized Therapies"
               fill
-              className="object-contain"
+              className="object-cover object-top"
               priority
-              sizes="50px"
+              sizes="100px"
             />
           </div>
-          <span className="font-display text-[1.35rem] font-light tracking-wide text-cream whitespace-nowrap">
+          <span className="hidden md:block font-display text-[1.35rem] font-light tracking-wide text-cream whitespace-nowrap">
             Harmonized <em className="not-italic text-gold">Therapies</em>
           </span>
         </Link>
