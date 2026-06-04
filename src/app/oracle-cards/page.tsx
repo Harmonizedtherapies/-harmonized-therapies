@@ -118,15 +118,11 @@ export default function OracleCardsPage() {
               The Complete Deck
             </h2>
           </div>
-          <div className="rounded-3xl overflow-hidden shadow-2xl">
-            <Image
-              src="/Images/oracle-cards-spread.png"
-              alt="The Quiet Holders Oracle — Danielle with the card deck"
-              width={1100}
-              height={700}
-              className="w-full object-cover"
-              sizes="(max-width: 1200px) 100vw, 1100px"
-            />
+          <div className="rounded-3xl border border-gold/20 bg-charcoal/60 p-16 text-center">
+            <p className="font-display text-5xl text-gold/30 mb-4 italic">44</p>
+            <p className="text-[0.7rem] tracking-[0.25em] uppercase text-gold/50 mb-3">Cards</p>
+            <div className="w-12 h-px bg-gold/20 mx-auto mb-4" />
+            <p className="text-cream/40 text-sm italic">Deck photography coming soon</p>
           </div>
         </div>
       </section>
@@ -139,16 +135,6 @@ export default function OracleCardsPage() {
             <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-light text-charcoal">
               Sample Cards
             </h2>
-          </div>
-          <div className="rounded-3xl overflow-hidden shadow-lg mb-12 max-w-3xl mx-auto">
-            <Image
-              src="/Images/oracle-cards-5-sample.png"
-              alt="Sample oracle cards — Trust, Healing, Grief, Rest, Becoming"
-              width={900}
-              height={520}
-              className="w-full object-cover"
-              sizes="(max-width: 1024px) 100vw, 900px"
-            />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {sampleCards.map(({ num, title, message }) => (
