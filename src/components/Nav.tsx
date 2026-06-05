@@ -12,6 +12,7 @@ const links = [
   { href: '/the-quiet-holders', label: 'Quiet Holders' },
   { href: '/oracle-cards', label: 'Oracle Cards' },
   { href: '/retreats', label: 'Retreats' },
+  { href: '/meditation', label: 'Meditation' },
   { href: '/contact', label: 'Contact' },
 ]
 
