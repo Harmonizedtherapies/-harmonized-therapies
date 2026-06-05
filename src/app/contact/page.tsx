@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import ContactForm from '@/components/ContactForm'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -116,103 +117,7 @@ export default function ContactPage() {
           </div>
 
           {/* Contact form */}
-          <div className="bg-warm-white rounded-3xl p-8 lg:p-10">
-            <h2 className="font-display text-2xl font-light text-charcoal mb-1">Send a message</h2>
-            <p className="text-muted text-sm mb-7">Danielle will get back to you within 1–2 business days.</p>
-            <form
-              action="mailto:danielle@harmonizedtherapies.com.au"
-              method="post"
-              encType="text/plain"
-              className="space-y-5"
-            >
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="firstName" className="block text-[0.68rem] tracking-[0.15em] uppercase text-muted mb-2 font-[400]">
-                    First name
-                  </label>
-                  <input
-                    id="firstName"
-                    name="First Name"
-                    type="text"
-                    required
-                    className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 text-sm text-charcoal placeholder-muted/50 outline-none focus:border-sage transition-colors"
-                    placeholder="Your first name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lastName" className="block text-[0.68rem] tracking-[0.15em] uppercase text-muted mb-2 font-[400]">
-                    Last name
-                  </label>
-                  <input
-                    id="lastName"
-                    name="Last Name"
-                    type="text"
-                    className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 text-sm text-charcoal placeholder-muted/50 outline-none focus:border-sage transition-colors"
-                    placeholder="Your last name"
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-[0.68rem] tracking-[0.15em] uppercase text-muted mb-2 font-[400]">
-                  Email address
-                </label>
-                <input
-                  id="email"
-                  name="Email"
-                  type="email"
-                  required
-                  className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 text-sm text-charcoal placeholder-muted/50 outline-none focus:border-sage transition-colors"
-                  placeholder="your@email.com"
-                />
-              </div>
-              <div>
-                <label htmlFor="interest" className="block text-[0.68rem] tracking-[0.15em] uppercase text-muted mb-2 font-[400]">
-                  I&apos;m interested in
-                </label>
-                <select
-                  id="interest"
-                  name="Interest"
-                  className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 text-sm text-charcoal outline-none focus:border-sage transition-colors appearance-none cursor-pointer"
-                >
-                  <option value="">Select an option</option>
-                  <option>Massage Therapy</option>
-                  <option>Havening Techniques®</option>
-                  <option>Oncology Massage</option>
-                  <option>Palliative Massage</option>
-                  <option>Access Bars®</option>
-                  <option>NLP & Hypnotherapy</option>
-                  <option>Meditation & Coaching</option>
-                  <option>Retreat / Workshop</option>
-                  <option>Oracle Cards</option>
-                  <option>General Enquiry</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-[0.68rem] tracking-[0.15em] uppercase text-muted mb-2 font-[400]">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="Message"
-                  rows={5}
-                  className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 text-sm text-charcoal placeholder-muted/50 outline-none focus:border-sage transition-colors resize-none"
-                  placeholder="Tell Danielle a little about what you're looking for..."
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-sage text-white text-[0.78rem] tracking-[0.1em] uppercase py-4 rounded-full hover:bg-sage-dark transition-colors"
-              >
-                Send Message
-              </button>
-              <p className="text-[0.68rem] text-muted/60 text-center">
-                This form opens your email client. Alternatively, email Danielle directly at{' '}
-                <a href="mailto:danielle@harmonizedtherapies.com.au" className="hover:text-sage transition-colors">
-                  danielle@harmonizedtherapies.com.au
-                </a>
-              </p>
-            </form>
-          </div>
+          <ContactForm />
         </div>
       </section>
 
