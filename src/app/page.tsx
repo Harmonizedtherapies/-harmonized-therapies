@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Testimonials from '@/components/Testimonials'
 import FadeIn from '@/components/FadeIn'
 import BotanicalDivider from '@/components/BotanicalDivider'
+import BeholdFeed from '@/components/BeholdFeed'
 import FloatingOrbs from '@/components/FloatingOrbs'
 import Marquee from '@/components/Marquee'
 
@@ -349,24 +350,8 @@ export default function HomePage() {
               Behind the scenes, healing insights, oracle card pulls, and moments from the Yarra Valley.
             </p>
           </div>
-          {/* Placeholder grid — styled to look like an Instagram feed */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-8">
-            {[
-              { bg: 'bg-sage-dark', label: 'Massage & Healing' },
-              { bg: 'bg-gold-light', label: 'Oracle Cards' },
-              { bg: 'bg-charcoal', label: 'The Quiet Holders' },
-              { bg: 'bg-sage-light/60', label: 'Yarra Valley' },
-            ].map(({ bg, label }) => (
-              <a
-                key={label}
-                href="https://www.instagram.com/harmonized_therapies"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${bg} aspect-square rounded-2xl flex items-end p-4 group overflow-hidden relative hover:opacity-90 transition-opacity`}
-              >
-                <span className="text-[0.65rem] tracking-[0.15em] uppercase text-white/70 group-hover:text-white transition-colors">{label}</span>
-              </a>
-            ))}
+          <div className="mb-8">
+            <BeholdFeed />
           </div>
           <div className="text-center">
             <a
