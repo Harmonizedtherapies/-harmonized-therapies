@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Jost } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     url: 'https://www.harmonizedtherapies.com.au',
     images: [
       {
-        url: '/Images/danielle-outdoor-portrait.png',
+        url: '/Images/danielle-portrait.png',
         width: 1200,
         height: 630,
         alt: 'Danielle Brierley — Harmonized Therapies, Yarra Valley Melbourne',
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/Images/danielle-outdoor-portrait.png'],
+    images: ['/Images/danielle-portrait.png'],
   },
 }
 
@@ -68,7 +69,7 @@ const jsonLd = {
   description: 'Massage therapy, Havening Techniques®, oncology massage, palliative massage, and holistic healing with Danielle Brierley — Yarra Valley, Melbourne.',
   url: 'https://www.harmonizedtherapies.com.au',
   email: 'danielle@harmonizedtherapies.com.au',
-  image: 'https://www.harmonizedtherapies.com.au/Images/danielle-outdoor-portrait.png',
+  image: 'https://www.harmonizedtherapies.com.au/Images/danielle-portrait.png',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Yarra Valley',
@@ -110,6 +111,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-L7HPY9CZEK"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-L7HPY9CZEK');
+          `}
+        </Script>
       </head>
       <body className="min-h-screen font-body antialiased overflow-x-hidden">
         <Nav />
