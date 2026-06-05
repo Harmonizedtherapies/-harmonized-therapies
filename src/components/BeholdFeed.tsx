@@ -16,7 +16,7 @@ export default function BeholdFeed() {
   return (
     <div
       dangerouslySetInnerHTML={{
-        __html: '<behold-widget feed-id="wyuJL"></behold-widget>',
+        __html: '<behold-widget feed-id="AG0yRBSVhY1lvBeESGBn"></behold-widget>',
       }}
     />
   )
