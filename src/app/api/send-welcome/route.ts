@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy initialisation — avoids build-time error when env var is not yet set
+const getResend = () => new Resend(process.env.RESEND_API_KEY ?? 're_placeholder')
 
 const DANIELLE_EMAIL = 'danielle@harmonizedtherapies.com.au'
 const FROM_ADDRESS = process.env.RESEND_FROM_ADDRESS ?? 'Harmonized Therapies <hello@harmonizedtherapies.com.au>'
@@ -144,6 +145,7 @@ export async function POST(req: NextRequest) {
 
   const downloadUrl = `${SITE_URL}${gift.pdfPath}`
 
+  const resend = getResend()
   const [welcome, notification] = await Promise.all([
     resend.emails.send({
       from: FROM_ADDRESS,
