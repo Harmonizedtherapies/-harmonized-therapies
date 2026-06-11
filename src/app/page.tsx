@@ -6,6 +6,7 @@ import BotanicalDivider from '@/components/BotanicalDivider'
 import BeholdFeed from '@/components/BeholdFeed'
 import FloatingOrbs from '@/components/FloatingOrbs'
 import Marquee from '@/components/Marquee'
+import LeadMagnetSignup from '@/components/LeadMagnetSignup'
 
 export default function HomePage() {
   return (
@@ -241,6 +242,26 @@ export default function HomePage() {
       <Testimonials />
 
       <Marquee />
+
+      {/* ─── GIFT 1: SELF-HAVENING GUIDE ─── */}
+      <LeadMagnetSignup
+        eyebrow="Free Gift"
+        title="Your Free Self-Havening Guide"
+        subtitle="Start your healing journey today — no appointment needed"
+        description="Learn how to use gentle Havening touch at home to calm anxiety, release stress, and bring yourself back to a place of peace. A simple, powerful practice you can return to anytime."
+        bullets={[
+          "How Havening touch works and why it’s so effective",
+          'A simple 5-minute daily calming practice',
+          'Techniques for anxiety, overwhelm & sleeplessness',
+          'Guided self-havening sequence with step-by-step instructions',
+        ]}
+        pdfPath="/self-havening-guide-harmonized-therapies.pdf"
+        pdfFilename="Self-Havening-Guide-Harmonized-Therapies.pdf"
+        source="havening-guide"
+        variant="sage"
+        mockupTitle="Self-Havening at Home"
+        mockupBrand="Harmonized Therapies"
+      />
 
       {/* ─── THE QUIET HOLDERS ─── */}
       <section className="bg-charcoal py-24 px-6 lg:px-10 text-center relative overflow-hidden">

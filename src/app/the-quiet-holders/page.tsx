@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import LeadMagnetSignup from '@/components/LeadMagnetSignup'
 
 export const metadata: Metadata = {
   title: 'The Quiet Holders',
@@ -276,6 +277,26 @@ export default function QuietHoldersPage() {
           </div>
         </div>
       </section>
+
+      {/* ─── GIFT 2: QUIET MORNING RITUAL ─── */}
+      <LeadMagnetSignup
+        eyebrow="Free Gift"
+        title="Your Quiet Morning Ritual"
+        subtitle="A gentle practice for grief, healing & becoming"
+        description="Begin each morning with intention — a soft, sacred ritual designed for anyone carrying something heavy. Five minutes to come home to yourself before the world begins."
+        bullets={[
+          'A grounding breath practice to start your day with stillness',
+          'Gentle prompts for reflection, grief, and becoming',
+          'A simple ritual for holding yourself with compassion',
+          'Ways to honour what you carry without being consumed by it',
+        ]}
+        pdfPath="/the-quiet-morning-ritual-quiet-holders.pdf"
+        pdfFilename="The-Quiet-Morning-Ritual-The-Quiet-Holders.pdf"
+        source="quiet-morning-ritual"
+        variant="gold"
+        mockupTitle="The Quiet Morning Ritual"
+        mockupBrand="The Quiet Holders"
+      />
 
       {/* ─── LINKS ─── */}
       <section className="bg-cream py-16 px-6 lg:px-10">
