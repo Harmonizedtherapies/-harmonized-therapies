@@ -37,16 +37,28 @@ export default function LeadMagnetSignup({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setStatus('sending')
+
     const { error } = await supabase
       .from('newsletter_signups')
       .insert([{ email, source }])
-    if (error && error.code === '23505') {
-      setStatus('success')
-    } else if (error) {
+
+    if (error && error.code !== '23505') {
       setStatus('error')
-    } else {
-      setStatus('success')
+      return
     }
+
+    // Send welcome + notification emails (best-effort — don't block on failure)
+    try {
+      await fetch('/api/send-welcome', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source }),
+      })
+    } catch {
+      // email is non-critical; user still gets the download
+    }
+
+    setStatus('success')
   }
 
   return (
