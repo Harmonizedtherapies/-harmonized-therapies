@@ -98,7 +98,7 @@ const jsonLd = {
   },
   founder: { '@type': 'Person', name: 'Danielle Brierley' },
   sameAs: [
-    'https://www.facebook.com/125108761007850',
+    'https://www.facebook.com/profile.php?id=100063942132425',
     'https://www.instagram.com/harmonized_therapies',
   ],
 }
