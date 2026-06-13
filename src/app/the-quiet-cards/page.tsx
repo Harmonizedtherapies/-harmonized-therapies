@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export const metadata: Metadata = {
-  title: 'Oracle Cards',
+  title: 'The Quiet Cards',
   description:
     'The Quiet Holders Oracle — 44 cards to support your healing, guide you back to your truth, and remind you that you are not alone.',
 }
@@ -54,7 +54,7 @@ export default function OracleCardsPage() {
             Messages for the soul. Healing for the heart. The Quiet Holders Oracle is currently being produced — register your interest below to be first to know when it&apos;s available.
           </p>
           <a
-            href="mailto:danielle@harmonizedtherapies.com.au?subject=Oracle Cards — Register My Interest"
+            href="mailto:danielle@harmonizedtherapies.com.au?subject=The Quiet Cards — Register My Interest"
             className="inline-block bg-gold text-charcoal text-[0.78rem] tracking-[0.1em] uppercase px-7 py-3.5 rounded-full hover:bg-gold/80 transition-colors"
           >
             Register My Interest
@@ -228,7 +228,7 @@ export default function OracleCardsPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="mailto:danielle@harmonizedtherapies.com.au?subject=Oracle Cards — Register My Interest"
+              href="mailto:danielle@harmonizedtherapies.com.au?subject=The Quiet Cards — Register My Interest"
               className="bg-gold text-charcoal text-[0.78rem] tracking-[0.1em] uppercase px-7 py-3.5 rounded-full hover:bg-gold/80 transition-colors"
             >
               Register My Interest

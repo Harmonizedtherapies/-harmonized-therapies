@@ -128,7 +128,7 @@ export default function ContactPage() {
             {[
               { href: '/services', label: 'Browse Services', desc: 'Find the right therapy for you.' },
               { href: '/retreats', label: 'Retreats & Workshops', desc: 'Come together and be held.' },
-              { href: '/oracle-cards', label: 'Oracle Cards', desc: 'The Quiet Holders Oracle deck.' },
+              { href: '/the-quiet-cards', label: 'The Quiet Cards', desc: 'The Quiet Holders Oracle deck.' },
             ].map(({ href, label, desc }) => (
               <Link
                 key={href}

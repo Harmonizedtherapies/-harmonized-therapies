@@ -284,10 +284,10 @@ export default function HomePage() {
               Explore The Quiet Holders
             </Link>
             <Link
-              href="/oracle-cards"
+              href="/the-quiet-cards"
               className="border border-cream/20 text-cream text-[0.78rem] tracking-[0.1em] uppercase px-7 py-3.5 rounded-full hover:border-cream/40 transition-colors"
             >
-              Oracle Cards
+              The Quiet Cards
             </Link>
           </div>
         </FadeIn>
@@ -310,9 +310,9 @@ export default function HomePage() {
             </div>
           </FadeIn>
           <FadeIn direction="left">
-            <p className="text-[0.7rem] tracking-[0.22em] uppercase text-sage mb-3 font-[400]">Oracle Cards</p>
+            <p className="text-[0.7rem] tracking-[0.22em] uppercase text-sage mb-3 font-[400]">The Quiet Cards</p>
             <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-light text-charcoal mb-5">
-              44 cards to guide you back to your truth
+              44 reflection cards to guide you back to your truth
             </h2>
             <p className="text-muted leading-relaxed mb-4">
               Messages for the soul. Healing for the heart. The Quiet Holders Oracle is a 44-card deck
@@ -324,7 +324,7 @@ export default function HomePage() {
               and the quiet moments in between.
             </p>
             <Link
-              href="/oracle-cards"
+              href="/the-quiet-cards"
               className="inline-block bg-sage text-white text-[0.78rem] tracking-[0.1em] uppercase px-7 py-3.5 rounded-full hover:bg-sage-dark transition-colors"
             >
               Explore the Deck

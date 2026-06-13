@@ -105,7 +105,7 @@ export default function ContactForm() {
             <option>NLP & Hypnotherapy</option>
             <option>Meditation & Coaching</option>
             <option>Retreat / Workshop</option>
-            <option>Oracle Cards</option>
+            <option>The Quiet Cards</option>
             <option>General Enquiry</option>
           </select>
         </div>

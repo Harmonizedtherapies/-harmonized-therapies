@@ -63,7 +63,7 @@ export default function NewsletterSignup() {
         {status === 'error' && <p className="text-red-400 text-sm mb-4">Something went wrong — please try again.</p>}
 
         <div className="flex flex-wrap justify-center gap-4 text-[0.68rem] tracking-wide text-muted/60 uppercase">
-          {['Oracle Card Updates', 'Retreat Announcements', 'Gentle Wisdom', 'Early Access'].map(tag => (
+          {['The Quiet Cards Updates', 'Retreat Announcements', 'Gentle Wisdom', 'Early Access'].map(tag => (
             <span key={tag} className="flex items-center gap-1.5">
               <span className="w-1 h-1 rounded-full bg-sage/50 inline-block" />
               {tag}

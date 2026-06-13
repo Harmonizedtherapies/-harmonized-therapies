@@ -10,7 +10,7 @@ const links = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
   { href: '/the-quiet-holders', label: 'Quiet Holders' },
-  { href: '/oracle-cards', label: 'Oracle Cards' },
+  { href: '/the-quiet-cards', label: 'The Quiet Cards' },
   { href: '/retreats', label: 'Retreats' },
   { href: '/meditation', label: 'Meditation' },
   { href: '/the-quiet-corner', label: 'Quiet Corner' },

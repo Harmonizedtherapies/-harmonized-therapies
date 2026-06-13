@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      { source: '/oracle-cards', destination: '/the-quiet-cards', permanent: true },
+    ]
+  },
 };
 
 export default nextConfig;

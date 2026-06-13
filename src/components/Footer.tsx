@@ -57,7 +57,7 @@ export default function Footer() {
                 { href: '/about', label: 'About Danielle' },
                 { href: '/services', label: 'Services' },
                 { href: '/the-quiet-holders', label: 'The Quiet Holders' },
-                { href: '/oracle-cards', label: 'Oracle Cards' },
+                { href: '/the-quiet-cards', label: 'The Quiet Cards' },
                 { href: '/retreats', label: 'Retreats & Workshops' },
                 { href: '/meditation', label: 'Free Meditation' },
                 { href: '/contact', label: 'Contact' },

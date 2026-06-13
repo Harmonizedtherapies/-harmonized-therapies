@@ -50,10 +50,10 @@ export default function QuietHoldersPage() {
               Join a Retreat
             </Link>
             <Link
-              href="/oracle-cards"
+              href="/the-quiet-cards"
               className="border border-cream/25 text-cream text-[0.78rem] tracking-[0.1em] uppercase px-7 py-3.5 rounded-full hover:border-cream/50 transition-colors"
             >
-              Oracle Cards
+              The Quiet Cards
             </Link>
           </div>
         </div>
@@ -302,12 +302,12 @@ export default function QuietHoldersPage() {
       <section className="bg-cream py-16 px-6 lg:px-10">
         <div className="max-w-4xl mx-auto grid sm:grid-cols-2 gap-4">
           <Link
-            href="/oracle-cards"
+            href="/the-quiet-cards"
             className="bg-warm-white rounded-2xl p-7 border border-sage/10 hover:shadow-md transition-shadow group flex items-center justify-between"
           >
             <div>
               <p className="text-[0.68rem] tracking-[0.18em] uppercase text-sage mb-1 font-[400]">Explore</p>
-              <h3 className="font-display text-xl font-light text-charcoal">Oracle Cards</h3>
+              <h3 className="font-display text-xl font-light text-charcoal">The Quiet Cards</h3>
               <p className="text-muted text-sm mt-1">44 cards to guide you back to your truth.</p>
             </div>
             <span className="text-sage group-hover:translate-x-1 transition-transform">→</span>
