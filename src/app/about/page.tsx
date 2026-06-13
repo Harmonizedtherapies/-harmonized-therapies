@@ -53,12 +53,12 @@ export default function AboutPage() {
       {/* ─── STORY ─── */}
       <section className="bg-cream py-24 px-6 lg:px-10">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
-          <div className="rounded-3xl overflow-hidden aspect-[4/5] relative">
+          <div className="rounded-3xl overflow-hidden relative" style={{aspectRatio: '4/5', maxHeight: '640px'}}>
             <Image
               src="/Images/danielle-portrait.png"
               alt="Danielle Brierley — founder of Harmonized Therapies"
               fill
-              className="object-cover object-top"
+              className="object-cover object-[center_20%]"
               sizes="(max-width: 1024px) 100vw, 50vw"
               quality={95}
             />
