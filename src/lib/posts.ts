@@ -10,6 +10,15 @@ export type PostMeta = {
 
 export const posts: PostMeta[] = [
   {
+    slug: 'what-ive-learned-sitting-with-grief',
+    title: "What I've Learned Sitting With People in Grief",
+    eyebrow: 'Grief & Healing',
+    date: '15 June 2026',
+    dateISO: '2026-06-15',
+    readTime: '4 min read',
+    excerpt: 'I used to think grief was something you got through. A door you walked through once, and then you were on the other side of it. I don\'t think that anymore.',
+  },
+  {
     slug: 'what-it-means-to-hold-space',
     title: 'What It Means to Hold Space for Someone',
     eyebrow: 'Healing & Presence',

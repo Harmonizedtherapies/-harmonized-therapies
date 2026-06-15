@@ -21,6 +21,74 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 // ─── Post content ────────────────────────────────────────────────────────────
 
+function PostSittingWithGrief() {
+  return (
+    <>
+      <p>
+        I used to think grief was something you got through. A door you walked through once,
+        and then you were on the other side of it.
+      </p>
+      <p>I don&apos;t think that anymore.</p>
+      <p>
+        After fourteen years of holding space for people — on the table, in conversation,
+        in the quiet moments before and after a session — I&apos;ve come to understand grief
+        differently. It&apos;s not a door. It&apos;s more like weather. It moves through. It changes
+        shape. Some days it&apos;s a fine mist you barely notice. Other days it&apos;s a storm that
+        knocks you flat, even years later, even when you thought you&apos;d &ldquo;dealt with it.&rdquo;
+      </p>
+      <p>Here&apos;s what I&apos;ve learned, sitting with people in that weather.</p>
+
+      <p>
+        <strong className="text-charcoal font-medium">Grief doesn&apos;t need to be fixed.</strong>{' '}
+        So often, people apologise to me — for crying, for &ldquo;not being over it yet,&rdquo; for
+        taking up space with their sadness. But grief was never a problem to solve. It&apos;s love
+        with nowhere left to go. When someone lets themselves feel it fully, even for a moment,
+        something in their body softens. Not because the grief is gone, but because it&apos;s been
+        allowed to exist.
+      </p>
+
+      <p>
+        <strong className="text-charcoal font-medium">The body remembers what the mind tries to forget.</strong>{' '}
+        I&apos;ve worked with people who could talk about their loss calmly, almost matter-of-factly —
+        and then, the moment I placed a hand on their shoulder, they wept. Not because anything
+        was wrong, but because their body had been holding it, waiting for permission to let go,
+        even briefly.
+      </p>
+
+      <p>
+        <strong className="text-charcoal font-medium">You can be held without being fixed.</strong>{' '}
+        This might be the biggest one. So much of what we&apos;re offered when we&apos;re grieving is
+        advice — what to do, how to move forward, what stage we should be in. What I&apos;ve found
+        people actually need, more often, is simply to not be alone in it. To have someone sit
+        with them in the weather, without trying to change it.
+      </p>
+
+      <p>
+        <strong className="text-charcoal font-medium">Healing isn&apos;t linear, and that&apos;s not a failure.</strong>{' '}
+        I&apos;ve seen people make enormous progress — and then, on an anniversary, a smell, a song,
+        find themselves right back in it. That&apos;s not regression. That&apos;s just how grief moves.
+        It loops. It returns. It doesn&apos;t mean the healing didn&apos;t happen.
+      </p>
+
+      <p>
+        <strong className="text-charcoal font-medium">You are allowed to be both — broken and becoming.</strong>{' '}
+        So many of the people I sit with carry a quiet shame, as if grieving means they&apos;re
+        somehow failing at life, at resilience, at moving on. But I&apos;ve never once seen
+        someone&apos;s grief and thought less of them for it. If anything, it&apos;s often the people
+        who&apos;ve grieved the deepest who go on to hold the most space for others.
+      </p>
+
+      <p>
+        If there&apos;s one thing I&apos;d want anyone reading this to take with them, it&apos;s this:
+        you don&apos;t have to carry it alone, and you don&apos;t have to carry it &ldquo;right.&rdquo;
+        Grief isn&apos;t something to get over. It&apos;s something to be held through.
+      </p>
+
+      <p>That&apos;s the work. That&apos;s always been the work.</p>
+    </>
+  )
+}
+
 function PostHoldingSpace() {
   return (
     <>
@@ -207,6 +275,7 @@ function PostGriefTimeline() {
 }
 
 const contentMap: Record<string, React.FC> = {
+  'what-ive-learned-sitting-with-grief': PostSittingWithGrief,
   'what-it-means-to-hold-space': PostHoldingSpace,
   'what-is-havening': PostWhatIsHavening,
   'grief-has-no-timeline': PostGriefTimeline,
