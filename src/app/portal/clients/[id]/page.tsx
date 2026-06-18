@@ -1,8 +1,8 @@
 'use client'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
-import { supabase, type Client, type Session } from '@/lib/supabase'
+import { supabase, type Client, type Session, type ClientFile } from '@/lib/supabase'
 
 const labelClass = 'text-[0.65rem] tracking-[0.15em] uppercase text-muted font-[400]'
 const inputClass = 'w-full border border-charcoal/10 rounded-xl px-4 py-3 text-sm text-charcoal outline-none focus:border-sage transition-colors'
@@ -51,8 +51,25 @@ function ReadField({ label, value }: { label: string; value: string | number | b
   )
 }
 
-function LinkCard({ label, link, submitted, submittedAt }: {
+function SendButton({ onSend, hasEmail }: { onSend: () => Promise<void>; hasEmail: boolean }) {
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  if (!hasEmail) return <span className="text-[0.65rem] text-muted/40">No email on file</span>
+  async function handle() {
+    setStatus('sending')
+    try { await onSend(); setStatus('sent') } catch { setStatus('error') }
+    setTimeout(() => setStatus('idle'), 3000)
+  }
+  return (
+    <button onClick={handle} disabled={status === 'sending'}
+      className="text-[0.7rem] tracking-[0.1em] uppercase px-4 py-2 rounded-full bg-sage-dark text-cream hover:bg-sage transition-colors disabled:opacity-50 whitespace-nowrap">
+      {status === 'sending' ? 'Sending…' : status === 'sent' ? 'Sent ✓' : status === 'error' ? 'Error' : 'Send email'}
+    </button>
+  )
+}
+
+function LinkCard({ label, link, submitted, submittedAt, onSend, hasEmail }: {
   label: string; link: string; submitted: boolean; submittedAt: string | null
+  onSend?: () => Promise<void>; hasEmail?: boolean
 }) {
   return (
     <div className="bg-cream rounded-xl p-4 border border-charcoal/6">
@@ -61,7 +78,10 @@ function LinkCard({ label, link, submitted, submittedAt }: {
         <StatusPill submitted={submitted} submittedAt={submittedAt} />
       </div>
       <p className="text-[0.65rem] text-muted/60 font-mono truncate mb-3">{link}</p>
-      <CopyButton url={link} />
+      <div className="flex items-center gap-2 flex-wrap">
+        <CopyButton url={link} />
+        {onSend && <SendButton onSend={onSend} hasEmail={hasEmail ?? false} />}
+      </div>
     </div>
   )
 }
@@ -73,6 +93,15 @@ function IntakeSection({ client }: { client: Client }) {
   const link = `${baseUrl}/welcome?token=${client.intake_token}`
   const intake = client.intake
 
+  async function sendIntake() {
+    const res = await fetch('/api/portal/send-intake', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ client_id: client.id }),
+    })
+    if (!res.ok) throw new Error('Send failed')
+  }
+
   return (
     <div className="space-y-5">
       {/* Link card */}
@@ -82,9 +111,12 @@ function IntakeSection({ client }: { client: Client }) {
             <p className={labelClass + ' mb-1'}>Welcome intake form</p>
             <p className="text-[0.65rem] text-muted/60 font-mono truncate max-w-xs">{link}</p>
           </div>
-          <CopyButton url={link} />
+          <StatusPill submitted={!!client.intake_submitted_at} submittedAt={client.intake_submitted_at} />
         </div>
-        <StatusPill submitted={!!client.intake_submitted_at} submittedAt={client.intake_submitted_at} />
+        <div className="flex items-center gap-2 flex-wrap">
+          <CopyButton url={link} />
+          <SendButton onSend={sendIntake} hasEmail={!!client.email} />
+        </div>
       </div>
 
       {!intake && (
@@ -131,7 +163,7 @@ function IntakeSection({ client }: { client: Client }) {
 
 // ─── Session card ────────────────────────────────────────────────────────────
 
-function SessionCard({ session, onUpdate }: { session: Session; onUpdate: () => void }) {
+function SessionCard({ session, clientEmail, onUpdate }: { session: Session; clientEmail: string | null; onUpdate: () => void }) {
   const [open, setOpen] = useState(false)
   const [notes, setNotes] = useState(session.danielle_notes ?? '')
   const [savingNotes, setSavingNotes] = useState(false)
@@ -141,6 +173,22 @@ function SessionCard({ session, onUpdate }: { session: Session; onUpdate: () => 
 
   const arrivalLink = `${baseUrl}/arrival?token=${session.arrival_token}`
   const reflectionLink = `${baseUrl}/reflection?token=${session.reflection_token}`
+
+  async function sendArrival() {
+    const res = await fetch('/api/portal/send-arrival', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ session_id: session.id }),
+    })
+    if (!res.ok) throw new Error('Send failed')
+  }
+
+  async function sendReflection() {
+    const res = await fetch('/api/portal/send-reflection', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ session_id: session.id }),
+    })
+    if (!res.ok) throw new Error('Send failed')
+  }
   const date = new Date(session.session_date + 'T00:00:00').toLocaleDateString('en-AU', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
   })
@@ -198,12 +246,16 @@ function SessionCard({ session, onUpdate }: { session: Session; onUpdate: () => 
               link={arrivalLink}
               submitted={!!session.arrival_submitted_at}
               submittedAt={session.arrival_submitted_at}
+              onSend={sendArrival}
+              hasEmail={!!clientEmail}
             />
             <LinkCard
               label="Post-session reflection"
               link={reflectionLink}
               submitted={!!session.reflection_submitted_at}
               submittedAt={session.reflection_submitted_at}
+              onSend={sendReflection}
+              hasEmail={!!clientEmail}
             />
           </div>
 
@@ -261,7 +313,7 @@ function SessionCard({ session, onUpdate }: { session: Session; onUpdate: () => 
 
 // ─── Sessions section ────────────────────────────────────────────────────────
 
-function SessionsSection({ clientId }: { clientId: string }) {
+function SessionsSection({ clientId, clientEmail }: { clientId: string; clientEmail: string | null }) {
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [creating, setCreating] = useState(false)
@@ -312,7 +364,111 @@ function SessionsSection({ clientId }: { clientId: string }) {
       ) : sessions.length === 0 ? (
         <p className="text-center text-muted text-sm py-8">No sessions yet — add one above.</p>
       ) : (
-        sessions.map(s => <SessionCard key={s.id} session={s} onUpdate={load} />)
+        sessions.map(s => <SessionCard key={s.id} session={s} clientEmail={clientEmail} onUpdate={load} />)
+      )}
+    </div>
+  )
+}
+
+// ─── Client files ────────────────────────────────────────────────────────────
+
+function formatSize(bytes: number | null) {
+  if (!bytes) return ''
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+}
+
+function ClientFiles({ clientId }: { clientId: string }) {
+  const [files, setFiles] = useState<ClientFile[]>([])
+  const [urls, setUrls] = useState<Record<string, string>>({})
+  const [uploading, setUploading] = useState(false)
+  const [deleting, setDeleting] = useState<string | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  const load = useCallback(async () => {
+    const { data } = await supabase
+      .from('client_files')
+      .select('*')
+      .eq('client_id', clientId)
+      .order('created_at', { ascending: false })
+    const list = data ?? []
+    setFiles(list)
+
+    const signed: Record<string, string> = {}
+    await Promise.all(list.map(async (f) => {
+      const { data: u } = await supabase.storage.from('client-files').createSignedUrl(f.path, 3600)
+      if (u?.signedUrl) signed[f.id] = u.signedUrl
+    }))
+    setUrls(signed)
+  }, [clientId])
+
+  useEffect(() => { load() }, [load])
+
+  async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    const path = `${clientId}/${crypto.randomUUID()}-${file.name}`
+    const { error } = await supabase.storage.from('client-files').upload(path, file)
+    if (!error) {
+      await supabase.from('client_files').insert([{ client_id: clientId, name: file.name, path, size: file.size }])
+      await load()
+    }
+    setUploading(false)
+    if (fileRef.current) fileRef.current.value = ''
+  }
+
+  async function handleDelete(f: ClientFile) {
+    if (!confirm(`Delete "${f.name}"?`)) return
+    setDeleting(f.id)
+    await supabase.storage.from('client-files').remove([f.path])
+    await supabase.from('client_files').delete().eq('id', f.id)
+    await load()
+    setDeleting(null)
+  }
+
+  return (
+    <div className="mt-5 bg-white rounded-2xl p-6 border border-sage/10">
+      <div className="flex items-center justify-between mb-5">
+        <div>
+          <p className={labelClass}>Client files</p>
+          <p className="text-muted text-xs mt-0.5">Consent forms, referrals, documents</p>
+        </div>
+        <label className={`text-[0.7rem] tracking-[0.1em] uppercase px-4 py-2 rounded-full border border-sage/30 text-sage hover:bg-sage hover:text-white transition-colors cursor-pointer whitespace-nowrap ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
+          {uploading ? 'Uploading…' : '+ Upload file'}
+          <input ref={fileRef} type="file" className="hidden" onChange={handleUpload} disabled={uploading} />
+        </label>
+      </div>
+
+      {files.length === 0 ? (
+        <p className="text-muted text-xs text-center py-4">No files uploaded yet.</p>
+      ) : (
+        <ul className="space-y-2">
+          {files.map(f => (
+            <li key={f.id} className="flex items-center justify-between gap-3 py-2.5 border-b border-charcoal/5 last:border-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="text-muted text-base flex-shrink-0">📄</span>
+                <div className="min-w-0">
+                  <p className="text-sm text-charcoal truncate">{f.name}</p>
+                  <p className="text-[0.65rem] text-muted/60">{formatSize(f.size)} · {new Date(f.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 flex-shrink-0">
+                {urls[f.id] && (
+                  <a href={urls[f.id]} target="_blank" rel="noopener noreferrer"
+                    className="text-[0.68rem] tracking-[0.08em] uppercase text-sage hover:underline">
+                    Download
+                  </a>
+                )}
+                <button onClick={() => handleDelete(f)} disabled={deleting === f.id}
+                  className="text-muted/30 hover:text-red-400 transition-colors text-sm disabled:opacity-40">
+                  ✕
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   )
@@ -466,11 +622,13 @@ export default function ClientDetailPage() {
           </form>
         )}
 
+        {tab === 'profile' && <ClientFiles clientId={id} />}
+
         {/* Intake tab */}
         {tab === 'intake' && <IntakeSection client={client} />}
 
         {/* Sessions tab */}
-        {tab === 'sessions' && <SessionsSection clientId={id} />}
+        {tab === 'sessions' && <SessionsSection clientId={id} clientEmail={client.email} />}
       </main>
     </div>
   )

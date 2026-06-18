@@ -66,6 +66,15 @@ export type Client = {
   updated_at: string
 }
 
+export type ClientFile = {
+  id: string
+  client_id: string
+  name: string
+  path: string
+  size: number | null
+  created_at: string
+}
+
 export type NewsletterSignup = {
   id: string
   email: string
