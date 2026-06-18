@@ -41,11 +41,11 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto">
           <p className="text-[0.7rem] tracking-[0.25em] uppercase text-sage-light/70 mb-4 font-[400]">About Danielle</p>
           <h1 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-light text-white leading-tight mb-5">
-            14 Years of<br /><em className="italic">Heart-Centred Healing</em>
+            For the women who have spent<br />
+            <em className="italic text-sage">a lifetime holding everyone else.</em>
           </h1>
           <p className="text-white/70 text-lg font-light leading-relaxed max-w-xl mx-auto">
-            Massage therapist, Havening practitioner, and grief space holder — Danielle brings
-            her whole self to every session.
+            Holding space for grief, healing and becoming — Yarra Valley, Melbourne.
           </p>
         </div>
       </section>
@@ -72,28 +72,34 @@ export default function AboutPage() {
 
             <div className="space-y-5 text-charcoal/70 leading-relaxed">
               <p>
-                Hi, I&apos;m Danielle Brierley — founder of Harmonized Therapies, based in the beautiful
-                Yarra Valley, Melbourne. I have been a massage therapist for over 14 years. But the
-                reason I do this work began long before any qualification.
+                I never set out to become a therapist. I simply followed the people who had quietly held me,
+                and somewhere along the way, I realised I wanted to become one of them too.
               </p>
               <p>
-                I have experienced miscarriage — the invisible kind that women were expected to endure
-                quietly, with no ceremony and no real space to grieve. I have spent weeks in hospital
-                without my newborn son, unable to walk, expressing milk for a baby I couldn&apos;t yet hold,
-                watching the screens and praying. I have sat in rooms where the curtains were pulled
-                around tiny babies who weren&apos;t going to make it. I have lived the weight of what it
-                means to carry things alone.
+                Life has taken me through motherhood, miscarriage, grief, hospital rooms, healing and many
+                seasons of beginning again. Along the way, I discovered that some of the most important
+                people in our lives are what I call <em>The Quiet Holders</em> — the ones who stay. The
+                ones who sit beside us when words aren&apos;t enough. The ones who carry hope when we can&apos;t.
               </p>
               <p>
-                And I have experienced the profound difference that one person — one quiet holder — can
-                make. A nurse who stays. A hand that reaches. A presence that says: <em>I see you.
-                You are not alone.</em> That changed everything for me.
+                For more than fourteen years, I have had the privilege of supporting people through massage,
+                oncology and palliative care, Havening Techniques&reg;, meditation and nervous system healing.
+                Yet the greatest lessons I&apos;ve learned have not come from books or courses. They came from
+                life itself.
               </p>
               <p>
-                It is why I trained in therapeutic, oncology, palliative, and relaxation massage. It is
-                why I became a Havening Techniques Practitioner. It is why I hold space for grief and
-                birth trauma and the things that have no name. Not because I studied them — but because
-                I have lived them. And I wanted to become the kind of person who holds others through them.
+                Through my own experiences, I learned that healing isn&apos;t about fixing ourselves. It isn&apos;t
+                about having all the answers. Sometimes healing is simply being seen. Being heard. Feeling
+                safe enough to exhale.
+              </p>
+              <p>
+                Today, through Harmonized Therapies and The Quiet Corner, I hold space for women navigating
+                stress, grief, life&apos;s transitions and those seasons where we no longer quite recognise
+                ourselves. I believe healing is a lifelong returning to ourselves. And I believe no one
+                should have to walk that journey alone.
+              </p>
+              <p className="text-charcoal/80 font-light italic">
+                I&apos;m so glad you&apos;re here. Danielle x
               </p>
             </div>
 
@@ -167,7 +173,7 @@ export default function AboutPage() {
       <section className="bg-charcoal py-20 px-6 lg:px-10 text-center">
         <div className="max-w-3xl mx-auto">
           <blockquote className="font-display text-[clamp(1.5rem,3vw,2.5rem)] text-cream italic font-light leading-relaxed mb-6">
-            &ldquo;Not as the one being held —<br />but as the one who holds.<br />That is why I do what I do.&rdquo;
+            &ldquo;Some seasons break us open.<br />Some teach us how to hold others.<br />And some quietly teach us how to finally hold ourselves.&rdquo;
           </blockquote>
           <cite className="text-[0.72rem] tracking-[0.18em] uppercase text-gold/70 not-italic">
             — Danielle Brierley

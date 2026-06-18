@@ -30,8 +30,7 @@ export default function HomePage() {
               <em className="text-sage italic">alone.</em>
             </h1>
             <p className="text-cream/70 text-lg font-light leading-relaxed max-w-md mb-10">
-              A space for grief, healing and becoming. Through massage, Havening,
-              and holistic therapy, Danielle holds space for women ready to heal.
+              For the women who have spent a lifetime holding everyone else.
             </p>
             <div className="flex flex-wrap gap-4 items-center">
               <Link

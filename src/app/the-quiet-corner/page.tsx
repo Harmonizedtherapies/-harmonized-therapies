@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import FadeIn from '@/components/FadeIn'
 import FloatingOrbs from '@/components/FloatingOrbs'
 import BotanicalDivider from '@/components/BotanicalDivider'
@@ -23,25 +24,34 @@ export default function QuietCornerPage() {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section className="relative min-h-[70vh] flex items-center bg-charcoal overflow-hidden">
-        <FloatingOrbs />
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+        {/* Background photo */}
+        <Image
+          src="/Images/quiet-corner-danielle.png"
+          alt="Danielle writing — The Quiet Corner"
+          fill
+          className="object-cover object-center"
+          priority
+          quality={95}
+        />
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 via-charcoal/60 to-charcoal/30" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
 
         <div className="relative max-w-4xl mx-auto px-6 lg:px-10 pt-36 pb-24 text-center w-full">
-          <p className="text-[0.68rem] tracking-[0.3em] uppercase text-gold/60 mb-5 font-[400]">
-            From Danielle · Harmonized Therapies
+          <p className="text-[0.68rem] tracking-[0.3em] uppercase text-gold/70 mb-5 font-[400]">
+            Honest reflections on grief, healing and becoming.
           </p>
           <h1 className="font-display text-[clamp(3rem,7vw,5.5rem)] font-light text-cream italic leading-tight mb-6">
             The Quiet Corner
           </h1>
           <div className="w-16 h-px bg-gold/40 mx-auto mb-8" />
-          <p className="text-cream/55 text-lg font-light leading-relaxed max-w-xl mx-auto">
-            A space for honest words. Reflections on grief, healing, Havening,
-            and what it means to hold space — for others, and for yourself.
+          <p className="text-cream/80 text-xl font-light leading-relaxed max-w-xl mx-auto">
+            A space to pause.<br className="hidden sm:block" /> A space to exhale.<br className="hidden sm:block" /> A space to begin again.
           </p>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-cream/25 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-cream/40 animate-bounce">
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path strokeLinecap="round" d="M12 5v14M5 12l7 7 7-7" />
           </svg>
