@@ -7,6 +7,10 @@ const oneHourSlots = [
   '1:30 pm', '2:30 pm', '3:30 pm', '4:30 pm',
 ]
 
+const ninetyMinSlots = [
+  '8:30 am', '10:00 am', '11:30 am', '1:00 pm', '2:30 pm', '4:00 pm',
+]
+
 const halfHourSlots = [
   '8:30 am', '9:00 am', '9:30 am', '10:00 am', '10:30 am', '11:00 am',
   '11:30 am', '12:00 pm', '12:30 pm', '1:00 pm', '1:30 pm', '2:00 pm',
@@ -14,9 +18,9 @@ const halfHourSlots = [
 ]
 
 export default function SignupSheet() {
-  const [mode, setMode] = useState<'1hr' | '30min'>('1hr')
-  const slots = mode === '1hr' ? oneHourSlots : halfHourSlots
-  const rowPad = mode === '1hr' ? '3.5mm' : '2mm'
+  const [mode, setMode] = useState<'1hr' | '90min' | '30min'>('1hr')
+  const slots = mode === '1hr' ? oneHourSlots : mode === '90min' ? ninetyMinSlots : halfHourSlots
+  const rowPad = mode === '30min' ? '2mm' : '3.5mm'
 
   return (
     <>
@@ -81,7 +85,7 @@ export default function SignupSheet() {
         </p>
         {/* Slot toggle */}
         <div style={{ display: 'inline-flex', background: '#e8e4dc', borderRadius: '100px', padding: '3px', marginBottom: '12px' }}>
-          {(['1hr', '30min'] as const).map(m => (
+          {(['1hr', '90min', '30min'] as const).map(m => (
             <button
               key={m}
               onClick={() => setMode(m)}
@@ -93,7 +97,7 @@ export default function SignupSheet() {
                 transition: 'all 0.2s',
               }}
             >
-              {m === '1hr' ? '1 hour slots' : '30 min slots'}
+              {m === '1hr' ? '1 hour' : m === '90min' ? '1½ hours' : '30 min'}
             </button>
           ))}
         </div>
@@ -143,7 +147,7 @@ export default function SignupSheet() {
           <div className="meta">
             <div>Friday &nbsp;<span>_____ / _____ / _____</span></div>
             <div>Sessions &nbsp;<span>8:30 am – 5:30 pm</span></div>
-            <div>Duration &nbsp;<span>{mode === '1hr' ? '1 hour' : '30 minutes'} per resident</span></div>
+            <div>Duration &nbsp;<span>{mode === '1hr' ? '1 hour' : mode === '90min' ? '1½ hours' : '30 minutes'} per resident</span></div>
           </div>
 
           <table>

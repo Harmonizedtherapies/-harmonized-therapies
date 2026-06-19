@@ -390,6 +390,13 @@ export default function TudorVillageFlyer() {
             </div>
           </div>
 
+          {/* Extended session note */}
+          <div style={{ textAlign: 'center', marginBottom: '2mm' }}>
+            <p style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '12px', fontStyle: 'italic', color: '#6b6b65' }}>
+              1½ hour sessions also available — just let Danielle know when you book
+            </p>
+          </div>
+
         </div>
 
         {/* Footer band */}
