@@ -4,6 +4,7 @@ import Image from 'next/image'
 import FadeIn from '@/components/FadeIn'
 import FloatingOrbs from '@/components/FloatingOrbs'
 import BotanicalDivider from '@/components/BotanicalDivider'
+import ComingHomeSignup from '@/components/ComingHomeSignup'
 import { posts } from '@/lib/posts'
 
 export const metadata: Metadata = {
@@ -134,6 +135,9 @@ export default function QuietCornerPage() {
           </div>
         </section>
       )}
+
+      {/* ─── COMING HOME SIGNUP ─── */}
+      <ComingHomeSignup />
 
       {/* ─── FROM DANIELLE ─── */}
       <section className="bg-charcoal py-20 px-6 lg:px-10 relative overflow-hidden">
