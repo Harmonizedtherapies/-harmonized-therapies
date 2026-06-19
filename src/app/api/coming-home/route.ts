@@ -6,7 +6,7 @@ const getResend = () => new Resend(process.env.RESEND_API_KEY ?? 're_placeholder
 const FROM = process.env.RESEND_FROM_ADDRESS ?? 'Danielle at Harmonized Therapies <hello@harmonizedtherapies.com.au>'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://harmonizedtherapies.com.au'
 
-function html(downloadUrl: string) {
+function html(listenUrl: string) {
   return `<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
 <body style="margin:0;padding:0;background:#f8f5f0;font-family:Georgia,serif;">
@@ -21,21 +21,22 @@ function html(downloadUrl: string) {
 
 <tr><td style="padding:40px 40px 12px;">
   <p style="margin:0 0 20px;font-size:16px;line-height:1.9;color:#2a2a2a;">
-    Welcome to The Quiet Corner.
+    Welcome to the meditation library.
   </p>
   <p style="margin:0 0 20px;font-size:15px;line-height:1.9;color:#444;">
-    I hope this recording brings you a moment of rest — and reminds you that you don&apos;t have to carry everything alone.
+    I&apos;m so glad you&apos;re here. <em>Coming Home to Yourself</em> is waiting for you — a gentle guided relaxation
+    to help your nervous system soften and settle. Find somewhere comfortable, press play, and let yourself arrive.
   </p>
   <p style="margin:0 0 20px;font-size:15px;line-height:1.9;color:#444;">
-    <em>Coming Home</em> is a gentle guided relaxation to help your nervous system soften and settle.
-    Find somewhere comfortable, press play, and let yourself arrive.
+    Every new meditation I release will come straight to your inbox — yours to keep, free, forever.
+    You don&apos;t have to go looking for it. I&apos;ll bring it to you.
   </p>
 </td></tr>
 
 <tr><td style="padding:4px 40px 36px;">
   <table cellpadding="0" cellspacing="0"><tr><td>
-    <a href="${downloadUrl}" style="display:inline-block;background:#1B3828;color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:14px 32px;border-radius:100px;">
-      Download Coming Home
+    <a href="${listenUrl}" style="display:inline-block;background:#1B3828;color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:14px 32px;border-radius:100px;">
+      Listen to Coming Home
     </a>
   </td></tr></table>
 </td></tr>
@@ -43,7 +44,7 @@ function html(downloadUrl: string) {
 <tr><td style="padding:0 40px 36px;">
   <div style="border-top:1px solid #e8e4dc;padding-top:28px;">
     <p style="margin:0 0 10px;font-size:13px;line-height:1.8;color:#666;">
-      I&apos;ll send you the occasional gentle note — reflections on healing, grief, and becoming.
+      I&apos;ll also send you the occasional gentle note — reflections on healing, grief, and becoming.
       Nothing salesy. Just soul.
     </p>
     <p style="margin:0;font-size:13px;line-height:1.8;color:#666;font-style:italic;">
@@ -70,19 +71,19 @@ export async function POST(req: NextRequest) {
 
   const { error: dbError } = await supabase
     .from('newsletter_signups')
-    .insert([{ email, source: 'coming-home' }])
+    .insert([{ email, source: 'meditation-library' }])
 
   if (dbError && dbError.code !== '23505') {
     return NextResponse.json({ error: 'Could not save email' }, { status: 500 })
   }
 
-  const downloadUrl = `${SITE_URL}/audio/coming-home-to-yourself.m4a`
+  const listenUrl = `${SITE_URL}/meditation`
 
   const { error: emailError } = await getResend().emails.send({
     from: FROM,
     to: email,
-    subject: 'Your Coming Home recording 🌿',
-    html: html(downloadUrl),
+    subject: 'Welcome to the meditation library 🌿',
+    html: html(listenUrl),
   })
 
   if (emailError) {

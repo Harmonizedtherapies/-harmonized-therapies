@@ -23,37 +23,32 @@ export default function ComingHomeSignup() {
 
   return (
     <section className="bg-charcoal py-20 px-6 lg:px-10 relative overflow-hidden">
-      {/* Soft glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-sage/5 blur-3xl pointer-events-none" />
 
       <div className="relative max-w-2xl mx-auto text-center">
 
         <p className="text-[0.68rem] tracking-[0.3em] uppercase text-gold/70 mb-4 font-[400]">
-          A free gift for you
+          Free · Always
         </p>
 
         <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-light text-cream italic leading-tight mb-4">
-          Coming Home
+          Join the free meditation library
         </h2>
-
-        <p className="text-cream/60 text-sm tracking-wide mb-6">
-          A guided relaxation &amp; nervous system reset
-        </p>
 
         <div className="w-12 h-px bg-gold/30 mx-auto mb-8" />
 
-        <p className="text-cream/75 leading-relaxed mb-2 max-w-md mx-auto">
-          Sometimes the most healing thing you can do is stop — and let yourself arrive.
+        <p className="text-cream/75 leading-relaxed mb-3 max-w-md mx-auto">
+          <em className="font-display text-cream/90">Coming Home to Yourself</em> is there for you now — free to listen, any time you need it.
         </p>
         <p className="text-cream/75 leading-relaxed mb-10 max-w-md mx-auto">
-          Enter your email and I&apos;ll send this recording straight to your inbox, with love.
+          Join the library and every new meditation will arrive in your inbox the moment it&apos;s released. Yours to keep, free, forever.
         </p>
 
         {status === 'success' ? (
           <div className="bg-sage/15 border border-sage/20 rounded-2xl px-8 py-7 max-w-md mx-auto">
-            <p className="font-display text-xl italic text-cream mb-2">It&apos;s on its way 🌿</p>
+            <p className="font-display text-xl italic text-cream mb-2">You&apos;re in the library 🌿</p>
             <p className="text-cream/60 text-sm leading-relaxed">
-              Check your inbox for your Coming Home recording. I hope it brings you a moment of quiet.
+              Check your inbox for a welcome from Danielle. Every new meditation will come straight to you.
             </p>
           </div>
         ) : (
@@ -71,7 +66,7 @@ export default function ComingHomeSignup() {
               disabled={status === 'sending'}
               className="bg-gold/90 hover:bg-gold text-charcoal text-[0.72rem] tracking-[0.12em] uppercase px-6 py-3.5 rounded-full transition-colors whitespace-nowrap disabled:opacity-60 font-[500]"
             >
-              {status === 'sending' ? 'Sending...' : 'Send it to me'}
+              {status === 'sending' ? 'Joining...' : 'Join the library'}
             </button>
           </form>
         )}

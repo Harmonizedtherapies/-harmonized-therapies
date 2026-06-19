@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import FadeIn from '@/components/FadeIn'
 import FloatingOrbs from '@/components/FloatingOrbs'
-import { supabase } from '@/lib/supabase'
+import ComingHomeSignup from '@/components/ComingHomeSignup'
 
 const meditations = [
   {
@@ -76,18 +76,6 @@ const statusStyle = {
 }
 
 export default function MeditationsPage() {
-  const [email, setEmail] = useState('')
-  const [notifyStatus, setNotifyStatus] = useState<'idle' | 'sending' | 'done'>('idle')
-
-  async function handleNotify(e: React.FormEvent) {
-    e.preventDefault()
-    setNotifyStatus('sending')
-    await supabase
-      .from('newsletter_signups')
-      .insert([{ email, source: 'meditation-series-updates' }])
-    setNotifyStatus('done')
-  }
-
   const available = meditations.filter(m => m.status === 'available')
   const upcoming = meditations.filter(m => m.status !== 'available')
 
@@ -202,45 +190,8 @@ export default function MeditationsPage() {
         </div>
       </section>
 
-      {/* ─── NOTIFY SIGNUP ─── */}
-      <section className="bg-[#111827] py-20 px-6 lg:px-10 border-t border-white/5">
-        <FadeIn className="max-w-lg mx-auto text-center">
-          <p className="text-[0.68rem] tracking-[0.25em] uppercase text-gold/50 mb-4 font-[400]">
-            Never miss a new release
-          </p>
-          <h2 className="font-display text-[clamp(1.8rem,3vw,2.5rem)] font-light text-cream italic mb-4">
-            Get notified when a new meditation drops
-          </h2>
-          <p className="text-cream/40 text-sm leading-relaxed mb-8">
-            New meditations are added regularly. Enter your email and Danielle will let you know the moment each one is ready.
-          </p>
-
-          {notifyStatus === 'done' ? (
-            <div>
-              <p className="font-display text-lg italic text-cream/80 mb-2">You&apos;re on the list 🌿</p>
-              <p className="text-cream/40 text-sm">You&apos;ll hear from Danielle when the next meditation is ready.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleNotify} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="Your email address"
-                required
-                className="flex-1 bg-white/6 border border-cream/15 rounded-full px-5 py-3 text-sm text-cream placeholder-cream/30 outline-none focus:border-gold/40 transition-colors"
-              />
-              <button
-                type="submit"
-                disabled={notifyStatus === 'sending'}
-                className="bg-gold text-charcoal text-[0.72rem] tracking-[0.12em] uppercase px-6 py-3 rounded-full hover:bg-gold/80 transition-colors whitespace-nowrap disabled:opacity-60"
-              >
-                {notifyStatus === 'sending' ? 'One moment...' : 'Notify Me'}
-              </button>
-            </form>
-          )}
-        </FadeIn>
-      </section>
+      {/* ─── LIBRARY SIGNUP ─── */}
+      <ComingHomeSignup />
 
       {/* ─── FROM DANIELLE ─── */}
       <section className="bg-charcoal py-20 px-6 lg:px-10 relative overflow-hidden border-t border-white/5">
