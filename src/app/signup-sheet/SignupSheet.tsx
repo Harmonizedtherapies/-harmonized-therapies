@@ -179,7 +179,7 @@ export default function SignupSheet() {
               <span className="divider-leaf">✦</span>
               <div className="divider-line" />
             </div>
-            <p className="footer-contact">danielle@harmonizedtherapies.com.au &nbsp;·&nbsp; harmonizedtherapies.com.au</p>
+            <p className="footer-contact">0411 267 676 &nbsp;·&nbsp; danielle@harmonizedtherapies.com.au &nbsp;·&nbsp; harmonizedtherapies.com.au</p>
             <p className="footer-text">Harmonized Therapies &nbsp;·&nbsp; Yarra Valley, Melbourne</p>
           </div>
         </div>
