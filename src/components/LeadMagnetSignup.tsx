@@ -87,7 +87,7 @@ export default function LeadMagnetSignup({
                   </p>
                   {/* Botanical decoration */}
                   <div className={`text-4xl mb-5 ${isSage ? '' : ''}`}>
-                    {isSage ? '🌿' : '🌙'}
+                    <div className={`w-8 h-px ${isSage ? 'bg-sage/40' : 'bg-gold/40'}`} />
                   </div>
                   {/* Title */}
                   <h3 className={`font-display text-[1.35rem] font-light italic leading-snug mb-6 ${isSage ? 'text-charcoal' : 'text-cream'}`}>
@@ -139,7 +139,7 @@ export default function LeadMagnetSignup({
             {status === 'success' ? (
               <div className={`rounded-2xl p-6 border ${isSage ? 'bg-white/8 border-sage-light/20' : 'bg-white/5 border-gold/25'}`}>
                 <p className={`font-display text-lg font-light italic mb-4 ${isSage ? 'text-cream' : 'text-cream'}`}>
-                  Your guide is ready to download. 🌿
+                  Your guide is ready to download.
                 </p>
                 <p className={`text-sm mb-5 ${isSage ? 'text-cream/60' : 'text-cream/60'}`}>
                   Thank you — enjoy, and reach out if you have any questions.

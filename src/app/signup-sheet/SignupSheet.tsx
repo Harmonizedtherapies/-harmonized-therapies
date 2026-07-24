@@ -20,7 +20,7 @@ const halfHourSlots = [
 export default function SignupSheet() {
   const [mode, setMode] = useState<'1hr' | '90min' | '30min'>('1hr')
   const slots = mode === '1hr' ? oneHourSlots : mode === '90min' ? ninetyMinSlots : halfHourSlots
-  const rowPad = mode === '30min' ? '2mm' : '3.5mm'
+  const rowPad = mode === '30min' ? '1.5mm' : mode === '1hr' ? '2.5mm' : '3mm'
 
   return (
     <>
@@ -30,8 +30,8 @@ export default function SignupSheet() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #fff; font-family: 'Jost', sans-serif; font-weight: 300; color: #181816; }
 
-        .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 14mm 14mm 12mm; background: #fff; }
-        .page-border { border: 1.5px solid #c8a96e; padding: 10mm 11mm 9mm; min-height: 270mm; position: relative; }
+        .page { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 10mm 12mm 10mm; background: #fff; }
+        .page-border { border: 1.5px solid #c8a96e; padding: 7mm 10mm 6mm; min-height: 270mm; position: relative; }
         .page-border::before { content: ''; position: absolute; inset: 4px; border: 0.5px solid #c8a96e33; pointer-events: none; }
 
         .corner { position: absolute; width: 16px; height: 16px; border-color: #c8a96e; border-style: solid; }
@@ -40,18 +40,19 @@ export default function SignupSheet() {
         .corner-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
         .corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
-        .header { text-align: center; margin-bottom: 6mm; }
-        .logo-wrap { margin-bottom: 3mm; }
-        .brand-tag { font-size: 7.5px; letter-spacing: 4px; text-transform: uppercase; color: #c8a96e; margin-bottom: 3mm; }
-        .title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: #1B3828; line-height: 1.1; margin-bottom: 1.5mm; }
+        .header { text-align: center; margin-bottom: 2mm; }
+        .logo-wrap { margin-bottom: 1.5mm; }
+        .brand-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: #1B3828; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.5mm; }
+        .brand-tag { font-size: 7.5px; letter-spacing: 4px; text-transform: uppercase; color: #c8a96e; margin-bottom: 1.5mm; }
+        .title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: #1B3828; line-height: 1.1; margin-bottom: 1mm; }
         .title em { font-style: italic; }
         .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 300; font-style: italic; color: #6b6b65; }
 
-        .divider { display: flex; align-items: center; gap: 8px; margin: 3.5mm 0; }
+        .divider { display: flex; align-items: center; gap: 8px; margin: 2mm 0; }
         .divider-line { flex: 1; height: 0.5px; background: #c8a96e55; }
         .divider-leaf { color: #c8a96e; font-size: 12px; }
 
-        .meta { display: flex; justify-content: space-between; margin-bottom: 5mm; font-size: 8.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #6b6b65; }
+        .meta { display: flex; justify-content: space-between; margin-bottom: 2mm; font-size: 8.5px; letter-spacing: 1.5px; text-transform: uppercase; color: #6b6b65; }
         .meta span { color: #1B3828; font-weight: 400; }
 
         table { width: 100%; border-collapse: collapse; }
@@ -66,14 +67,21 @@ export default function SignupSheet() {
         .phone-col { width: 35mm; padding: 0 3mm; }
         .notes-col { padding: 0 3mm; }
 
-        .footer { margin-top: 5mm; text-align: center; }
-        .footer-contact { font-family: 'Cormorant Garamond', serif; font-size: 10px; font-style: italic; color: #6b6b65; margin-top: 1.5mm; }
-        .footer-text { font-size: 7px; letter-spacing: 2px; text-transform: uppercase; color: #c8a96e88; margin-top: 1.5mm; }
+        .footer { margin-top: 3mm; text-align: center; }
+        .footer-phone { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; color: #1B3828; margin-top: 1.5mm; }
+        .footer-contact { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: #6b6b65; margin-top: 1mm; }
+        .footer-text { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #c8a96e88; margin-top: 1.5mm; }
 
         @media print {
           html, body { background: #fff !important; }
-          .page { margin: 0; padding: 10mm 10mm 8mm; width: 100%; }
+          .page { margin: 0; padding: 8mm 10mm; width: 100%; min-height: unset; height: auto; box-sizing: border-box; break-inside: avoid; }
+          .page-border { min-height: unset; break-inside: avoid; }
           .no-print { display: none !important; }
+          .footer { margin-top: 1mm; }
+          .footer .divider { margin-top: 1mm !important; }
+          .footer-phone { margin-top: 0.5mm; }
+          .footer-contact { margin-top: 0.5mm; }
+          .footer-text { margin-top: 0.5mm; }
           @page { size: A4 portrait; margin: 0; }
         }
       `}</style>
@@ -125,15 +133,16 @@ export default function SignupSheet() {
           <div className="corner corner-br" />
 
           <div className="header">
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3mm' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5mm' }}>
               <Image
                 src="/Images/logo-submark.png"
                 alt="Harmonized Therapies"
-                width={90}
-                height={110}
+                width={110}
+                height={135}
                 style={{ objectFit: 'contain' }}
               />
             </div>
+            <p className="brand-name">Harmonized Therapies</p>
             <p className="brand-tag">Tudor Village Lilydale</p>
             <h1 className="title">Massage <em>Sign-Up Sheet</em></h1>
             <p className="subtitle">Danielle Brierley &nbsp;·&nbsp; Holistic Massage Therapist</p>
@@ -164,13 +173,13 @@ export default function SignupSheet() {
                 <tr key={i}>
                   <td className="time-cell" style={{ paddingTop: rowPad, paddingBottom: rowPad }}>{time}</td>
                   <td className="name-col" style={{ paddingTop: rowPad, paddingBottom: rowPad }}>
-                    <span className="write-line" style={{ height: mode === '1hr' ? '5mm' : '3.5mm' }} />
+                    <span className="write-line" style={{ height: mode === '1hr' ? '4mm' : '3mm' }} />
                   </td>
                   <td className="phone-col" style={{ paddingTop: rowPad, paddingBottom: rowPad }}>
-                    <span className="write-line" style={{ height: mode === '1hr' ? '5mm' : '3.5mm' }} />
+                    <span className="write-line" style={{ height: mode === '1hr' ? '4mm' : '3mm' }} />
                   </td>
                   <td className="notes-col" style={{ paddingTop: rowPad, paddingBottom: rowPad }}>
-                    <span className="write-line" style={{ height: mode === '1hr' ? '5mm' : '3.5mm' }} />
+                    <span className="write-line" style={{ height: mode === '1hr' ? '4mm' : '3mm' }} />
                   </td>
                 </tr>
               ))}
@@ -178,12 +187,13 @@ export default function SignupSheet() {
           </table>
 
           <div className="footer">
-            <div className="divider" style={{ marginTop: '5mm' }}>
+            <div className="divider" style={{ marginTop: '3mm' }}>
               <div className="divider-line" />
               <span className="divider-leaf">✦</span>
               <div className="divider-line" />
             </div>
-            <p className="footer-contact">0411 267 676 &nbsp;·&nbsp; danielle@harmonizedtherapies.com.au &nbsp;·&nbsp; harmonizedtherapies.com.au</p>
+            <p className="footer-phone">0411 267 676</p>
+            <p className="footer-contact">danielle@harmonizedtherapies.com.au &nbsp;·&nbsp; harmonizedtherapies.com.au</p>
             <p className="footer-text">Harmonized Therapies &nbsp;·&nbsp; Yarra Valley, Melbourne</p>
           </div>
         </div>

@@ -260,7 +260,8 @@ export default function TudorVillageFlyer() {
 
         @media print {
           html, body { background: #fff !important; }
-          .page { margin: 0; width: 100%; }
+          * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          .page { margin: 0; width: 100%; height: 297mm; overflow: hidden; break-after: avoid; }
           .no-print { display: none !important; }
           @page { size: A4 portrait; margin: 0; }
         }

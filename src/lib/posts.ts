@@ -10,6 +10,15 @@ export type PostMeta = {
 
 export const posts: PostMeta[] = [
   {
+    slug: 'trauma-the-brain-and-havening',
+    title: 'Trauma, the Brain and the Science Behind Havening Techniques®',
+    eyebrow: 'Havening Techniques',
+    date: '24 July 2026',
+    dateISO: '2026-07-24',
+    readTime: '7 min read',
+    excerpt: 'Why does the body keep reacting as though danger is still present, even when the mind knows it is safe? Here is the neuroscience behind trauma — and how Havening works to change it.',
+  },
+  {
     slug: 'what-ive-learned-sitting-with-grief',
     title: "What I've Learned Sitting With People in Grief",
     eyebrow: 'Grief & Healing',

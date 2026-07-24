@@ -15,6 +15,7 @@ const links = [
   { href: '/meditations', label: 'Meditations' },
   { href: '/the-quiet-corner', label: 'Quiet Corner' },
   { href: '/contact', label: 'Contact' },
+  { href: '/enquire', label: 'Enquire' },
 ]
 
 export default function Nav() {

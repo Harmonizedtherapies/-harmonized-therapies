@@ -13,25 +13,25 @@ const meditations = [
     description: 'A grounding forest-walk meditation for rest, release, and returning to the quiet within. Begin here.',
     duration: '15–20 min',
     theme: 'Grounding · Rest · Release',
-    emoji: '🌿',
+    num: '01',
     status: 'available' as const,
   },
   {
     slug: '/meditation/sleep',
     title: 'Sleep & Surrender',
-    description: 'A gentle journey into deep rest — for anyone whose nervous system has forgotten how to let go at the end of the day.',
+    description: 'A gentle journey into deep rest for anyone whose nervous system has forgotten how to let go at the end of the day.',
     duration: '20 min',
     theme: 'Sleep · Nervous System · Surrender',
-    emoji: '🌙',
+    num: '02',
     status: 'recording' as const,
   },
   {
     slug: null,
     title: 'Releasing Grief',
-    description: 'A held, tender meditation for anyone carrying loss — spoken, unspoken, witnessed or not. You are allowed to put it down.',
+    description: 'A held, tender meditation for anyone carrying loss, spoken or unspoken, witnessed or not. You are allowed to put it down.',
     duration: '~20 min',
     theme: 'Grief · Loss · Release',
-    emoji: '🕊️',
+    num: '03',
     status: 'soon' as const,
   },
   {
@@ -40,7 +40,7 @@ const meditations = [
     description: 'When anxiety has moved in and won\'t leave. A body-based meditation using breath, Havening touch, and stillness.',
     duration: '~15 min',
     theme: 'Anxiety · Calm · Havening',
-    emoji: '🌊',
+    num: '04',
     status: 'soon' as const,
   },
   {
@@ -49,16 +49,16 @@ const meditations = [
     description: 'Begin your day with softness. A short, grounding practice to set the tone before the world makes its demands.',
     duration: '~10 min',
     theme: 'Morning · Intentions · Clarity',
-    emoji: '☀️',
+    num: '05',
     status: 'soon' as const,
   },
   {
     slug: null,
     title: 'For the Quiet Holders',
-    description: 'Dedicated to carers, nurses, mothers, and anyone who holds space for others — this one is just for you.',
+    description: 'Dedicated to carers, nurses, mothers, and anyone who holds space for others. This one is just for you.',
     duration: '~20 min',
     theme: 'Carers · Replenish · Rest',
-    emoji: '💛',
+    num: '06',
     status: 'soon' as const,
   },
 ]
@@ -122,8 +122,8 @@ export default function MeditationsPage() {
               <FadeIn key={m.title} delay={i * 0.1}>
                 <Link href={m.slug!} className="group block">
                   <div className="bg-white rounded-2xl border border-sage/10 p-8 hover:shadow-xl transition-shadow duration-400 grid sm:grid-cols-[auto_1fr_auto] gap-6 items-center">
-                    <div className="w-16 h-16 rounded-2xl bg-sage/10 flex items-center justify-center text-3xl flex-shrink-0">
-                      {m.emoji}
+                    <div className="w-16 h-16 rounded-2xl bg-sage/10 flex items-center justify-center flex-shrink-0">
+                      <span className="font-display text-sage text-lg font-light italic">{m.num}</span>
                     </div>
                     <div>
                       <div className="flex items-center gap-3 mb-2">
@@ -161,7 +161,7 @@ export default function MeditationsPage() {
                   <Link href={m.slug} className="group block h-full">
                     <div className="rounded-2xl border border-white/8 bg-white/3 p-7 h-full hover:border-gold/20 transition-colors">
                       <div className="flex items-start justify-between mb-4">
-                        <span className="text-2xl">{m.emoji}</span>
+                        <span className="font-display text-cream/30 text-sm font-light italic">{m.num}</span>
                         <span className={`text-[0.6rem] tracking-[0.18em] uppercase px-2.5 py-1 rounded-full ${statusStyle[m.status]}`}>
                           {statusLabel[m.status]}
                         </span>
@@ -174,7 +174,7 @@ export default function MeditationsPage() {
                 ) : (
                   <div className="rounded-2xl border border-white/6 bg-white/2 p-7 h-full">
                     <div className="flex items-start justify-between mb-4">
-                      <span className="text-2xl opacity-50">{m.emoji}</span>
+                      <span className="font-display text-cream/20 text-sm font-light italic">{m.num}</span>
                       <span className={`text-[0.6rem] tracking-[0.18em] uppercase px-2.5 py-1 rounded-full ${statusStyle[m.status]}`}>
                         {statusLabel[m.status]}
                       </span>

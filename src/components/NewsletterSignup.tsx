@@ -39,7 +39,7 @@ export default function NewsletterSignup() {
 
         {status === 'success' ? (
           <div className="max-w-md mx-auto mb-8 bg-sage/10 rounded-2xl px-6 py-5">
-            <p className="text-sage font-display text-lg font-light italic">You&apos;re in. Welcome to the community. 🌿</p>
+            <p className="text-sage font-display text-lg font-light italic">You&apos;re in. Welcome to the community.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">

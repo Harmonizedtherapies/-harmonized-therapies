@@ -274,7 +274,95 @@ function PostGriefTimeline() {
   )
 }
 
+function PostTraumaBrainHavening() {
+  return (
+    <>
+      <p>
+        When we experience a traumatic or highly distressing event, the brain&apos;s primary concern
+        is survival. During these moments, the amygdala — often referred to as the brain&apos;s
+        &ldquo;alarm centre&rdquo; — rapidly detects danger and signals the release of stress hormones
+        such as adrenaline and cortisol. This activates the body&apos;s fight, flight or freeze
+        response, preparing us to survive the perceived threat.
+      </p>
+      <p>
+        At the same time, the hippocampus, which helps organise memories in time and context,
+        and the prefrontal cortex, responsible for reasoning, decision-making and emotional
+        regulation, may become less effective under intense stress. As a result, traumatic memories
+        can be stored differently from ordinary memories. Rather than becoming integrated as
+        experiences from the past, they may remain highly emotionally charged and easily
+        reactivated by reminders such as sights, sounds, smells, thoughts or body sensations.
+      </p>
+      <p>
+        This explains why a person may intellectually know they are safe while their body continues
+        to react as though the danger is happening in the present. The nervous system responds
+        automatically, often producing symptoms such as anxiety, panic, hypervigilance, emotional
+        overwhelm, racing thoughts, muscle tension or feelings of being &ldquo;stuck.&rdquo;
+      </p>
+
+      <h2>How Havening works</h2>
+      <p>
+        Havening Techniques® is based on the theory that by combining gentle therapeutic touch,
+        focused attention, and distraction or sensory tasks, it is possible to help calm the nervous
+        system while a distressing memory is briefly activated. The aim is not to erase the memory
+        itself but to reduce the intense emotional response attached to it.
+      </p>
+      <p>
+        The soothing touch used in Havening stimulates specialised nerve fibres in the skin called
+        C-tactile afferents, which respond to slow, nurturing touch. These fibres communicate with
+        brain regions involved in emotional regulation and social safety. Research into affective
+        touch suggests this type of stimulation can increase parasympathetic nervous system
+        activity — the body&apos;s natural &ldquo;rest, regulate and restore&rdquo; state — while
+        reducing physiological stress responses.
+      </p>
+      <p>
+        During a Havening session, the practitioner guides the client to briefly access the
+        distressing memory without becoming overwhelmed. Gentle Havening touch is then combined
+        with calming distraction exercises, such as eye movements, counting, humming or
+        visualisation. According to Havening theory, this process occurs while the memory is
+        temporarily active and may support memory reconsolidation — the natural process in which
+        an activated memory becomes temporarily open to modification before being stored again.
+      </p>
+
+      <h2>What changes — and what doesn&apos;t</h2>
+      <p>
+        The goal is that, over time, the emotional charge linked to the memory decreases. The
+        individual can usually still remember what happened, but the memory no longer triggers the
+        same intense physiological and emotional reaction. Instead of the nervous system responding
+        with fear or threat, many people report feeling calmer, more grounded and better able to
+        think clearly when recalling the experience.
+      </p>
+      <p>
+        I came to Havening not through study, but through my own healing. After years of grief —
+        babies lost, hospital rooms, the kind of pain that has no ceremony — I found my way to a
+        healer who introduced me to Havening. Within a session, something shifted that years of
+        other work hadn&apos;t touched. That is why I trained. That is why I use it.
+      </p>
+
+      <h2>A note on the research</h2>
+      <p>
+        Current neuroscience strongly supports the concepts of neuroplasticity, emotional
+        regulation, memory reconsolidation, and the benefits of compassionate therapeutic touch.
+        However, while these broader scientific principles are well established, research
+        specifically evaluating Havening Techniques® is still emerging. Early studies, case reports
+        and clinical experience are encouraging, but larger, high-quality clinical trials are needed
+        to confirm the effectiveness and precise mechanisms of Havening across different populations
+        and conditions.
+      </p>
+      <p>
+        For this reason, Havening is considered a complementary therapeutic approach. It may be
+        used alongside counselling, psychology, coaching, body-based therapies and medical care to
+        support emotional wellbeing, resilience and nervous system regulation.
+      </p>
+      <p>
+        If you have been carrying something your mind has processed but your body has not — I would
+        love to talk with you about whether Havening might help.
+      </p>
+    </>
+  )
+}
+
 const contentMap: Record<string, React.FC> = {
+  'trauma-the-brain-and-havening': PostTraumaBrainHavening,
   'what-ive-learned-sitting-with-grief': PostSittingWithGrief,
   'what-it-means-to-hold-space': PostHoldingSpace,
   'what-is-havening': PostWhatIsHavening,

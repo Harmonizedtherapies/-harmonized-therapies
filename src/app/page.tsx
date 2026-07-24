@@ -119,7 +119,7 @@ export default function HomePage() {
               {
                 tag: 'Hold',
                 title: 'One on One Sessions',
-                desc: 'Deeply personal healing — massage, Havening, coaching, and NLP. Held with care, tailored to you.',
+                desc: 'Deeply personal healing through massage, Havening, coaching, and NLP. Held with care, tailored to you.',
                 href: '/services',
                 cta: 'Explore Services',
                 bg: 'bg-white',
@@ -135,7 +135,7 @@ export default function HomePage() {
               {
                 tag: 'Retreat',
                 title: 'The Quiet Holders Retreat',
-                desc: 'Overnight and weekend retreats — nature-based, spiritual, grounded. For those ready to go deeper.',
+                desc: 'Overnight and weekend retreats, nature-based, spiritual, and grounded. For those ready to go deeper.',
                 href: '/retreats',
                 cta: 'Explore Retreats',
                 bg: 'bg-white',
@@ -176,16 +176,16 @@ export default function HomePage() {
           </FadeIn>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
-              { icon: '🌿', name: 'Massage Therapy', desc: 'Pure essential oils, hot stones, and natural oils — tailored to your unique needs.' },
-              { icon: '✋', name: 'Havening Techniques®', desc: 'Science-backed psychosensory touch that creates rapid, lasting emotional change.' },
-              { icon: '🌸', name: 'Oncology Massage', desc: 'Specialised and deeply caring massage for individuals at all stages of their cancer journey.' },
-              { icon: '🕊️', name: 'Palliative Massage', desc: 'Compassionate, gentle care for those facing life-limiting illness. Mobile services available.' },
-              { icon: '✨', name: 'Access Bars', desc: 'Gentle touch of 32 points on the head to release limitations and create more ease and clarity.' },
-              { icon: '🧠', name: 'NLP & Hypnotherapy', desc: 'Shift patterns, release limiting beliefs, and step into a more empowered version of yourself.' },
-            ].map(({ icon, name, desc }, i) => (
+              { name: 'Massage Therapy', desc: 'Pure essential oils, hot stones, and natural oils, tailored to your unique needs.' },
+              { name: 'Havening Techniques®', desc: 'Science-backed psychosensory touch that creates rapid, lasting emotional change.' },
+              { name: 'Oncology Massage', desc: 'Specialised and deeply caring massage for individuals at all stages of their cancer journey.' },
+              { name: 'Palliative Massage', desc: 'Compassionate, gentle care for those facing life-limiting illness. Mobile services available.' },
+              { name: 'Access Bars', desc: 'Gentle touch of 32 points on the head to release limitations and create more ease and clarity.' },
+              { name: 'NLP & Hypnotherapy', desc: 'Shift patterns, release limiting beliefs, and step into a more empowered version of yourself.' },
+            ].map(({ name, desc }, i) => (
               <FadeIn key={name} delay={i * 0.1}>
                 <div className="luxury-card bg-white rounded-2xl p-7 border border-warm-white h-full">
-                  <span className="text-2xl mb-4 block">{icon}</span>
+                  <div className="w-6 h-px bg-gold/50 mb-5" />
                   <h3 className="font-display text-xl font-light text-charcoal mb-2">{name}</h3>
                   <p className="text-muted text-sm leading-relaxed">{desc}</p>
                 </div>
@@ -246,7 +246,7 @@ export default function HomePage() {
       <LeadMagnetSignup
         eyebrow="Free Gift"
         title="Your Free Self-Havening Guide"
-        subtitle="Start your healing journey today — no appointment needed"
+        subtitle="Start your healing journey today, no appointment needed"
         description="Learn how to use gentle Havening touch at home to calm anxiety, release stress, and bring yourself back to a place of peace. A simple, powerful practice you can return to anytime."
         bullets={[
           "How Havening touch works and why it’s so effective",

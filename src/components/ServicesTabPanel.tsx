@@ -6,7 +6,6 @@ type Service = {
   id: string
   name: string
   tagline: string
-  icon: string
   description: string[]
   benefits: string[]
   forYouIf: string[]
@@ -19,7 +18,6 @@ const services: Service[] = [
     id: 'signature',
     name: 'Harmonize Me — Signature',
     tagline: 'The one that changes everything',
-    icon: '✨',
     description: [
       "You've been holding it together for so long.",
       "The Harmonize Me Signature Session is my most complete and deeply personal offering — a full-body, full-soul experience that weaves together massage, Havening touch, breathwork, and intuitive coaching into one sacred session.",
@@ -44,7 +42,6 @@ const services: Service[] = [
     id: 'relaxation',
     name: 'Relaxation & Deep Tissue Massage',
     tagline: 'Let your body finally breathe',
-    icon: '🌿',
     description: [
       "Your body remembers everything — every late night, every hard conversation, every time you pushed through when you wanted to stop.",
       "This session is your permission slip to let it all go.",
@@ -69,7 +66,6 @@ const services: Service[] = [
     id: 'hotstone',
     name: 'Hot Stone Massage',
     tagline: "Warmth that reaches the places words can't",
-    icon: '🪨',
     description: [
       "There is something about warmth — the way it melts not just muscle, but worry. Not just tightness, but the armour we forget we're wearing.",
       "Smooth, heated basalt stones are placed along the body's energy centres and used as an extension of my hands — delivering deep, penetrating heat that loosens tension at a cellular level.",
@@ -94,7 +90,6 @@ const services: Service[] = [
     id: 'indian-head',
     name: 'Indian Head & Face Massage',
     tagline: 'Release what lives in your head',
-    icon: '🙏',
     description: [
       "So much of what we carry lives above the shoulders — the overthinking, the tension headaches, the jaw that hasn't unclenched in months.",
       "Indian Head and Face Massage works with the head, neck, face, scalp and shoulders to release the tension that builds there.",
@@ -120,7 +115,6 @@ const services: Service[] = [
     id: 'foot',
     name: 'Foot Massage & Reflexology',
     tagline: 'Everything is connected — start at the ground',
-    icon: '🦶',
     description: [
       "In reflexology, every part of your foot maps to a part of your body. By working specific points on the feet, we can support the health and energy flow of your whole system.",
       "This is gentle, grounding, and surprisingly powerful.",
@@ -145,7 +139,6 @@ const services: Service[] = [
     id: 'pregnancy',
     name: 'Pregnancy Massage',
     tagline: 'You are growing life — let someone take care of yours',
-    icon: '🤱',
     description: [
       "Pregnancy is miraculous and beautiful and also — honestly — exhausting. Your body is doing the most extraordinary thing, and it deserves extraordinary care.",
       "Pregnancy massage is specifically designed for the changing needs of your body throughout each trimester. Using safe, supported positioning and gentle, nurturing techniques, I create a space where you can simply breathe, rest, and receive.",
@@ -171,7 +164,6 @@ const services: Service[] = [
     id: 'oncology',
     name: 'Oncology Massage',
     tagline: 'A softer way to heal — for those navigating cancer',
-    icon: '🌸',
     description: [
       "A cancer diagnosis changes everything. Your body is going through something enormous — and it deserves care that truly understands that.",
       "With Level 1 and 2 Oncology Massage training and hands-on experience working alongside Eastern Palliative Care, I bring both skill and deep compassion to every session.",
@@ -196,7 +188,6 @@ const services: Service[] = [
     id: 'palliative',
     name: 'Palliative Massage',
     tagline: 'The quiet gift of presence',
-    icon: '🕊️',
     description: [
       "Some of the most sacred work I do happens in the quietest rooms.",
       "Palliative massage is gentle, intuitive bodywork for people living with life-limiting illness — and for the families who love them. It is not about fixing or curing. It is about comfort, dignity, peace, and the profound healing power of human touch.",
@@ -221,11 +212,11 @@ const services: Service[] = [
     id: 'havening',
     name: 'Havening Techniques®',
     tagline: "We can't always change what happened — but we can change how it lives in your body",
-    icon: '🤲',
     description: [
       "Some things stay with us long after they should have passed — the anxiety that arrives without warning, the memory that ambushes you, the feeling that no matter how much you process something, it's still there.",
       "Havening is different.",
-      "Developed by Dr Ronald Ruden, Havening Techniques® are a science-backed, evidence-informed psychosensory therapy. Through gentle touch applied to the arms, face and hands, Havening generates delta waves in the brain — helping permanently de-link the emotional charge from distressing memories. The result? What once felt unbearable becomes simply something that happened.",
+      "When we experience trauma, the brain's amygdala — the alarm centre — encodes that memory with a powerful emotional charge. The hippocampus and prefrontal cortex, which normally help us place memories in the past, are overwhelmed. The result is a nervous system that stays on high alert long after the danger is gone. The mind knows it is safe. The body doesn't get the message.",
+      "Havening Techniques® work by combining gentle therapeutic touch with focused attention and calming distraction tasks. The touch stimulates C-tactile nerve fibres in the skin — fibres that respond to slow, nurturing contact and communicate directly with the brain's emotional regulation centres. As the distressing memory is briefly and safely accessed, this touch supports memory reconsolidation — the process by which an activated memory can be modified before being stored again. The emotional charge begins to dissolve. The memory remains, but it no longer has the same power.",
     ],
     benefits: [
       'Trauma, PTSD and complex grief',
@@ -248,7 +239,6 @@ const services: Service[] = [
     id: 'access',
     name: 'Access Bars®',
     tagline: 'What if you could clear 10,000 years of limitation in 60 minutes?',
-    icon: '💫',
     description: [
       "Access Bars® is one of those therapies that's almost impossible to describe — and absolutely unmistakable to experience.",
       "32 points on the head store every thought, belief, judgment, emotion and pattern you've ever had — about money, relationships, your body, and what's possible for you. By lightly holding these points, Access Bars® begins to dissolve the electromagnetic charge of those stored limitations.",
@@ -273,7 +263,6 @@ const services: Service[] = [
     id: 'nlp',
     name: 'NLP & Hypnotherapy',
     tagline: 'Change the story. Change the life.',
-    icon: '🧠',
     description: [
       "Every pattern you have, every belief that holds you back — it all began as a story. A conclusion your mind drew, often in childhood, often from a single moment.",
       "NLP and conversational hypnotherapy work directly with the subconscious mind — where those stories live — to gently rewrite what no longer serves you.",
@@ -298,7 +287,6 @@ const services: Service[] = [
     id: 'meditation',
     name: 'Meditation & Coaching',
     tagline: 'Come home to yourself',
-    icon: '🌙',
     description: [
       "In a world that never stops, learning to be still is one of the most radical things you can do.",
       "Well-being coaching with Danielle is not a one-size-fits-all program. It is a deeply personal, intuitive process — part meditation guidance, part mindfulness practice, part gentle accountability, and part creating space for you to hear your own inner wisdom again.",
@@ -348,7 +336,7 @@ export default function ServicesTabPanel() {
       {/* Detail panel */}
       <div className="bg-white p-8 lg:p-10">
         <div className="flex items-start gap-4 mb-5">
-          <span className="text-3xl">{current.icon}</span>
+          <div className="w-6 h-px bg-gold/50 mt-3 flex-shrink-0" />
           <div>
             <h3 className="font-display text-[clamp(1.5rem,2.5vw,2rem)] font-light text-charcoal leading-tight">
               {current.name}

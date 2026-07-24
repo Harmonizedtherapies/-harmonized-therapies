@@ -68,7 +68,6 @@ export default function ServicesPage() {
       <section className="bg-warm-white py-16 px-6 lg:px-10">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
           <div className="bg-white rounded-2xl p-8 border border-sage/10">
-            <span className="text-2xl block mb-4">🚗</span>
             <h3 className="font-display text-xl font-light text-charcoal mb-3">Mobile Services</h3>
             <p className="text-muted text-sm leading-relaxed">
               Danielle brings her healing practice to you. Mobile sessions available across Melbourne —
@@ -77,7 +76,6 @@ export default function ServicesPage() {
             </p>
           </div>
           <div className="bg-white rounded-2xl p-8 border border-sage/10">
-            <span className="text-2xl block mb-4">📞</span>
             <h3 className="font-display text-xl font-light text-charcoal mb-3">Free Discovery Call</h3>
             <p className="text-muted text-sm leading-relaxed mb-4">
               Not sure where to start? Book a free 20-minute discovery call and Danielle will help you
@@ -96,7 +94,6 @@ export default function ServicesPage() {
       {/* ─── GIFT VOUCHERS ─── */}
       <section className="bg-gold-light py-16 px-6 lg:px-10 text-center">
         <div className="max-w-xl mx-auto">
-          <span className="text-3xl block mb-4">🎁</span>
           <h2 className="font-display text-[clamp(1.8rem,3vw,2.5rem)] font-light text-charcoal mb-4">
             Gift Vouchers
           </h2>

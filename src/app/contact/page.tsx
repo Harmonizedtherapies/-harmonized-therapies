@@ -40,27 +40,39 @@ export default function ContactPage() {
             <div className="space-y-6 mb-10">
               {[
                 {
-                  icon: '📍',
+                  icon: (
+                    <svg className="w-4 h-4 text-sage" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
+                    </svg>
+                  ),
                   label: 'Location',
                   content: 'Yarra Valley, Melbourne, Australia',
                   href: undefined,
                 },
                 {
-                  icon: '✉️',
+                  icon: (
+                    <svg className="w-4 h-4 text-sage" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                  ),
                   label: 'Email',
                   content: 'danielle@harmonizedtherapies.com.au',
                   href: 'mailto:danielle@harmonizedtherapies.com.au',
                 },
                 {
-                  icon: '📅',
-                  label: 'Book a Session',
-                  content: 'Send an email to book',
-                  href: 'mailto:danielle@harmonizedtherapies.com.au?subject=Session Enquiry',
+                  icon: (
+                    <svg className="w-4 h-4 text-sage" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                  ),
+                  label: 'New Client Enquiry',
+                  content: 'Fill in the new client form',
+                  href: '/enquire',
                   external: false,
                 },
               ].map(({ icon, label, content, href, external }) => (
                 <div key={label} className="flex gap-4 items-start">
-                  <div className="w-10 h-10 rounded-xl bg-sage-light flex items-center justify-center flex-shrink-0 text-lg">
+                  <div className="w-10 h-10 rounded-xl bg-sage-light flex items-center justify-center flex-shrink-0">
                     {icon}
                   </div>
                   <div>
@@ -102,17 +114,19 @@ export default function ContactPage() {
               </a>
             </div>
 
-            {/* CTA */}
+            {/* New client CTA */}
             <div className="mt-10 p-6 bg-sage-dark rounded-2xl text-center">
-              <p className="text-cream/60 text-sm mb-3 leading-relaxed">
-                Not sure where to start? A free 20-minute discovery call is the perfect place.
+              <p className="text-[0.68rem] tracking-[0.2em] uppercase text-gold/60 mb-2 font-[400]">New clients</p>
+              <p className="text-cream/70 text-sm mb-4 leading-relaxed">
+                If you are new to Danielle, the new client enquiry form is the best place to start.
+                She reads every one personally.
               </p>
-              <a
-                href="mailto:danielle@harmonizedtherapies.com.au?subject=Free Discovery Call"
-                className="inline-block bg-sage text-white text-[0.72rem] tracking-[0.1em] uppercase px-5 py-2.5 rounded-full hover:bg-sage-dark/80 transition-colors"
+              <Link
+                href="/enquire"
+                className="inline-block bg-gold text-charcoal text-[0.72rem] tracking-[0.1em] uppercase px-5 py-2.5 rounded-full hover:bg-gold/80 transition-colors"
               >
-                Book a Free Discovery Call
-              </a>
+                New Client Enquiry Form
+              </Link>
             </div>
           </div>
 

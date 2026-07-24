@@ -81,11 +81,15 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 text-sm text-cream/60">
               <li className="flex gap-2.5 items-start">
-                <span className="mt-0.5">📍</span>
+                <svg className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-gold/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
+                </svg>
                 <span>Yarra Valley, Melbourne, Australia</span>
               </li>
               <li className="flex gap-2.5 items-start">
-                <span className="mt-0.5">✉️</span>
+                <svg className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-gold/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
                 <a
                   href="mailto:danielle@harmonizedtherapies.com.au"
                   className="hover:text-sage-mid transition-colors"
@@ -94,13 +98,15 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex gap-2.5 items-start">
-                <span className="mt-0.5">📅</span>
-                <a
-                  href="mailto:danielle@harmonizedtherapies.com.au?subject=Session Enquiry"
+                <svg className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-gold/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+                </svg>
+                <Link
+                  href="/enquire"
                   className="hover:text-sage-mid transition-colors"
                 >
-                  Book a session
-                </a>
+                  New client enquiry
+                </Link>
               </li>
             </ul>
             <a

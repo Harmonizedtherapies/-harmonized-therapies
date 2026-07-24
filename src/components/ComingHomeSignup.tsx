@@ -46,7 +46,7 @@ export default function ComingHomeSignup() {
 
         {status === 'success' ? (
           <div className="bg-sage/15 border border-sage/20 rounded-2xl px-8 py-7 max-w-md mx-auto">
-            <p className="font-display text-xl italic text-cream mb-2">You&apos;re in the library 🌿</p>
+            <p className="font-display text-xl italic text-cream mb-2">You&apos;re in the library.</p>
             <p className="text-cream/60 text-sm leading-relaxed">
               Check your inbox for a welcome from Danielle. Every new meditation will come straight to you.
             </p>

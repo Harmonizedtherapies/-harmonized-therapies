@@ -128,12 +128,12 @@ export default function AboutPage() {
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: '🧠', title: 'Mind', text: 'Your mind shapes your reality. Cultivating a positive, empowered mindset is key to personal growth and lasting transformation.' },
-              { icon: '🌿', title: 'Body', text: 'Your body is your vessel. Caring for your physical health through massage and nourishment helps restore energy and vitality.' },
-              { icon: '✨', title: 'Soul', text: 'Your soul is your essence — the source of inner wisdom and deep connection to yourself and the world around you.' },
-            ].map(({ icon, title, text }) => (
+              { title: 'Mind', text: 'Your mind shapes your reality. Cultivating a positive, empowered mindset is key to personal growth and lasting transformation.' },
+              { title: 'Body', text: 'Your body is your vessel. Caring for your physical health through massage and nourishment helps restore energy and vitality.' },
+              { title: 'Soul', text: 'Your soul is your essence, the source of inner wisdom and deep connection to yourself and the world around you.' },
+            ].map(({ title, text }) => (
               <div key={title} className="bg-white rounded-2xl p-8 border border-warm-white text-center hover:shadow-md transition-shadow">
-                <span className="text-3xl block mb-4">{icon}</span>
+                <div className="w-6 h-px bg-gold/50 mx-auto mb-5" />
                 <h3 className="font-display text-2xl font-light text-charcoal mb-3">{title}</h3>
                 <p className="text-muted text-sm leading-relaxed">{text}</p>
               </div>

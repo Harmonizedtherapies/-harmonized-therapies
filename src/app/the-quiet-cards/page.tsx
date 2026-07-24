@@ -194,13 +194,13 @@ export default function OracleCardsPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { icon: '☀️', title: 'Daily Draw', desc: 'Pull one card each morning as a gentle reminder and intention for the day.' },
-              { icon: '🌿', title: 'Retreat Use', desc: 'Spread cards face down — invite each woman to choose one that speaks to her. Use as an opening for sharing.' },
-              { icon: '💧', title: 'Grief Circles', desc: 'Use the Grief & Loss grouping as a dedicated healing practice — each woman draws one card and shares.' },
-              { icon: '📖', title: 'Journal Prompts', desc: 'Each card can be a journaling prompt: "What does this card mean for me right now?"' },
-            ].map(({ icon, title, desc }) => (
+              { title: 'Daily Draw', desc: 'Pull one card each morning as a gentle reminder and intention for the day.' },
+              { title: 'Retreat Use', desc: 'Spread cards face down and invite each woman to choose one that speaks to her. Use as an opening for sharing.' },
+              { title: 'Grief Circles', desc: 'Use the Grief & Loss grouping as a dedicated healing practice. Each woman draws one card and shares.' },
+              { title: 'Journal Prompts', desc: 'Each card can be a journaling prompt: "What does this card mean for me right now?"' },
+            ].map(({ title, desc }) => (
               <div key={title} className="bg-charcoal/60 border border-cream/8 rounded-2xl p-6 text-center">
-                <span className="text-2xl block mb-3">{icon}</span>
+                <div className="w-5 h-px bg-gold/40 mx-auto mb-4" />
                 <h3 className="font-display text-lg font-light text-cream mb-2">{title}</h3>
                 <p className="text-cream/50 text-sm leading-relaxed">{desc}</p>
               </div>

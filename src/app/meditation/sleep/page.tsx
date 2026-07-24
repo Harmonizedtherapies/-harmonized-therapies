@@ -102,7 +102,9 @@ export default function SleepMeditationPage() {
           <div className="rounded-3xl border border-gold/15 bg-[#0d0f1a] p-10 text-center">
             {/* Moon icon */}
             <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center mx-auto mb-6">
-              <span className="text-2xl">🌙</span>
+              <svg className="w-7 h-7 text-gold/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+              </svg>
             </div>
             <p className="text-[0.68rem] tracking-[0.25em] uppercase text-gold/50 mb-3 font-[400]">
               Recording in progress
@@ -117,7 +119,7 @@ export default function SleepMeditationPage() {
 
             {status === 'done' ? (
               <div className="text-center">
-                <p className="font-display text-lg italic text-cream/80 mb-2">You&apos;re on the list 🌙</p>
+                <p className="font-display text-lg italic text-cream/80 mb-2">You&apos;re on the list.</p>
                 <p className="text-cream/40 text-sm">Danielle will reach out the moment it&apos;s live.</p>
               </div>
             ) : (
