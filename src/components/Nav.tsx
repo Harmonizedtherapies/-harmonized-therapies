@@ -15,7 +15,6 @@ const links = [
   { href: '/meditations', label: 'Meditations' },
   { href: '/the-quiet-corner', label: 'Quiet Corner' },
   { href: '/contact', label: 'Contact' },
-  { href: '/enquire', label: 'Enquire' },
 ]
 
 export default function Nav() {
@@ -74,12 +73,12 @@ export default function Nav() {
             </li>
           ))}
           <li>
-            <a
-              href="mailto:danielle@harmonizedtherapies.com.au?subject=Session Enquiry"
+            <Link
+              href="/enquire"
               className="border border-gold text-gold text-[0.72rem] tracking-[0.12em] uppercase px-6 py-2.5 rounded-full hover:bg-gold hover:text-charcoal transition-colors whitespace-nowrap"
             >
-              Get in Touch
-            </a>
+              Enquire
+            </Link>
           </li>
         </ul>
 
@@ -115,12 +114,12 @@ export default function Nav() {
               {label}
             </Link>
           ))}
-          <a
-            href="mailto:danielle@harmonizedtherapies.com.au?subject=Session Enquiry"
+          <Link
+            href="/enquire"
             className="self-start bg-sage text-white text-[0.72rem] tracking-[0.12em] uppercase px-6 py-3 rounded-full hover:bg-sage-dark transition-colors mt-2"
           >
-            Get in Touch
-          </a>
+            Enquire
+          </Link>
         </div>
       )}
     </header>
