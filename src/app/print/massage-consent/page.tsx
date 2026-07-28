@@ -1,3 +1,4 @@
+'use client'
 export default function PrintMassageConsent() {
   return (
     <div className="min-h-screen bg-white p-10 print:p-8 font-sans text-sm text-charcoal max-w-2xl mx-auto">
