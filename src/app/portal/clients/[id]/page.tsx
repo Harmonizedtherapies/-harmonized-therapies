@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
-import { supabase, type Client, type Session, type ClientFile } from '@/lib/supabase'
+import { supabase, type Client, type Session, type ClientFile, type MassageConsentData } from '@/lib/supabase'
 
 const labelClass = 'text-[0.65rem] tracking-[0.15em] uppercase text-muted font-[400]'
 const inputClass = 'w-full border border-charcoal/10 rounded-xl px-4 py-3 text-sm text-charcoal outline-none focus:border-sage transition-colors'
@@ -153,6 +153,88 @@ function IntakeSection({ client }: { client: Client }) {
               <ReadField label="Pregnant" value={intake.pregnant} />
               <ReadField label="Areas to avoid" value={intake.areas_to_avoid} />
               <ReadField label="Consent given" value={intake.consent_given} />
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+// ─── Consent section ─────────────────────────────────────────────────────────
+
+function ConsentSection({ client }: { client: Client }) {
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
+  const link = `${baseUrl}/massage-consent?token=${client.massage_consent_token}`
+  const consent = client.massage_consent as MassageConsentData | null
+
+  async function sendConsent() {
+    const res = await fetch('/api/portal/send-massage-consent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ client_id: client.id }),
+    })
+    if (!res.ok) throw new Error('Send failed')
+  }
+
+  return (
+    <div className="space-y-5">
+      <div className="bg-white rounded-2xl p-6 border border-sage/10">
+        <div className="flex items-center justify-between gap-4 mb-3">
+          <div>
+            <p className={labelClass + ' mb-1'}>Massage consent form</p>
+            <p className="text-[0.65rem] text-muted/60 font-mono truncate max-w-xs">{link}</p>
+          </div>
+          <StatusPill submitted={!!client.massage_consent_submitted_at} submittedAt={client.massage_consent_submitted_at} />
+        </div>
+        <div className="flex items-center gap-2 flex-wrap">
+          <CopyButton url={link} />
+          <SendButton onSend={sendConsent} hasEmail={!!client.email} />
+          <a
+            href="/print/massage-consent"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[0.7rem] tracking-[0.1em] uppercase px-4 py-2 rounded-full border border-sage/30 text-sage hover:bg-sage hover:text-white transition-colors whitespace-nowrap"
+          >
+            Print blank form
+          </a>
+        </div>
+      </div>
+
+      {!consent && (
+        <p className="text-center text-muted text-sm py-6">No consent form submitted yet.</p>
+      )}
+
+      {consent && (
+        <>
+          <div className="bg-white rounded-2xl p-6 border border-sage/10">
+            <p className="text-[0.68rem] tracking-[0.22em] uppercase text-sage mb-4">Personal details</p>
+            <div className="divide-y divide-charcoal/5">
+              <div className="grid sm:grid-cols-3 gap-x-6 pb-4">
+                <ReadField label="Full name" value={consent.full_name} />
+                <ReadField label="Date of birth" value={consent.dob ? new Date(consent.dob + 'T00:00:00').toLocaleDateString('en-AU') : null} />
+                <ReadField label="Phone" value={consent.phone} />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 border border-sage/10">
+            <p className="text-[0.68rem] tracking-[0.22em] uppercase text-sage mb-4">Health information</p>
+            <div className="divide-y divide-charcoal/5">
+              <ReadField label="Health conditions" value={consent.health_conditions} />
+              <ReadField label="Medications" value={consent.medications} />
+              <ReadField label="Recent surgery or injury" value={consent.recent_surgery_injury} />
+              <ReadField label="Skin conditions or allergies" value={consent.skin_conditions} />
+              <ReadField label="Pregnant" value={consent.pregnant} />
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 border border-sage/10">
+            <p className="text-[0.68rem] tracking-[0.22em] uppercase text-sage mb-4">Preferences</p>
+            <div className="divide-y divide-charcoal/5">
+              <ReadField label="Areas to avoid" value={consent.areas_to_avoid} />
+              <ReadField label="Pressure preference" value={consent.pressure_preference} />
+              <ReadField label="Consent given" value={consent.consent_given} />
             </div>
           </div>
         </>
@@ -476,7 +558,7 @@ function ClientFiles({ clientId }: { clientId: string }) {
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-type Tab = 'profile' | 'intake' | 'sessions'
+type Tab = 'profile' | 'intake' | 'consent' | 'sessions'
 
 export default function ClientDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -526,6 +608,7 @@ export default function ClientDetailPage() {
   const tabs: { id: Tab; label: string }[] = [
     { id: 'profile', label: 'Profile' },
     { id: 'intake', label: client.intake_submitted_at ? 'Intake ✓' : 'Intake' },
+    { id: 'consent', label: client.massage_consent_submitted_at ? 'Consent ✓' : 'Consent' },
     { id: 'sessions', label: 'Sessions' },
   ]
 
@@ -627,6 +710,9 @@ export default function ClientDetailPage() {
 
         {/* Intake tab */}
         {tab === 'intake' && <IntakeSection client={client} />}
+
+        {/* Consent tab */}
+        {tab === 'consent' && <ConsentSection client={client} />}
 
         {/* Sessions tab */}
         {tab === 'sessions' && <SessionsSection clientId={id} clientEmail={client.email} />}

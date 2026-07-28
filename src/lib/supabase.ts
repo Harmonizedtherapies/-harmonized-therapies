@@ -62,8 +62,26 @@ export type Client = {
   intake: IntakeData | null
   intake_token: string
   intake_submitted_at: string | null
+  massage_consent: MassageConsentData | null
+  massage_consent_token: string
+  massage_consent_submitted_at: string | null
   created_at: string
   updated_at: string
+}
+
+export type MassageConsentData = {
+  full_name?: string
+  dob?: string
+  phone?: string
+  health_conditions?: string
+  medications?: string
+  recent_surgery_injury?: string
+  skin_conditions?: string
+  areas_to_avoid?: string
+  pregnant?: 'yes' | 'no' | 'unsure'
+  pressure_preference?: 'light' | 'medium' | 'firm'
+  consent_given?: boolean
+  consent_date?: string
 }
 
 export type ClientFile = {
