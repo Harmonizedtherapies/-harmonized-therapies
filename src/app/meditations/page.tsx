@@ -23,7 +23,7 @@ const meditations = [
     duration: '20 min',
     theme: 'Sleep · Nervous System · Surrender',
     num: '02',
-    status: 'recording' as const,
+    status: 'available' as const,
   },
   {
     slug: null,

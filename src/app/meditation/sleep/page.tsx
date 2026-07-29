@@ -1,10 +1,14 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
+import MeditationPlayer from '@/components/MeditationPlayer'
 import FadeIn from '@/components/FadeIn'
 import FloatingOrbs from '@/components/FloatingOrbs'
-import { supabase } from '@/lib/supabase'
+
+export const metadata: Metadata = {
+  title: 'Sleep & Surrender — Guided Meditation',
+  description:
+    'A free guided sleep meditation by Danielle Brierley of Harmonized Therapies. A gentle journey into deep rest for anyone whose nervous system has forgotten how to let go.',
+}
 
 const sections = [
   {
@@ -34,18 +38,6 @@ const sections = [
 ]
 
 export default function SleepMeditationPage() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle')
-
-  async function handleNotify(e: React.FormEvent) {
-    e.preventDefault()
-    setStatus('sending')
-    await supabase
-      .from('newsletter_signups')
-      .insert([{ email, source: 'sleep-meditation-launch' }])
-    setStatus('done')
-  }
-
   return (
     <>
       {/* ─── HERO ─── */}
@@ -57,24 +49,22 @@ export default function SleepMeditationPage() {
               key={i}
               className="absolute rounded-full bg-white"
               style={{
-                width: Math.random() > 0.85 ? '2px' : '1px',
-                height: Math.random() > 0.85 ? '2px' : '1px',
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.6 + 0.1,
+                width: i % 7 === 0 ? '2px' : '1px',
+                height: i % 7 === 0 ? '2px' : '1px',
+                top: `${(i * 37 + 13) % 100}%`,
+                left: `${(i * 61 + 7) % 100}%`,
+                opacity: ((i % 5) + 1) * 0.12,
               }}
             />
           ))}
-          {/* Soft moon glow */}
           <div className="absolute top-16 right-24 w-40 h-40 rounded-full bg-gold/10 blur-3xl" />
           <div className="absolute top-16 right-24 w-20 h-20 rounded-full bg-gold/15 blur-xl" />
-          {/* Deep aurora */}
           <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#111827]/80 to-transparent" />
         </div>
 
         <div className="relative max-w-3xl mx-auto px-6 lg:px-10 pt-36 pb-24 text-center w-full">
           <p className="text-[0.68rem] tracking-[0.3em] uppercase text-gold/50 mb-6 font-[400]">
-            Guided Meditation · Coming Soon
+            Free Guided Meditation · Approx. 21 minutes
           </p>
           <h1 className="font-display text-[clamp(2.8rem,7vw,5.5rem)] font-light text-cream italic leading-tight mb-5">
             Sleep &amp; Surrender
@@ -85,7 +75,7 @@ export default function SleepMeditationPage() {
             and the gentle art of letting the day go.
           </p>
           <p className="text-cream/30 text-sm">
-            Approx. 20 minutes · Best listened to in bed · Headphones recommended
+            Best listened to in bed · Headphones recommended
           </p>
         </div>
 
@@ -96,52 +86,17 @@ export default function SleepMeditationPage() {
         </div>
       </section>
 
-      {/* ─── COMING SOON PLAYER ─── */}
+      {/* ─── PLAYER ─── */}
       <section className="bg-[#111827] py-16 px-6 lg:px-10">
         <FadeIn className="max-w-lg mx-auto">
-          <div className="rounded-3xl border border-gold/15 bg-[#0d0f1a] p-10 text-center">
-            {/* Moon icon */}
-            <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center mx-auto mb-6">
-              <svg className="w-7 h-7 text-gold/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
-              </svg>
-            </div>
-            <p className="text-[0.68rem] tracking-[0.25em] uppercase text-gold/50 mb-3 font-[400]">
-              Recording in progress
-            </p>
-            <h2 className="font-display text-xl font-light text-cream italic mb-4">
-              Danielle is recording this meditation now
-            </h2>
-            <p className="text-cream/40 text-sm leading-relaxed mb-8">
-              Enter your email below and you&apos;ll be the first to know the moment it&apos;s ready
-              to listen — completely free.
-            </p>
-
-            {status === 'done' ? (
-              <div className="text-center">
-                <p className="font-display text-lg italic text-cream/80 mb-2">You&apos;re on the list.</p>
-                <p className="text-cream/40 text-sm">Danielle will reach out the moment it&apos;s live.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleNotify} className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="Your email address"
-                  required
-                  className="flex-1 bg-white/6 border border-cream/15 rounded-full px-5 py-3 text-sm text-cream placeholder-cream/30 outline-none focus:border-gold/40 transition-colors"
-                />
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="bg-gold text-charcoal text-[0.72rem] tracking-[0.12em] uppercase px-6 py-3 rounded-full hover:bg-gold/80 transition-colors whitespace-nowrap disabled:opacity-60"
-                >
-                  {status === 'sending' ? 'One moment...' : 'Notify Me'}
-                </button>
-              </form>
-            )}
-          </div>
+          <MeditationPlayer
+            src="/audio/sleep-and-surrender.m4a"
+            title="Sleep & Surrender"
+          />
+          <p className="text-center text-cream/30 text-xs mt-5 leading-relaxed">
+            If you have been introduced to Havening, you may like to softly begin
+            havening your arms or face as you drift into sleep.
+          </p>
         </FadeIn>
       </section>
 
@@ -190,7 +145,7 @@ export default function SleepMeditationPage() {
       <section className="bg-[#0d0f1a] py-16 px-6 lg:px-10 border-t border-white/5">
         <FadeIn className="max-w-4xl mx-auto">
           <p className="text-[0.68rem] tracking-[0.22em] uppercase text-gold/40 mb-8 font-[400] text-center">
-            While you wait
+            Also in the library
           </p>
           <div className="grid sm:grid-cols-2 gap-4">
             <Link
