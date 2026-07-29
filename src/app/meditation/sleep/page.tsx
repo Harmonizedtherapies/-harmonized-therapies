@@ -1,14 +1,11 @@
+'use client'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import type { Metadata } from 'next'
 import MeditationPlayer from '@/components/MeditationPlayer'
 import FadeIn from '@/components/FadeIn'
-import FloatingOrbs from '@/components/FloatingOrbs'
+import { supabase } from '@/lib/supabase'
 
-export const metadata: Metadata = {
-  title: 'Sleep & Surrender — Guided Meditation',
-  description:
-    'A free guided sleep meditation by Danielle Brierley of Harmonized Therapies. A gentle journey into deep rest for anyone whose nervous system has forgotten how to let go.',
-}
+const STORAGE_KEY = 'ht_sleep_access'
 
 const sections = [
   {
@@ -37,7 +34,67 @@ const sections = [
   },
 ]
 
+function EmailGate({ onUnlock }: { onUnlock: () => void }) {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle')
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setStatus('sending')
+    await supabase.from('newsletter_signups').upsert(
+      [{ email, source: 'sleep-meditation' }],
+      { onConflict: 'email' }
+    )
+    localStorage.setItem(STORAGE_KEY, 'true')
+    onUnlock()
+  }
+
+  return (
+    <div className="rounded-3xl border border-gold/15 bg-[#0d0f1a] p-10 text-center">
+      <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center mx-auto mb-6">
+        <svg className="w-7 h-7 text-gold/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+        </svg>
+      </div>
+      <h2 className="font-display text-xl font-light text-cream italic mb-3">
+        Listen for free
+      </h2>
+      <p className="text-cream/40 text-sm leading-relaxed mb-8 max-w-xs mx-auto">
+        Enter your email and the meditation will begin. You&apos;ll also be the first
+        to hear when new recordings are added to the library.
+      </p>
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder="Your email address"
+          required
+          className="flex-1 bg-white/6 border border-cream/15 rounded-full px-5 py-3 text-sm text-cream placeholder-cream/30 outline-none focus:border-gold/40 transition-colors"
+        />
+        <button
+          type="submit"
+          disabled={status === 'sending'}
+          className="bg-gold text-charcoal text-[0.72rem] tracking-[0.12em] uppercase px-6 py-3 rounded-full hover:bg-gold/80 transition-colors whitespace-nowrap disabled:opacity-60"
+        >
+          {status === 'sending' ? 'One moment…' : 'Listen Now'}
+        </button>
+      </form>
+      {status === 'error' && (
+        <p className="text-red-400 text-xs mt-3">Something went wrong — please try again.</p>
+      )}
+      <p className="text-cream/20 text-xs mt-5">No spam. Unsubscribe anytime.</p>
+    </div>
+  )
+}
+
 export default function SleepMeditationPage() {
+  const [unlocked, setUnlocked] = useState(false)
+
+  useEffect(() => {
+    if (localStorage.getItem(STORAGE_KEY) === 'true') setUnlocked(true)
+  }, [])
+
   return (
     <>
       {/* ─── HERO ─── */}
@@ -86,17 +143,23 @@ export default function SleepMeditationPage() {
         </div>
       </section>
 
-      {/* ─── PLAYER ─── */}
+      {/* ─── PLAYER / GATE ─── */}
       <section className="bg-[#111827] py-16 px-6 lg:px-10">
         <FadeIn className="max-w-lg mx-auto">
-          <MeditationPlayer
-            src="/audio/sleep-and-surrender.m4a"
-            title="Sleep & Surrender"
-          />
-          <p className="text-center text-cream/30 text-xs mt-5 leading-relaxed">
-            If you have been introduced to Havening, you may like to softly begin
-            havening your arms or face as you drift into sleep.
-          </p>
+          {unlocked ? (
+            <>
+              <MeditationPlayer
+                src="/audio/sleep-and-surrender.m4a"
+                title="Sleep & Surrender"
+              />
+              <p className="text-center text-cream/30 text-xs mt-5 leading-relaxed">
+                If you have been introduced to Havening, you may like to softly begin
+                havening your arms or face as you drift into sleep.
+              </p>
+            </>
+          ) : (
+            <EmailGate onUnlock={() => setUnlocked(true)} />
+          )}
         </FadeIn>
       </section>
 
