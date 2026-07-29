@@ -108,6 +108,41 @@ export default function MeditationsPage() {
         </div>
       </section>
 
+      {/* ─── INTRO ─── */}
+      <section className="bg-cream py-20 px-6 lg:px-10">
+        <FadeIn className="max-w-3xl mx-auto text-center">
+          <p className="text-[0.68rem] tracking-[0.22em] uppercase text-sage mb-6 font-[400]">Welcome</p>
+          <div className="space-y-5 text-charcoal/70 leading-relaxed text-[1.05rem]">
+            <p>
+              Life asks so much of our nervous systems. Whether you&apos;re carrying grief, navigating change,
+              living with illness, healing from trauma, or simply longing for a moment of peace, these guided
+              meditations have been thoughtfully created to offer a safe place to pause, breathe, and come
+              home to yourself.
+            </p>
+            <p>
+              Each meditation is a standalone experience, carefully written using trauma-informed language,
+              grounding techniques, gentle hypnotic storytelling, and nervous system regulation principles.
+              Rather than asking you to &ldquo;fix&rdquo; or &ldquo;let go&rdquo; of difficult emotions,
+              these recordings create a compassionate space where your mind and body can begin to soften,
+              settle, and restore.
+            </p>
+            <p>
+              Listen whenever you need support — whether it&apos;s first thing in the morning, before sleep,
+              during challenging moments, or simply when you need a quiet place to land.
+            </p>
+            <p className="font-display text-lg italic text-charcoal">
+              This collection has been created for The Quiet Holders — for those who spend so much of their
+              lives caring for others, and who deserve to be held with the same kindness and compassion they
+              so freely offer.
+            </p>
+            <p>
+              There is no right way to listen. Simply press play, allow yourself to be guided, and trust
+              that your nervous system already knows how to find its way back to calm.
+            </p>
+          </div>
+        </FadeIn>
+      </section>
+
       {/* ─── AVAILABLE NOW ─── */}
       <section className="bg-warm-white py-20 px-6 lg:px-10">
         <div className="max-w-5xl mx-auto">
