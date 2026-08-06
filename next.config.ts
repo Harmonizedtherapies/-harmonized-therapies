@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     return [
       { source: '/oracle-cards', destination: '/the-quiet-cards', permanent: true },
       { source: '/well-being-workshop', destination: '/retreats', permanent: true },
+      { source: '/home', destination: '/', permanent: true },
     ]
   },
 };
