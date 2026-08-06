@@ -100,3 +100,18 @@ export type NewsletterSignup = {
   source: string
   created_at: string
 }
+
+export type Invoice = {
+  id: string
+  invoice_number: number
+  client_name: string
+  client_email: string | null
+  description: string | null
+  amount: number
+  invoice_date: string
+  due_date: string | null
+  paid: boolean
+  paid_date: string | null
+  notes: string | null
+  created_at: string
+}
