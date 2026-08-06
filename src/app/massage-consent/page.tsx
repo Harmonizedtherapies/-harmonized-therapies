@@ -8,6 +8,53 @@ const labelClass = 'block text-[0.68rem] tracking-[0.15em] uppercase text-muted 
 const inputClass = 'w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 text-sm text-charcoal placeholder-muted/40 outline-none focus:border-sage transition-colors'
 const textareaClass = `${inputClass} resize-none leading-relaxed`
 
+const CONDITIONS = [
+  'Heart disease', 'Diabetes', 'Epilepsy', 'Asthma', 'Headaches',
+  'Chronic illness / disease', 'Dizziness', 'High blood pressure', 'Low blood pressure',
+  'Night sweats', 'Skin conditions', 'Anxiety', 'Depression',
+  'GIT conditions (constipation/diarrhoea)', 'Menstrual irregularities / pain',
+  'Menopausal symptoms', 'Major surgeries', 'Other',
+]
+
+function SectionDivider({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-3 mb-6">
+      <div className="h-px flex-1 bg-sage/15" />
+      <p className="text-[0.68rem] tracking-[0.22em] uppercase text-sage font-[400]">{label}</p>
+      <div className="h-px flex-1 bg-sage/15" />
+    </div>
+  )
+}
+
+function ScaleGroup({ label, name, value, options, onChange }: {
+  label: string
+  name: string
+  value: string | undefined
+  options: string[]
+  onChange: (v: string) => void
+}) {
+  return (
+    <div>
+      <label className={labelClass}>{label}</label>
+      <div className="flex gap-4 flex-wrap">
+        {options.map(opt => (
+          <label key={opt} className="flex items-center gap-2 cursor-pointer group">
+            <input
+              type="radio"
+              name={name}
+              value={opt}
+              checked={value === opt}
+              onChange={() => onChange(opt)}
+              className="accent-sage w-4 h-4"
+            />
+            <span className="text-sm text-charcoal capitalize group-hover:text-sage transition-colors">{opt}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function ConsentForm() {
   const params = useSearchParams()
   const token = params.get('token') ?? ''
@@ -15,8 +62,16 @@ function ConsentForm() {
   const [form, setForm] = useState<MassageConsentData>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
 
-  function set(field: keyof MassageConsentData, value: string | boolean) {
+  function set(field: keyof MassageConsentData, value: string | boolean | string[]) {
     setForm(f => ({ ...f, [field]: value }))
+  }
+
+  function toggleCondition(condition: string) {
+    const current = form.health_conditions_list ?? []
+    const next = current.includes(condition)
+      ? current.filter(c => c !== condition)
+      : [...current, condition]
+    set('health_conditions_list', next)
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -58,9 +113,7 @@ function ConsentForm() {
           <div className="w-10 mx-auto mb-6 text-sage/50">
             <Logo />
           </div>
-          <h2 className="font-display text-3xl font-light text-charcoal mb-4">
-            Thank you
-          </h2>
+          <h2 className="font-display text-3xl font-light text-charcoal mb-4">Thank you</h2>
           <p className="text-muted text-sm leading-relaxed max-w-sm mx-auto">
             Your consent form has been received. Danielle will review this before your session.
             You don&apos;t need to do anything else — see you soon.
@@ -93,11 +146,7 @@ function ConsentForm() {
 
         {/* ─── Section 1: Personal details ─── */}
         <section>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-sage/15" />
-            <p className="text-[0.68rem] tracking-[0.22em] uppercase text-sage font-[400]">Personal details</p>
-            <div className="h-px flex-1 bg-sage/15" />
-          </div>
+          <SectionDivider label="Personal details" />
           <div className="bg-warm-white rounded-3xl p-7 space-y-5">
             <div>
               <label className={labelClass}>Full name *</label>
@@ -136,22 +185,37 @@ function ConsentForm() {
 
         {/* ─── Section 2: Health information ─── */}
         <section>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-sage/15" />
-            <p className="text-[0.68rem] tracking-[0.22em] uppercase text-sage font-[400]">Health information</p>
-            <div className="h-px flex-1 bg-sage/15" />
-          </div>
-          <div className="bg-warm-white rounded-3xl p-7 space-y-5">
+          <SectionDivider label="Health information" />
+          <div className="bg-warm-white rounded-3xl p-7 space-y-6">
             <p className="text-muted text-xs leading-relaxed -mt-1">
               This information helps me work safely with your body. Please share anything relevant, even if you&apos;re unsure whether it matters.
             </p>
 
+            {/* Condition checkboxes */}
             <div>
-              <label className={labelClass}>Health conditions or medical history</label>
+              <label className={labelClass}>Do you have any of the following? (tick all that apply)</label>
+              <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 mt-3">
+                {CONDITIONS.map(condition => (
+                  <label key={condition} className="flex items-center gap-2.5 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      checked={(form.health_conditions_list ?? []).includes(condition)}
+                      onChange={() => toggleCondition(condition)}
+                      className="accent-sage w-4 h-4 flex-shrink-0"
+                    />
+                    <span className="text-sm text-charcoal group-hover:text-sage transition-colors leading-snug">{condition}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Details if ticked */}
+            <div>
+              <label className={labelClass}>If you ticked any of the above, please give details</label>
               <textarea
-                rows={3}
+                rows={2}
                 className={textareaClass}
-                placeholder="e.g. high blood pressure, diabetes, chronic pain, mental health conditions, recent diagnoses…"
+                placeholder="e.g. total thyroid removal, anxiety managed with medication…"
                 value={form.health_conditions ?? ''}
                 onChange={e => set('health_conditions', e.target.value)}
               />
@@ -176,6 +240,17 @@ function ConsentForm() {
                 placeholder="e.g. recent surgery, sprains, fractures, flare-ups — include approximate timeframe"
                 value={form.recent_surgery_injury ?? ''}
                 onChange={e => set('recent_surgery_injury', e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className={labelClass}>Major accidents or injuries in the last 10 years</label>
+              <textarea
+                rows={2}
+                className={textareaClass}
+                placeholder="Please describe or write No"
+                value={form.accidents_injuries ?? ''}
+                onChange={e => set('accidents_injuries', e.target.value)}
               />
             </div>
 
@@ -213,13 +288,111 @@ function ConsentForm() {
           </div>
         </section>
 
-        {/* ─── Section 3: Preferences ─── */}
+        {/* ─── Section 3: Current complaint ─── */}
         <section>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-sage/15" />
-            <p className="text-[0.68rem] tracking-[0.22em] uppercase text-sage font-[400]">Your preferences</p>
-            <div className="h-px flex-1 bg-sage/15" />
+          <SectionDivider label="Current complaint" />
+          <div className="bg-warm-white rounded-3xl p-7 space-y-5">
+            <p className="text-muted text-xs leading-relaxed -mt-1">
+              Is there a specific condition or experience you&apos;re hoping this session may help with? If not, leave this section blank.
+            </p>
+            <div>
+              <label className={labelClass}>What are you experiencing?</label>
+              <textarea
+                rows={2}
+                className={textareaClass}
+                placeholder="e.g. lower back tightness, shoulder tension, stress, grief…"
+                value={form.current_complaint ?? ''}
+                onChange={e => set('current_complaint', e.target.value)}
+              />
+            </div>
+            <div className="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label className={labelClass}>When did it begin?</label>
+                <input
+                  type="text"
+                  className={inputClass}
+                  placeholder="e.g. 3 months ago, after surgery…"
+                  value={form.complaint_began ?? ''}
+                  onChange={e => set('complaint_began', e.target.value)}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>What do you think caused it?</label>
+                <input
+                  type="text"
+                  className={inputClass}
+                  placeholder="e.g. stress, overuse, injury, unknown…"
+                  value={form.complaint_cause ?? ''}
+                  onChange={e => set('complaint_cause', e.target.value)}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>What relieves it?</label>
+                <input
+                  type="text"
+                  className={inputClass}
+                  placeholder="e.g. heat, rest, movement…"
+                  value={form.complaint_relieves ?? ''}
+                  onChange={e => set('complaint_relieves', e.target.value)}
+                />
+              </div>
+              <div>
+                <label className={labelClass}>What aggravates it?</label>
+                <input
+                  type="text"
+                  className={inputClass}
+                  placeholder="e.g. sitting, cold, stress…"
+                  value={form.complaint_aggravates ?? ''}
+                  onChange={e => set('complaint_aggravates', e.target.value)}
+                />
+              </div>
+            </div>
           </div>
+        </section>
+
+        {/* ─── Section 4: Wellbeing today ─── */}
+        <section>
+          <SectionDivider label="How are you today?" />
+          <div className="bg-warm-white rounded-3xl p-7 space-y-6">
+            <p className="text-muted text-xs leading-relaxed -mt-1">
+              A quick snapshot so I can meet you where you are.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <ScaleGroup
+                label="Pain level"
+                name="pain_level"
+                value={form.pain_level}
+                options={['low', 'medium', 'high']}
+                onChange={v => set('pain_level', v)}
+              />
+              <ScaleGroup
+                label="Sleep quality"
+                name="sleep_quality"
+                value={form.sleep_quality}
+                options={['poor', 'average', 'good']}
+                onChange={v => set('sleep_quality', v)}
+              />
+              <ScaleGroup
+                label="Mood"
+                name="mood"
+                value={form.mood}
+                options={['poor', 'average', 'good']}
+                onChange={v => set('mood', v)}
+              />
+              <ScaleGroup
+                label="Energy"
+                name="energy"
+                value={form.energy}
+                options={['poor', 'average', 'good']}
+                onChange={v => set('energy', v)}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Section 5: Preferences ─── */}
+        <section>
+          <SectionDivider label="Your preferences" />
           <div className="bg-warm-white rounded-3xl p-7 space-y-5">
             <div>
               <label className={labelClass}>Areas you&apos;d prefer I avoid or be gentle with</label>
@@ -231,7 +404,6 @@ function ConsentForm() {
                 onChange={e => set('areas_to_avoid', e.target.value)}
               />
             </div>
-
             <div>
               <label className={labelClass}>Pressure preference</label>
               <div className="flex gap-5 flex-wrap">
@@ -253,13 +425,9 @@ function ConsentForm() {
           </div>
         </section>
 
-        {/* ─── Section 4: Consent ─── */}
+        {/* ─── Section 6: Consent ─── */}
         <section>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-sage/15" />
-            <p className="text-[0.68rem] tracking-[0.22em] uppercase text-sage font-[400]">Consent</p>
-            <div className="h-px flex-1 bg-sage/15" />
-          </div>
+          <SectionDivider label="Consent" />
           <div className="bg-warm-white rounded-3xl p-7 space-y-5">
             <p className="text-muted text-sm leading-relaxed">
               Massage therapy involves therapeutic touch. You have the right to ask Danielle to adjust

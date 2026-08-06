@@ -73,12 +73,23 @@ export type MassageConsentData = {
   full_name?: string
   dob?: string
   phone?: string
+  health_conditions_list?: string[]
   health_conditions?: string
   medications?: string
   recent_surgery_injury?: string
+  accidents_injuries?: string
   skin_conditions?: string
-  areas_to_avoid?: string
   pregnant?: 'yes' | 'no' | 'unsure'
+  current_complaint?: string
+  complaint_began?: string
+  complaint_cause?: string
+  complaint_relieves?: string
+  complaint_aggravates?: string
+  pain_level?: 'low' | 'medium' | 'high'
+  sleep_quality?: 'poor' | 'average' | 'good'
+  mood?: 'poor' | 'average' | 'good'
+  energy?: 'poor' | 'average' | 'good'
+  areas_to_avoid?: string
   pressure_preference?: 'light' | 'medium' | 'firm'
   consent_given?: boolean
   consent_date?: string
