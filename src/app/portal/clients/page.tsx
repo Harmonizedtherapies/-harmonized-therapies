@@ -43,9 +43,14 @@ export default function ClientsPage() {
             <h2 className="font-display text-2xl font-light text-charcoal">Clients</h2>
             <p className="text-muted text-sm">{clients.length} total</p>
           </div>
-          <Link href="/portal/clients/new" className="bg-sage text-white text-[0.72rem] tracking-[0.1em] uppercase px-5 py-2.5 rounded-full hover:bg-sage-dark transition-colors">
-            + Add Client
-          </Link>
+          <div className="flex gap-3">
+            <Link href="/portal/clients/import" className="border border-sage text-sage text-[0.72rem] tracking-[0.1em] uppercase px-5 py-2.5 rounded-full hover:bg-sage hover:text-white transition-colors">
+              Import CSV
+            </Link>
+            <Link href="/portal/clients/new" className="bg-sage text-white text-[0.72rem] tracking-[0.1em] uppercase px-5 py-2.5 rounded-full hover:bg-sage-dark transition-colors">
+              + Add Client
+            </Link>
+          </div>
         </div>
 
         <input
