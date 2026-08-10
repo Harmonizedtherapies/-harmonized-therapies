@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { supabase } from '@/lib/supabase'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
@@ -9,6 +10,7 @@ const labelClass = 'block text-[0.68rem] tracking-[0.15em] uppercase text-muted 
 export default function NewClientForm() {
   const [status, setStatus] = useState<Status>('idle')
   const [therapy, setTherapy] = useState('')
+  const [newsletter, setNewsletter] = useState(false)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -22,9 +24,21 @@ export default function NewClientForm() {
         headers: { Accept: 'application/json' },
       })
       if (res.ok) {
+        if (newsletter) {
+          const firstName = (data.get('First Name') as string || '').trim()
+          const lastName = (data.get('Last Name') as string || '').trim()
+          const email = (data.get('Email') as string || '').trim()
+          if (email) {
+            await supabase.from('newsletter_signups').upsert(
+              [{ name: [firstName, lastName].filter(Boolean).join(' '), email, source: 'enquiry' }],
+              { onConflict: 'email', ignoreDuplicates: true }
+            )
+          }
+        }
         setStatus('success')
         form.reset()
         setTherapy('')
+        setNewsletter(false)
       } else {
         setStatus('error')
       }
@@ -214,6 +228,19 @@ export default function NewClientForm() {
             className={inputClass + ' resize-none'}
           />
         </div>
+
+        {/* Newsletter consent */}
+        <label className="flex items-start gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            checked={newsletter}
+            onChange={e => setNewsletter(e.target.checked)}
+            className="mt-0.5 w-4 h-4 rounded border-charcoal/20 text-sage accent-sage flex-shrink-0"
+          />
+          <span className="text-muted text-xs leading-relaxed">
+            Keep me updated with occasional news from Danielle — upcoming retreats, offerings, and gentle reminders to look after yourself.
+          </span>
+        </label>
 
         {status === 'error' && (
           <p className="text-red-500 text-sm">Something went wrong — please try again or email Danielle directly at danielle@harmonizedtherapies.com.au</p>
