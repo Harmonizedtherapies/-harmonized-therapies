@@ -1,10 +1,12 @@
 'use client'
 import { useState } from 'react'
+import { supabase } from '@/lib/supabase'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle')
+  const [newsletter, setNewsletter] = useState(false)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -18,8 +20,20 @@ export default function ContactForm() {
         headers: { Accept: 'application/json' },
       })
       if (res.ok) {
+        if (newsletter) {
+          const firstName = (data.get('First Name') as string || '').trim()
+          const lastName = (data.get('Last Name') as string || '').trim()
+          const email = (data.get('Email') as string || '').trim()
+          if (email) {
+            await supabase.from('newsletter_signups').upsert(
+              [{ name: [firstName, lastName].filter(Boolean).join(' '), email, source: 'contact' }],
+              { onConflict: 'email', ignoreDuplicates: true }
+            )
+          }
+        }
         setStatus('success')
         form.reset()
+        setNewsletter(false)
       } else {
         setStatus('error')
       }
@@ -121,6 +135,19 @@ export default function ContactForm() {
             placeholder="Tell Danielle a little about what you're looking for..."
           />
         </div>
+        {/* Newsletter consent */}
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={newsletter}
+            onChange={e => setNewsletter(e.target.checked)}
+            className="mt-0.5 w-4 h-4 rounded border-charcoal/20 text-sage accent-sage flex-shrink-0"
+          />
+          <span className="text-muted text-xs leading-relaxed">
+            Keep me updated with occasional news from Danielle — upcoming retreats, offerings, and gentle reminders to look after yourself.
+          </span>
+        </label>
+
         {status === 'error' && (
           <p className="text-red-500 text-sm text-center">Something went wrong — please try again or email Danielle directly.</p>
         )}
