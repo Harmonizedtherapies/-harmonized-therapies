@@ -104,7 +104,7 @@ export default function ImportPage() {
     )
 
     if (clientErr) {
-      setError(clientErr.message)
+      setError(`Import failed: ${clientErr.message} (code: ${clientErr.code})`)
       setImporting(false)
       return
     }
