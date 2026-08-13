@@ -6,6 +6,7 @@ import { supabase, type NewsletterSignup } from '@/lib/supabase'
 export default function NewsletterPage() {
   const [signups, setSignups] = useState<NewsletterSignup[]>([])
   const [loading, setLoading] = useState(true)
+  const [deleting, setDeleting] = useState<string | null>(null)
 
   useEffect(() => {
     supabase.from('newsletter_signups').select('*').order('created_at', { ascending: false }).then(({ data }) => {
@@ -13,6 +14,14 @@ export default function NewsletterPage() {
       setLoading(false)
     })
   }, [])
+
+  async function handleDelete(id: string) {
+    if (!confirm('Remove this person from your newsletter list?')) return
+    setDeleting(id)
+    await supabase.from('newsletter_signups').delete().eq('id', id)
+    setSignups(prev => prev.filter(s => s.id !== id))
+    setDeleting(null)
+  }
 
   return (
     <div className="min-h-screen bg-cream">
@@ -33,7 +42,7 @@ export default function NewsletterPage() {
       <main className="max-w-5xl mx-auto px-6 py-10">
         <div className="mb-6">
           <h2 className="font-display text-2xl font-light text-charcoal">Newsletter Signups</h2>
-          <p className="text-muted text-sm">{signups.length} subscribers from your website</p>
+          <p className="text-muted text-sm">{signups.length} subscribers</p>
         </div>
 
         {loading ? (
@@ -51,6 +60,7 @@ export default function NewsletterPage() {
                   <th className="text-left px-6 py-4 text-[0.65rem] tracking-[0.15em] uppercase text-muted font-[400] hidden sm:table-cell">Name</th>
                   <th className="text-left px-6 py-4 text-[0.65rem] tracking-[0.15em] uppercase text-muted font-[400] hidden md:table-cell">Source</th>
                   <th className="text-left px-6 py-4 text-[0.65rem] tracking-[0.15em] uppercase text-muted font-[400] hidden md:table-cell">Date</th>
+                  <th className="px-6 py-4"></th>
                 </tr>
               </thead>
               <tbody>
@@ -63,6 +73,15 @@ export default function NewsletterPage() {
                     </td>
                     <td className="px-6 py-4 text-muted hidden md:table-cell">
                       {new Date(s.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button
+                        onClick={() => handleDelete(s.id)}
+                        disabled={deleting === s.id}
+                        className="text-[0.65rem] tracking-[0.1em] uppercase text-muted hover:text-red-400 transition-colors disabled:opacity-40"
+                      >
+                        {deleting === s.id ? 'Removing…' : 'Remove'}
+                      </button>
                     </td>
                   </tr>
                 ))}
