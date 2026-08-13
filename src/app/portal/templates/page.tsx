@@ -2,6 +2,34 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
+const smsTemplates = [
+  {
+    id: 'sms-reminder-day-before',
+    title: 'Appointment reminder — day before',
+    body: `Hi [Name], just a reminder that you have a [service] with Danielle tomorrow at [time] at Harmonized Therapies. Looking forward to seeing you 🌿 Reply if you need to reschedule.`,
+  },
+  {
+    id: 'sms-reminder-morning',
+    title: 'Appointment reminder — morning of',
+    body: `Good morning [Name] 🌿 Just a reminder you have your [service] with Danielle today at [time]. See you soon — Harmonized Therapies.`,
+  },
+  {
+    id: 'sms-retreat',
+    title: 'Retreat / event announcement',
+    body: `Hi [Name], I have a [retreat/event name] coming up on [date] and thought of you. I'd love for you to join us if it feels right. More details here: [link] — Danielle, Harmonized Therapies.`,
+  },
+  {
+    id: 'sms-follow-up',
+    title: 'Follow-up after session',
+    body: `Hi [Name], I hope you're feeling well after your session yesterday. Take it gently and please reach out if anything comes up. Warmly, Danielle 🌿`,
+  },
+  {
+    id: 'sms-newsletter',
+    title: 'Newsletter / general update',
+    body: `Hi [Name], I have some news to share — [brief detail]. You can read more here: [link]. Take care — Danielle, Harmonized Therapies.`,
+  },
+]
+
 const templates = [
   {
     id: 'retreat-general',
@@ -150,6 +178,18 @@ export default function TemplatesPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-6 py-10">
+
+        <div className="mb-8">
+          <h2 className="font-display text-2xl font-light text-charcoal">Text Message Templates</h2>
+          <p className="text-muted text-sm mt-1">Copy and paste into a text message. Replace anything in [brackets] before sending.</p>
+        </div>
+
+        <div className="space-y-4 mb-14">
+          {smsTemplates.map(t => (
+            <TemplateCard key={t.id} title={t.title} body={t.body} />
+          ))}
+        </div>
+
         <div className="mb-8">
           <h2 className="font-display text-2xl font-light text-charcoal">Email Templates</h2>
           <p className="text-muted text-sm mt-1">Click a template to expand, then copy and paste into your email.</p>
