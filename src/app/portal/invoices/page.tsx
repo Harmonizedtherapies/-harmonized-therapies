@@ -238,6 +238,10 @@ export default function InvoicesPage() {
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <p className="font-display text-lg font-light text-charcoal">{fmt(invoice.amount)}</p>
+                  <a href={`/api/portal/preview-invoice?id=${invoice.id}`} target="_blank" rel="noopener noreferrer"
+                    className="text-[0.65rem] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border border-charcoal/15 text-muted hover:bg-sage/10 hover:text-sage hover:border-sage/30 transition-colors">
+                    Preview
+                  </a>
                   <button onClick={() => openSend(invoice)}
                     className="text-[0.65rem] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border border-charcoal/15 text-muted hover:bg-sage/10 hover:text-sage hover:border-sage/30 transition-colors">
                     Send PDF
