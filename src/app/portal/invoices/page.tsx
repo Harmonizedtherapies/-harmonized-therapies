@@ -25,6 +25,7 @@ export default function InvoicesPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [send, setSend] = useState<SendState | null>(null)
+  const [deleting, setDeleting] = useState<string | null>(null)
 
   useEffect(() => {
     loadInvoices()
@@ -79,6 +80,14 @@ export default function InvoicesPage() {
   )
   const outstanding = invoices.filter(i => !i.paid).reduce((sum, i) => sum + i.amount, 0)
   const totalPaid = invoices.filter(i => i.paid).reduce((sum, i) => sum + i.amount, 0)
+
+  async function handleDelete(id: string) {
+    if (!confirm('Delete this invoice?')) return
+    setDeleting(id)
+    await supabase.from('invoices').delete().eq('id', id)
+    setInvoices(prev => prev.filter(i => i.id !== id))
+    setDeleting(null)
+  }
 
   function openSend(invoice: Invoice) {
     setSend({ invoiceId: invoice.id, email: invoice.client_email ?? '', sending: false, sent: false, error: '' })
@@ -253,6 +262,10 @@ export default function InvoicesPage() {
                         : 'bg-white text-muted border-charcoal/15 hover:bg-sage/10 hover:text-sage hover:border-sage/30'
                     }`}>
                     {invoice.paid ? '✓ Paid' : 'Mark paid'}
+                  </button>
+                  <button onClick={() => handleDelete(invoice.id)} disabled={deleting === invoice.id}
+                    className="text-[0.65rem] tracking-[0.1em] uppercase text-muted hover:text-red-400 transition-colors disabled:opacity-40 px-1">
+                    {deleting === invoice.id ? '…' : 'Delete'}
                   </button>
                 </div>
               </div>
