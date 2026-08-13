@@ -7,6 +7,7 @@ export default function ClientsPage() {
   const [clients, setClients] = useState<Client[]>([])
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
+  const [deleting, setDeleting] = useState<string | null>(null)
 
   useEffect(() => {
     supabase.from('clients').select('*').order('name').then(({ data }) => {
@@ -14,6 +15,15 @@ export default function ClientsPage() {
       setLoading(false)
     })
   }, [])
+
+  async function handleDelete(e: React.MouseEvent, id: string) {
+    e.preventDefault()
+    if (!confirm('Delete this client?')) return
+    setDeleting(id)
+    await supabase.from('clients').delete().eq('id', id)
+    setClients(prev => prev.filter(c => c.id !== id))
+    setDeleting(null)
+  }
 
   const filtered = clients.filter(c =>
     c.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -89,6 +99,13 @@ export default function ClientsPage() {
                       {client.service}
                     </span>
                   )}
+                  <button
+                    onClick={e => handleDelete(e, client.id)}
+                    disabled={deleting === client.id}
+                    className="text-[0.65rem] tracking-[0.1em] uppercase text-muted hover:text-red-400 transition-colors disabled:opacity-40 px-1"
+                  >
+                    {deleting === client.id ? '…' : 'Delete'}
+                  </button>
                   <span className="text-muted group-hover:text-sage transition-colors">→</span>
                 </div>
               </Link>
