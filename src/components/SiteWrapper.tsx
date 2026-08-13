@@ -5,7 +5,7 @@ import Footer from './Footer'
 import GoogleReviews from './GoogleReviews'
 import NewsletterSignup from './NewsletterSignup'
 
-const STANDALONE_PREFIXES = ['/welcome', '/arrival', '/reflection', '/portal', '/signup-sheet', '/tudor-village']
+const STANDALONE_PREFIXES = ['/welcome', '/arrival', '/reflection', '/portal', '/signup-sheet', '/tudor-village', '/print', '/massage-consent']
 
 export default function SiteWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
