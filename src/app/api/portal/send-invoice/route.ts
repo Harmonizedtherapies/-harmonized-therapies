@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { renderToBuffer } = require('@react-pdf/renderer')
+import { renderToBuffer } from '@react-pdf/renderer'
+import { createElement } from 'react'
 import { Resend } from 'resend'
 import { supabase } from '@/lib/supabase'
 import { InvoicePDF } from '@/lib/invoice-pdf'
-import { createElement } from 'react'
 
 const getResend = () => new Resend(process.env.RESEND_API_KEY ?? 're_placeholder')
 const FROM = 'Danielle Brierley <danielle@harmonizedtherapies.com.au>'
@@ -65,8 +64,7 @@ export async function POST(req: NextRequest) {
   const { data: invoice } = await supabase.from('invoices').select('*').eq('id', invoiceId).single()
   if (!invoice) return NextResponse.json({ error: 'Invoice not found' }, { status: 404 })
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const pdfBuffer = await renderToBuffer(createElement(InvoicePDF, { invoice }) as any)
+  const pdfBuffer = await renderToBuffer(createElement(InvoicePDF, { invoice }) as unknown as Parameters<typeof renderToBuffer>[0])
 
   const { error } = await getResend().emails.send({
     from: FROM,
