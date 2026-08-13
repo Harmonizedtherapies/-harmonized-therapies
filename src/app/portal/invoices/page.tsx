@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase, type Invoice } from '@/lib/supabase'
 
+type SendState = { invoiceId: string; email: string; sending: boolean; sent: boolean; error: string }
+
 const EMPTY_FORM = {
   invoice_number: '',
   client_name: '',
@@ -22,6 +24,7 @@ export default function InvoicesPage() {
   const [form, setForm] = useState(EMPTY_FORM)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [send, setSend] = useState<SendState | null>(null)
 
   useEffect(() => {
     loadInvoices()
@@ -76,6 +79,27 @@ export default function InvoicesPage() {
   )
   const outstanding = invoices.filter(i => !i.paid).reduce((sum, i) => sum + i.amount, 0)
   const totalPaid = invoices.filter(i => i.paid).reduce((sum, i) => sum + i.amount, 0)
+
+  function openSend(invoice: Invoice) {
+    setSend({ invoiceId: invoice.id, email: invoice.client_email ?? '', sending: false, sent: false, error: '' })
+  }
+
+  async function handleSend(e: React.FormEvent) {
+    e.preventDefault()
+    if (!send) return
+    setSend(s => s ? { ...s, sending: true, error: '' } : s)
+    const res = await fetch('/api/portal/send-invoice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ invoiceId: send.invoiceId, email: send.email }),
+    })
+    if (res.ok) {
+      setSend(s => s ? { ...s, sending: false, sent: true } : s)
+      setTimeout(() => setSend(null), 3000)
+    } else {
+      setSend(s => s ? { ...s, sending: false, error: 'Something went wrong — please try again.' } : s)
+    }
+  }
 
   function fmt(amount: number) {
     return `$${amount.toFixed(2)}`
@@ -212,8 +236,12 @@ export default function InvoicesPage() {
                     <p className="text-muted text-xs">{fmtDate(invoice.invoice_date)}{invoice.due_date ? ` · due ${fmtDate(invoice.due_date)}` : ''}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 flex-shrink-0">
+                <div className="flex items-center gap-3 flex-shrink-0">
                   <p className="font-display text-lg font-light text-charcoal">{fmt(invoice.amount)}</p>
+                  <button onClick={() => openSend(invoice)}
+                    className="text-[0.65rem] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border border-charcoal/15 text-muted hover:bg-sage/10 hover:text-sage hover:border-sage/30 transition-colors">
+                    Send PDF
+                  </button>
                   <button onClick={() => markPaid(invoice)}
                     className={`text-[0.65rem] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border transition-colors ${
                       invoice.paid
@@ -228,6 +256,49 @@ export default function InvoicesPage() {
           </div>
         )}
       </main>
+
+      {/* Send PDF modal */}
+      {send && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl border border-sage/10 p-8 w-full max-w-sm shadow-xl">
+            {send.sent ? (
+              <div className="text-center py-4">
+                <p className="font-display text-xl font-light text-sage mb-2">Sent</p>
+                <p className="text-muted text-sm">Invoice emailed to {send.email}</p>
+              </div>
+            ) : (
+              <>
+                <h3 className="font-display text-xl font-light text-charcoal mb-1">Send Invoice PDF</h3>
+                <p className="text-muted text-sm mb-6">The PDF will be attached to the email.</p>
+                <form onSubmit={handleSend} className="space-y-4">
+                  <div>
+                    <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Send to</label>
+                    <input
+                      type="email"
+                      required
+                      value={send.email}
+                      onChange={e => setSend(s => s ? { ...s, email: e.target.value } : s)}
+                      className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors"
+                      placeholder="client@email.com"
+                    />
+                  </div>
+                  {send.error && <p className="text-red-500 text-sm">{send.error}</p>}
+                  <div className="flex gap-3 pt-1">
+                    <button type="button" onClick={() => setSend(null)}
+                      className="flex-1 text-[0.72rem] tracking-[0.1em] uppercase px-4 py-2.5 rounded-full border border-charcoal/15 text-muted hover:border-sage/40 transition-colors">
+                      Cancel
+                    </button>
+                    <button type="submit" disabled={send.sending}
+                      className="flex-1 bg-sage text-white text-[0.72rem] tracking-[0.1em] uppercase px-4 py-2.5 rounded-full hover:bg-sage-dark transition-colors disabled:opacity-60">
+                      {send.sending ? 'Sending…' : 'Send'}
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
