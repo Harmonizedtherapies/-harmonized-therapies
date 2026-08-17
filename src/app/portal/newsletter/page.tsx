@@ -7,6 +7,7 @@ export default function NewsletterPage() {
   const [signups, setSignups] = useState<NewsletterSignup[]>([])
   const [loading, setLoading] = useState(true)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [filter, setFilter] = useState<string>('all')
 
   useEffect(() => {
     supabase.from('newsletter_signups').select('*').order('created_at', { ascending: false }).then(({ data }) => {
@@ -14,6 +15,9 @@ export default function NewsletterPage() {
       setLoading(false)
     })
   }, [])
+
+  const sources = ['all', ...Array.from(new Set(signups.map(s => s.source))).sort()]
+  const filtered = filter === 'all' ? signups : signups.filter(s => s.source === filter)
 
   async function handleDelete(id: string) {
     if (!confirm('Remove this person from your newsletter list?')) return
@@ -40,10 +44,25 @@ export default function NewsletterPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-6 py-10">
-        <div className="mb-6">
-          <h2 className="font-display text-2xl font-light text-charcoal">Newsletter Signups</h2>
-          <p className="text-muted text-sm">{signups.length} subscribers</p>
+        <div className="flex items-end justify-between mb-6">
+          <div>
+            <h2 className="font-display text-2xl font-light text-charcoal">Newsletter Signups</h2>
+            <p className="text-muted text-sm">{filtered.length} {filter === 'all' ? 'subscribers' : `from ${filter}`}</p>
+          </div>
         </div>
+
+        {!loading && signups.length > 0 && (
+          <div className="flex gap-2 flex-wrap mb-4">
+            {sources.map(s => (
+              <button key={s} onClick={() => setFilter(s)}
+                className={`text-[0.68rem] tracking-[0.1em] uppercase px-4 py-1.5 rounded-full transition-colors ${
+                  filter === s ? 'bg-sage text-white' : 'bg-white text-muted border border-charcoal/10 hover:border-sage/40'
+                }`}>
+                {s === 'all' ? 'All' : s === 'sleep-meditation' ? 'Sleep Meditation' : s === 'timely-import' ? 'Timely Import' : s}
+              </button>
+            ))}
+          </div>
+        )}
 
         {loading ? (
           <p className="text-muted text-sm text-center py-10">Loading...</p>
@@ -64,7 +83,7 @@ export default function NewsletterPage() {
                 </tr>
               </thead>
               <tbody>
-                {signups.map((s, i) => (
+                {filtered.map((s, i) => (
                   <tr key={s.id} className={i % 2 === 0 ? 'bg-white' : 'bg-cream/40'}>
                     <td className="px-6 py-4 text-charcoal">{s.email}</td>
                     <td className="px-6 py-4 text-muted hidden sm:table-cell">{s.name || '—'}</td>
