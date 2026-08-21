@@ -16,7 +16,8 @@ export default function NewClientPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setSaving(true)
-    await supabase.from('clients').insert([form])
+    const intake_token = crypto.randomUUID()
+    await supabase.from('clients').insert([{ ...form, intake_token }])
     router.push('/portal/clients')
   }
 
