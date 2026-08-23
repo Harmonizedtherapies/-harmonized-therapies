@@ -52,6 +52,6 @@ export async function POST(req: NextRequest) {
     html: html(firstName, link),
   })
 
-  if (error) return NextResponse.json({ error: 'Send failed' }, { status: 500 })
+  if (error) return NextResponse.json({ error: 'Send failed', detail: error }, { status: 500 })
   return NextResponse.json({ ok: true })
 }
