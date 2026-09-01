@@ -104,6 +104,16 @@ export type ClientFile = {
   created_at: string
 }
 
+export type ClientRecording = {
+  id: string
+  client_id: string
+  title: string
+  file_path: string
+  token: string
+  emailed_at: string | null
+  created_at: string
+}
+
 export type NewsletterSignup = {
   id: string
   email: string

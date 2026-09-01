@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
-import { supabase, type Client, type Session, type ClientFile, type MassageConsentData } from '@/lib/supabase'
+import { supabase, type Client, type Session, type ClientFile, type ClientRecording, type MassageConsentData } from '@/lib/supabase'
 
 const labelClass = 'text-[0.65rem] tracking-[0.15em] uppercase text-muted font-[400]'
 const inputClass = 'w-full border border-charcoal/10 rounded-xl px-4 py-3 text-sm text-charcoal outline-none focus:border-sage transition-colors'
@@ -556,9 +556,128 @@ function ClientFiles({ clientId }: { clientId: string }) {
   )
 }
 
+// ─── Recordings section ──────────────────────────────────────────────────────
+
+function ClientRecordings({ clientId, clientEmail }: { clientId: string; clientEmail: string | null }) {
+  const [recordings, setRecordings] = useState<ClientRecording[]>([])
+  const [title, setTitle] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const [sending, setSending] = useState<string | null>(null)
+  const [sent, setSent] = useState<string | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  const load = useCallback(async () => {
+    const { data } = await supabase
+      .from('client_recordings')
+      .select('*')
+      .eq('client_id', clientId)
+      .order('created_at', { ascending: false })
+    setRecordings(data ?? [])
+  }, [clientId])
+
+  useEffect(() => { load() }, [load])
+
+  async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file || !title.trim()) return
+    setUploading(true)
+    const path = `recordings/${clientId}/${crypto.randomUUID()}-${file.name}`
+    const { error } = await supabase.storage.from('client-files').upload(path, file)
+    if (!error) {
+      await supabase.from('client_recordings').insert([{ client_id: clientId, title: title.trim(), file_path: path }])
+      setTitle('')
+      await load()
+    }
+    setUploading(false)
+    if (fileRef.current) fileRef.current.value = ''
+  }
+
+  async function handleSend(recording: ClientRecording) {
+    setSending(recording.id)
+    const res = await fetch('/api/portal/send-recording', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recording_id: recording.id }),
+    })
+    if (res.ok) { setSent(recording.id); await load() }
+    setSending(null)
+    setTimeout(() => setSent(null), 3000)
+  }
+
+  async function handleDelete(recording: ClientRecording) {
+    if (!confirm(`Delete "${recording.title}"?`)) return
+    await supabase.storage.from('client-files').remove([recording.file_path])
+    await supabase.from('client_recordings').delete().eq('id', recording.id)
+    await load()
+  }
+
+  return (
+    <div className="bg-white rounded-2xl p-6 border border-sage/10">
+      <p className={labelClass + ' mb-5'}>Recordings</p>
+
+      <div className="space-y-3 mb-6">
+        <div>
+          <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Recording title</label>
+          <input
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm text-charcoal outline-none focus:border-sage transition-colors"
+            placeholder="e.g. Sleep & Surrender, Grounding Meditation…"
+          />
+        </div>
+        <label className={`inline-flex items-center gap-2 text-[0.7rem] tracking-[0.1em] uppercase px-5 py-2.5 rounded-full border transition-colors cursor-pointer ${
+          !title.trim() || uploading
+            ? 'border-charcoal/10 text-muted/40 pointer-events-none'
+            : 'border-sage/30 text-sage hover:bg-sage hover:text-white'
+        }`}>
+          {uploading ? 'Uploading…' : '+ Upload audio file'}
+          <input ref={fileRef} type="file" accept="audio/*" className="hidden" onChange={handleUpload} disabled={!title.trim() || uploading} />
+        </label>
+      </div>
+
+      {recordings.length === 0 ? (
+        <p className="text-muted text-xs text-center py-4">No recordings yet.</p>
+      ) : (
+        <ul className="space-y-3">
+          {recordings.map(r => (
+            <li key={r.id} className="flex items-center justify-between gap-3 bg-cream rounded-xl p-4 border border-charcoal/6">
+              <div className="min-w-0">
+                <p className="text-sm text-charcoal font-medium truncate">{r.title}</p>
+                <p className="text-[0.65rem] text-muted/60 mt-0.5">
+                  {new Date(r.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {r.emailed_at && ` · Sent ${new Date(r.emailed_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}`}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {clientEmail ? (
+                  <button
+                    onClick={() => handleSend(r)}
+                    disabled={sending === r.id}
+                    className="text-[0.7rem] tracking-[0.1em] uppercase px-4 py-2 rounded-full bg-sage-dark text-cream hover:bg-sage transition-colors disabled:opacity-50"
+                  >
+                    {sending === r.id ? 'Sending…' : sent === r.id ? 'Sent ✓' : r.emailed_at ? 'Resend' : 'Send email'}
+                  </button>
+                ) : (
+                  <span className="text-[0.65rem] text-muted/40">No email on file</span>
+                )}
+                <button
+                  onClick={() => handleDelete(r)}
+                  className="text-[0.65rem] text-muted/40 hover:text-red-400 transition-colors"
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-type Tab = 'profile' | 'intake' | 'consent' | 'sessions'
+type Tab = 'profile' | 'intake' | 'consent' | 'sessions' | 'recordings'
 
 export default function ClientDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -610,6 +729,7 @@ export default function ClientDetailPage() {
     { id: 'intake', label: client.intake_submitted_at ? 'Intake ✓' : 'Intake' },
     { id: 'consent', label: client.massage_consent_submitted_at ? 'Consent ✓' : 'Consent' },
     { id: 'sessions', label: 'Sessions' },
+    { id: 'recordings', label: 'Recordings' },
   ]
 
   return (
@@ -717,6 +837,9 @@ export default function ClientDetailPage() {
 
         {/* Sessions tab */}
         {tab === 'sessions' && <SessionsSection clientId={id} clientEmail={client.email} />}
+
+        {/* Recordings tab */}
+        {tab === 'recordings' && <ClientRecordings clientId={id} clientEmail={client.email} />}
       </main>
     </div>
   )
