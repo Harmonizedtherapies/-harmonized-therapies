@@ -128,6 +128,7 @@ export default function InvoicesPage() {
           <Link href="/portal/clients" className="text-[0.7rem] tracking-[0.12em] uppercase text-muted hover:text-sage transition-colors">Clients</Link>
           <Link href="/portal/invoices" className="text-[0.7rem] tracking-[0.12em] uppercase text-sage font-[400]">Invoices</Link>
           <Link href="/portal/newsletter" className="text-[0.7rem] tracking-[0.12em] uppercase text-muted hover:text-sage transition-colors">Newsletter</Link>
+          <Link href="/portal/recordings" className="text-[0.7rem] tracking-[0.12em] uppercase text-muted hover:text-sage transition-colors">Recordings</Link>
           <Link href="/portal/templates" className="text-[0.7rem] tracking-[0.12em] uppercase text-muted hover:text-sage transition-colors">Templates</Link>
           <Link href="/" className="text-[0.7rem] tracking-[0.12em] uppercase text-muted hover:text-sage transition-colors">Website</Link>
         </nav>

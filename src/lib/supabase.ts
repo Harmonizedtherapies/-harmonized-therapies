@@ -115,6 +115,16 @@ export type ClientRecording = {
   created_at: string
 }
 
+export type Meditation = {
+  id: string
+  slug: string
+  title: string
+  notes: string | null
+  status: string
+  file_path: string | null
+  created_at: string
+}
+
 export type NewsletterSignup = {
   id: string
   email: string
