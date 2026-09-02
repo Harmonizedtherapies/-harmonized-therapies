@@ -6,7 +6,10 @@ const getResend = () => new Resend(process.env.RESEND_API_KEY ?? 're_placeholder
 const FROM = process.env.RESEND_FROM_ADDRESS ?? 'Harmonized Therapies <hello@harmonizedtherapies.com.au>'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://harmonizedtherapies.com.au'
 
-function html(name: string, title: string, link: string) {
+function html(name: string, title: string, link: string, message: string | null) {
+  const messageLine = message
+    ? `<p style="margin:0 0 32px;font-size:16px;line-height:1.8;color:#555;">${message}</p>`
+    : `<p style="margin:0 0 32px;font-size:16px;line-height:1.8;color:#555;">You can listen or download it anytime using the link below. I hope it brings you something gentle.</p>`
   return `<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>
 <body style="margin:0;padding:0;background:#f8f5f0;font-family:Arial,sans-serif;">
@@ -18,8 +21,8 @@ function html(name: string, title: string, link: string) {
 </td></tr>
 <tr><td style="padding:40px 40px 36px;">
   <p style="margin:0 0 16px;font-size:16px;line-height:1.8;color:#2a2a2a;">Hi ${name},</p>
-  <p style="margin:0 0 8px;font-size:16px;line-height:1.8;color:#555;">I've made a recording for you — <em>${title}</em>.</p>
-  <p style="margin:0 0 32px;font-size:16px;line-height:1.8;color:#555;">You can listen or download it anytime using the link below. I hope it brings you something gentle.</p>
+  <p style="margin:0 0 16px;font-size:16px;line-height:1.8;color:#555;">I've made a recording for you — <em>${title}</em>.</p>
+  ${messageLine}
   <table cellpadding="0" cellspacing="0" style="margin-bottom:36px;">
     <tr><td style="background:#2D5A3D;border-radius:100px;">
       <a href="${link}" style="display:inline-block;padding:14px 28px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#fff;text-decoration:none;">Listen to recording</a>
@@ -43,7 +46,7 @@ export async function POST(req: NextRequest) {
 
   const { data: recording } = await supabase
     .from('client_recordings')
-    .select('title, token, client_id')
+    .select('title, token, message, client_id')
     .eq('id', recording_id)
     .single()
 
@@ -64,7 +67,7 @@ export async function POST(req: NextRequest) {
     from: FROM,
     to: client.email,
     subject: `Your recording — ${recording.title}`,
-    html: html(firstName, recording.title, link),
+    html: html(firstName, recording.title, link, recording.message),
   })
 
   if (error) return NextResponse.json({ error: 'Send failed', detail: error }, { status: 500 })

@@ -110,6 +110,7 @@ export type ClientRecording = {
   title: string
   file_path: string
   token: string
+  message: string | null
   emailed_at: string | null
   created_at: string
 }

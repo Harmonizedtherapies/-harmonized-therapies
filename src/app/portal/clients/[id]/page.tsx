@@ -561,6 +561,7 @@ function ClientFiles({ clientId }: { clientId: string }) {
 function ClientRecordings({ clientId, clientEmail }: { clientId: string; clientEmail: string | null }) {
   const [recordings, setRecordings] = useState<ClientRecording[]>([])
   const [title, setTitle] = useState('')
+  const [message, setMessage] = useState('')
   const [uploading, setUploading] = useState(false)
   const [sending, setSending] = useState<string | null>(null)
   const [sent, setSent] = useState<string | null>(null)
@@ -584,8 +585,9 @@ function ClientRecordings({ clientId, clientEmail }: { clientId: string; clientE
     const path = `recordings/${clientId}/${crypto.randomUUID()}-${file.name}`
     const { error } = await supabase.storage.from('client-files').upload(path, file)
     if (!error) {
-      await supabase.from('client_recordings').insert([{ client_id: clientId, title: title.trim(), file_path: path }])
+      await supabase.from('client_recordings').insert([{ client_id: clientId, title: title.trim(), message: message.trim() || null, file_path: path }])
       setTitle('')
+      setMessage('')
       await load()
     }
     setUploading(false)
@@ -623,6 +625,16 @@ function ClientRecordings({ clientId, clientEmail }: { clientId: string; clientE
             onChange={e => setTitle(e.target.value)}
             className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm text-charcoal outline-none focus:border-sage transition-colors"
             placeholder="e.g. Sleep & Surrender, Grounding Meditation…"
+          />
+        </div>
+        <div>
+          <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Personal message <span className="normal-case">(optional)</span></label>
+          <textarea
+            value={message}
+            onChange={e => setMessage(e.target.value)}
+            rows={3}
+            className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm text-charcoal outline-none focus:border-sage transition-colors resize-none"
+            placeholder="e.g. I made this especially for you to help with the new job nerves…"
           />
         </div>
         <label className={`inline-flex items-center gap-2 text-[0.7rem] tracking-[0.1em] uppercase px-5 py-2.5 rounded-full border transition-colors cursor-pointer ${
