@@ -632,7 +632,7 @@ function ClientRecordings({ clientId, clientEmail }: { clientId: string; clientE
           <textarea
             value={message}
             onChange={e => setMessage(e.target.value)}
-            rows={3}
+            rows={6}
             className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm text-charcoal outline-none focus:border-sage transition-colors resize-none"
             placeholder="e.g. I made this especially for you to help with the new job nerves…"
           />
