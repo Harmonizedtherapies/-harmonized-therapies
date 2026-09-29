@@ -70,10 +70,19 @@ function fmt(n: number) {
   return `$${n.toFixed(2)}`
 }
 
+type LineItem = { desc: string; amount: number | string }
+
+function parseLines(description: string | null, fallbackAmount: number): LineItem[] {
+  if (!description) return [{ desc: 'Services', amount: fallbackAmount }]
+  try {
+    const parsed = JSON.parse(description)
+    if (Array.isArray(parsed)) return parsed
+  } catch {}
+  return description.split('\n').filter(Boolean).map(d => ({ desc: d, amount: '' }))
+}
+
 export function InvoicePDF({ invoice }: { invoice: Invoice }) {
-  const lines = invoice.description
-    ? invoice.description.split('\n').filter(Boolean)
-    : [{ desc: 'Services', amount: invoice.amount }]
+  const lines = parseLines(invoice.description, invoice.amount)
 
   return (
     <Document>
@@ -128,8 +137,8 @@ export function InvoicePDF({ invoice }: { invoice: Invoice }) {
           </View>
           {lines.map((line, i) => (
             <View key={i} style={i % 2 === 0 ? s.tableRow : s.tableRowAlt}>
-              <Text style={s.colDesc}>{typeof line === 'string' ? line : line.desc}</Text>
-              <Text style={s.colRight}>{typeof line === 'object' ? fmt(line.amount) : ''}</Text>
+              <Text style={s.colDesc}>{line.desc}</Text>
+              <Text style={s.colRight}>{line.amount ? fmt(Number(line.amount)) : ''}</Text>
             </View>
           ))}
         </View>

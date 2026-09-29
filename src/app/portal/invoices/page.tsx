@@ -3,17 +3,33 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase, type Invoice } from '@/lib/supabase'
 
+type LineItem = { desc: string; amount: string }
 type SendState = { invoiceId: string; email: string; sending: boolean; sent: boolean; error: string }
+
+const EMPTY_LINE: LineItem = { desc: '', amount: '' }
 
 const EMPTY_FORM = {
   invoice_number: '',
   client_name: '',
   client_email: '',
-  description: '',
-  amount: '',
+  line_items: [{ desc: '', amount: '' }] as LineItem[],
   invoice_date: new Date().toISOString().split('T')[0],
   due_date: '',
   notes: '',
+}
+
+function parseLineItems(description: string | null): LineItem[] {
+  if (!description) return [EMPTY_LINE]
+  try {
+    const parsed = JSON.parse(description)
+    if (Array.isArray(parsed)) return parsed
+  } catch {}
+  // Legacy plain text — treat whole description as one line with no amount
+  return [{ desc: description, amount: '' }]
+}
+
+function serializeLineItems(items: LineItem[]): string {
+  return JSON.stringify(items.filter(i => i.desc.trim()))
 }
 
 export default function InvoicesPage() {
@@ -21,6 +37,7 @@ export default function InvoicesPage() {
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<'all' | 'unpaid' | 'paid'>('all')
   const [showForm, setShowForm] = useState(false)
+  const [editingId, setEditingId] = useState<string | null>(null)
   const [form, setForm] = useState(EMPTY_FORM)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -40,6 +57,34 @@ export default function InvoicesPage() {
     setLoading(false)
   }
 
+  function openNew() {
+    setEditingId(null)
+    setForm(EMPTY_FORM)
+    setError('')
+    setShowForm(true)
+  }
+
+  function openEdit(invoice: Invoice) {
+    setEditingId(invoice.id)
+    setForm({
+      invoice_number: String(invoice.invoice_number),
+      client_name: invoice.client_name,
+      client_email: invoice.client_email ?? '',
+      line_items: parseLineItems(invoice.description),
+      invoice_date: invoice.invoice_date,
+      due_date: invoice.due_date ?? '',
+      notes: invoice.notes ?? '',
+    })
+    setError('')
+    setShowForm(true)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function closeForm() {
+    setShowForm(false)
+    setEditingId(null)
+  }
+
   async function markPaid(invoice: Invoice) {
     const paid = !invoice.paid
     await supabase.from('invoices').update({
@@ -49,29 +94,46 @@ export default function InvoicesPage() {
     setInvoices(prev => prev.map(i => i.id === invoice.id ? { ...i, paid, paid_date: paid ? new Date().toISOString().split('T')[0] : null } : i))
   }
 
+  const lineTotal = form.line_items.reduce((sum, i) => sum + (parseFloat(i.amount) || 0), 0)
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
-    if (!form.client_name || !form.amount || !form.invoice_number) {
-      setError('Please fill in invoice number, client name and amount.')
+    if (!form.client_name || !form.invoice_number) {
+      setError('Please fill in invoice number and client name.')
+      return
+    }
+    const filledLines = form.line_items.filter(i => i.desc.trim())
+    if (filledLines.length === 0) {
+      setError('Please add at least one line item.')
+      return
+    }
+    if (lineTotal <= 0) {
+      setError('Please add amounts to your line items.')
       return
     }
     setSaving(true)
-    const { error: err } = await supabase.from('invoices').insert([{
+    const payload = {
       invoice_number: parseInt(form.invoice_number),
       client_name: form.client_name,
       client_email: form.client_email || null,
-      description: form.description || null,
-      amount: parseFloat(form.amount),
+      description: serializeLineItems(form.line_items),
+      amount: lineTotal,
       invoice_date: form.invoice_date,
       due_date: form.due_date || null,
       notes: form.notes || null,
-      paid: false,
-    }])
+    }
+    let err
+    if (editingId) {
+      ({ error: err } = await supabase.from('invoices').update(payload).eq('id', editingId))
+    } else {
+      ({ error: err } = await supabase.from('invoices').insert([{ ...payload, paid: false }]))
+    }
     setSaving(false)
     if (err) { setError('Something went wrong — please try again.'); return }
     setForm(EMPTY_FORM)
     setShowForm(false)
+    setEditingId(null)
     loadInvoices()
   }
 
@@ -115,6 +177,22 @@ export default function InvoicesPage() {
   }
   function fmtDate(d: string) {
     return new Date(d + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
+  }
+
+  function updateLine(index: number, field: keyof LineItem, value: string) {
+    setForm(f => {
+      const items = [...f.line_items]
+      items[index] = { ...items[index], [field]: value }
+      return { ...f, line_items: items }
+    })
+  }
+
+  function addLine() {
+    setForm(f => ({ ...f, line_items: [...f.line_items, { desc: '', amount: '' }] }))
+  }
+
+  function removeLine(index: number) {
+    setForm(f => ({ ...f, line_items: f.line_items.filter((_, i) => i !== index) }))
   }
 
   return (
@@ -164,16 +242,18 @@ export default function InvoicesPage() {
               </button>
             ))}
           </div>
-          <button onClick={() => setShowForm(v => !v)}
+          <button onClick={openNew}
             className="bg-sage text-white text-[0.72rem] tracking-[0.1em] uppercase px-5 py-2.5 rounded-full hover:bg-sage-dark transition-colors">
-            {showForm ? 'Cancel' : '+ Add Invoice'}
+            + Add Invoice
           </button>
         </div>
 
-        {/* Add invoice form */}
+        {/* Add / edit invoice form */}
         {showForm && (
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-sage/10 p-6 mb-6 space-y-4">
-            <h3 className="font-display text-lg font-light text-charcoal">New Invoice</h3>
+          <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-sage/10 p-6 mb-6 space-y-5">
+            <h3 className="font-display text-lg font-light text-charcoal">
+              {editingId ? 'Edit Invoice' : 'New Invoice'}
+            </h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Invoice No *</label>
@@ -181,9 +261,9 @@ export default function InvoicesPage() {
                   className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors" placeholder="e.g. 29" />
               </div>
               <div>
-                <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Amount *</label>
-                <input type="number" step="0.01" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))}
-                  className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors" placeholder="e.g. 372.00" />
+                <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Invoice Date</label>
+                <input type="date" value={form.invoice_date} onChange={e => setForm(f => ({ ...f, invoice_date: e.target.value }))}
+                  className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors" />
               </div>
               <div>
                 <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Client Name *</label>
@@ -195,32 +275,73 @@ export default function InvoicesPage() {
                 <input type="email" value={form.client_email} onChange={e => setForm(f => ({ ...f, client_email: e.target.value }))}
                   className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors" placeholder="e.g. hello@restandrestore.com.au" />
               </div>
-              <div className="col-span-2">
-                <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Description</label>
-                <input type="text" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                  className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors" placeholder="e.g. 4 × 60 min Remedial Massage @ $93" />
-              </div>
-              <div>
-                <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Invoice Date</label>
-                <input type="date" value={form.invoice_date} onChange={e => setForm(f => ({ ...f, invoice_date: e.target.value }))}
-                  className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors" />
-              </div>
               <div>
                 <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Due Date</label>
                 <input type="date" value={form.due_date} onChange={e => setForm(f => ({ ...f, due_date: e.target.value }))}
                   className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors" />
               </div>
-              <div className="col-span-2">
+              <div>
                 <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-1.5">Notes</label>
                 <input type="text" value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
                   className="w-full border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors" placeholder="Optional" />
               </div>
             </div>
+
+            {/* Line items */}
+            <div>
+              <label className="block text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-2">Line Items</label>
+              <div className="space-y-2">
+                {form.line_items.map((item, i) => (
+                  <div key={i} className="flex gap-2 items-center">
+                    <input
+                      type="text"
+                      value={item.desc}
+                      onChange={e => updateLine(i, 'desc', e.target.value)}
+                      className="flex-1 border border-charcoal/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-sage transition-colors"
+                      placeholder="e.g. Monday 29 Sep — Remedial Massage 60min"
+                    />
+                    <div className="relative w-32 flex-shrink-0">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted text-sm">$</span>
+                      <input
+                        type="number"
+                        step="0.01"
+                        value={item.amount}
+                        onChange={e => updateLine(i, 'amount', e.target.value)}
+                        className="w-full border border-charcoal/10 rounded-xl pl-7 pr-3 py-2.5 text-sm outline-none focus:border-sage transition-colors"
+                        placeholder="0.00"
+                      />
+                    </div>
+                    {form.line_items.length > 1 && (
+                      <button type="button" onClick={() => removeLine(i)}
+                        className="text-muted hover:text-red-400 transition-colors text-lg leading-none px-1">×</button>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <button type="button" onClick={addLine}
+                className="mt-2 text-sage text-[0.72rem] tracking-[0.08em] uppercase hover:underline">
+                + Add line
+              </button>
+            </div>
+
+            {/* Total */}
+            {lineTotal > 0 && (
+              <div className="flex justify-end">
+                <p className="text-sm text-muted">Total: <span className="font-display text-lg text-charcoal ml-1">{fmt(lineTotal)}</span></p>
+              </div>
+            )}
+
             {error && <p className="text-red-500 text-sm">{error}</p>}
-            <button type="submit" disabled={saving}
-              className="bg-sage text-white text-[0.72rem] tracking-[0.1em] uppercase px-6 py-2.5 rounded-full hover:bg-sage-dark transition-colors disabled:opacity-60">
-              {saving ? 'Saving…' : 'Save Invoice'}
-            </button>
+            <div className="flex gap-3">
+              <button type="submit" disabled={saving}
+                className="bg-sage text-white text-[0.72rem] tracking-[0.1em] uppercase px-6 py-2.5 rounded-full hover:bg-sage-dark transition-colors disabled:opacity-60">
+                {saving ? 'Saving…' : editingId ? 'Save Changes' : 'Save Invoice'}
+              </button>
+              <button type="button" onClick={closeForm}
+                className="text-[0.72rem] tracking-[0.1em] uppercase px-6 py-2.5 rounded-full border border-charcoal/15 text-muted hover:border-sage/40 transition-colors">
+                Cancel
+              </button>
+            </div>
           </form>
         )}
 
@@ -230,7 +351,7 @@ export default function InvoicesPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-muted text-sm mb-4">{filter !== 'all' ? `No ${filter} invoices.` : 'No invoices yet.'}</p>
-            {filter === 'all' && <button onClick={() => setShowForm(true)} className="text-sage text-sm hover:underline">Add your first invoice →</button>}
+            {filter === 'all' && <button onClick={openNew} className="text-sage text-sm hover:underline">Add your first invoice →</button>}
           </div>
         ) : (
           <div className="space-y-3">
@@ -242,12 +363,15 @@ export default function InvoicesPage() {
                   </div>
                   <div className="min-w-0">
                     <p className="text-charcoal font-[400] text-sm">{invoice.client_name}</p>
-                    {invoice.description && <p className="text-muted text-xs truncate">{invoice.description}</p>}
                     <p className="text-muted text-xs">{fmtDate(invoice.invoice_date)}{invoice.due_date ? ` · due ${fmtDate(invoice.due_date)}` : ''}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <p className="font-display text-lg font-light text-charcoal">{fmt(invoice.amount)}</p>
+                  <button onClick={() => openEdit(invoice)}
+                    className="text-[0.65rem] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border border-charcoal/15 text-muted hover:bg-sage/10 hover:text-sage hover:border-sage/30 transition-colors">
+                    Edit
+                  </button>
                   <a href={`/api/portal/preview-invoice?id=${invoice.id}`} target="_blank" rel="noopener noreferrer"
                     className="text-[0.65rem] tracking-[0.1em] uppercase px-3 py-1.5 rounded-full border border-charcoal/15 text-muted hover:bg-sage/10 hover:text-sage hover:border-sage/30 transition-colors">
                     Preview
