@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer'
+import { Document, Page, Text, View, StyleSheet, Font, Image } from '@react-pdf/renderer'
 
 Font.register({
   family: 'Cormorant',
@@ -16,7 +16,7 @@ const CREAM = '#faf8f3'
 const s = StyleSheet.create({
   page: { backgroundColor: CREAM, padding: '40 48', fontFamily: 'Helvetica', fontSize: 10, color: '#181816' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', borderBottomWidth: 2, borderBottomColor: GOLD, paddingBottom: 20, marginBottom: 24 },
-  brand: { fontFamily: 'Cormorant', fontSize: 28, fontWeight: 400, color: SAGE, letterSpacing: 1 },
+  logo: { width: 110, height: 110 },
   brandSub: { fontSize: 8, color: MUTED, letterSpacing: 2, textTransform: 'uppercase', marginTop: 4 },
   invoiceLabel: { fontFamily: 'Cormorant', fontSize: 28, color: SAGE, textAlign: 'right' },
   metaRow: { flexDirection: 'row', justifyContent: 'flex-end', gap: 8, marginTop: 4 },
@@ -91,7 +91,7 @@ export function InvoicePDF({ invoice }: { invoice: Invoice }) {
         {/* Header */}
         <View style={s.header}>
           <View>
-            <Text style={s.brand}>Harmonized Therapies</Text>
+            <Image style={s.logo} src="https://www.harmonizedtherapies.com.au/Images/logo-new.png" />
             <Text style={s.brandSub}>ABN 39 516 208 879</Text>
           </View>
           <View>
