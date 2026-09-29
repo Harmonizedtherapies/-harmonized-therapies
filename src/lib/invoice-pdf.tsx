@@ -3,8 +3,8 @@ import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/rendere
 Font.register({
   family: 'Cormorant',
   fonts: [
-    { src: process.cwd() + '/public/fonts/CormorantGaramond-Regular.ttf', fontWeight: 400 },
-    { src: process.cwd() + '/public/fonts/CormorantGaramond-SemiBold.ttf', fontWeight: 600 },
+    { src: 'https://www.harmonizedtherapies.com.au/fonts/CormorantGaramond-Regular.ttf', fontWeight: 400 },
+    { src: 'https://www.harmonizedtherapies.com.au/fonts/CormorantGaramond-SemiBold.ttf', fontWeight: 600 },
   ],
 })
 
