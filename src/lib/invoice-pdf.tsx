@@ -3,8 +3,8 @@ import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/rendere
 Font.register({
   family: 'Cormorant',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/cormorantgaramond/v21/co3YmX5slCNuHLi8bLeY9MK7whWMhyjYrEPjuw.ttf', fontWeight: 400 },
-    { src: 'https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjQAllvuQ.ttf', fontWeight: 600 },
+    { src: process.cwd() + '/public/fonts/CormorantGaramond-Regular.ttf', fontWeight: 400 },
+    { src: process.cwd() + '/public/fonts/CormorantGaramond-SemiBold.ttf', fontWeight: 600 },
   ],
 })
 
