@@ -16,7 +16,7 @@ const CREAM = '#faf8f3'
 const s = StyleSheet.create({
   page: { backgroundColor: CREAM, padding: '40 48', fontFamily: 'Helvetica', fontSize: 10, color: '#181816' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', borderBottomWidth: 2, borderBottomColor: GOLD, paddingBottom: 20, marginBottom: 24 },
-  logo: { width: 110, height: 110 },
+  logo: { width: 80, height: 120 },
   brandSub: { fontSize: 8, color: MUTED, letterSpacing: 2, textTransform: 'uppercase', marginTop: 4 },
   invoiceLabel: { fontFamily: 'Cormorant', fontSize: 28, color: SAGE, textAlign: 'right' },
   metaRow: { flexDirection: 'row', justifyContent: 'flex-end', gap: 8, marginTop: 4 },
