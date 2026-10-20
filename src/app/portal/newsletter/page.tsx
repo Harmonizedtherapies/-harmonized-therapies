@@ -39,6 +39,7 @@ export default function NewsletterPage() {
           <Link href="/portal/invoices" className="text-[0.7rem] tracking-[0.12em] uppercase text-muted hover:text-sage transition-colors">Invoices</Link>
           <Link href="/portal/newsletter" className="text-[0.7rem] tracking-[0.12em] uppercase text-sage font-[400]">Newsletter</Link>
           <Link href="/portal/templates" className="text-[0.7rem] tracking-[0.12em] uppercase text-muted hover:text-sage transition-colors">Templates</Link>
+          <Link href="/signup-sheet" className="text-[0.7rem] tracking-[0.12em] uppercase text-muted hover:text-sage transition-colors">Roster</Link>
           <Link href="/" className="text-[0.7rem] tracking-[0.12em] uppercase text-muted hover:text-sage transition-colors">Website</Link>
         </nav>
       </header>
