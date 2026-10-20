@@ -122,6 +122,9 @@ export default function SignupSheet() {
         >
           Print sheet
         </button>
+        <p style={{ fontFamily: 'sans-serif', fontSize: '11px', color: '#aaa', marginTop: '8px' }}>
+          In the print dialog → More settings → uncheck <strong>Headers and footers</strong> for a clean sheet
+        </p>
       </div>
 
       {/* Printable sheet */}
