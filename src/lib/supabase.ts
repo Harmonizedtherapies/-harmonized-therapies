@@ -133,6 +133,17 @@ export type NewsletterSignup = {
   created_at: string
 }
 
+export type OncologyIntake = {
+  id: string
+  name: string
+  email: string | null
+  phone: string | null
+  data: Record<string, unknown>
+  consent_given: boolean
+  consent_date: string
+  created_at: string
+}
+
 export type Invoice = {
   id: string
   invoice_number: number
